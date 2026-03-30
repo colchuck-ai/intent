@@ -52,6 +52,8 @@ jobs:
           node-version: "20"
           cache: "npm"
       - run: npm ci
+      - name: Bundle intent skill
+        run: zip -r intent-skill.zip intent
       - name: Semantic Release
         id: release
         uses: cycjimmy/semantic-release-action@v4

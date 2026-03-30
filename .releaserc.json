@@ -18,7 +18,7 @@
       "@semantic-release/github",
       {
         "assets": [
-          { "path": "intent", "label": "intent" }
+          { "path": "intent-skill.zip", "label": "intent" }
         ]
       }
     ]
