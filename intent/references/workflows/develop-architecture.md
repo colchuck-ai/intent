@@ -2,7 +2,7 @@
 
 **`DEV-ARCH`**
 
-You are writing **`docs/engineering/README.md`** as a **high-level architectural story**: how the system hangs together, main flows, boundaries, and principles. **Component one-liners and the components table are not part of this workflow yet**—those belong in **Enumerate components**. It is fine for the README to gesture at major pieces in prose before they have stable `C###` rows.
+You are writing **`docs/engineering/README.md`** as a **high-level architectural story**: how the system hangs together, main flows, boundaries, and principles. **In scope:** that engineering root README and its narrative. **Out of scope:** component one-liners and the **components table**—those belong in **Enumerate components** (`ENUM-COMP`). It is fine for the README to gesture at major pieces in prose before they have stable `C###` rows.
 
 **Strong recommendation:** have **outcomes and requirement indices** in good shape first so architecture answers real intent rather than inventing it.
 

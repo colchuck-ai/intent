@@ -2,7 +2,7 @@
 
 **`DEV-OUT`**
 
-You are creating **`docs/product/outcomes/O<NNN>-<slug>/`** with a real **outcome document** (typically `README.md` in a complex folder), using the [`outcome`](../../assets/outcome.md) shape. At this stage you may **omit** the risk and requirement tables—or leave them empty—if you have not run **Enumerate requirements** yet. The outcome can be **partial**: problem, success, boundaries, and story first; the index of requirements can arrive in a later workflow.
+You are creating **`docs/product/outcomes/O<NNN>-<slug>/`** with a real **outcome document** (typically `README.md` in a complex folder), using the [`outcome`](../../assets/outcome.md) shape. The product tree is chunked **by outcome**; one pass of this workflow develops **one** outcome. At this stage you may **omit** the risk and requirement tables—or leave them empty—if you have not run **Enumerate requirements** yet. The outcome can be **partial**: problem, success, boundaries, and story first; the index of requirements can arrive in a later workflow. **In scope:** this outcome’s folder and README. **Out of scope:** populating risk and requirement **tables** on that README (**Enumerate requirements**, `ENUM-REQ`) and any files under **`requirements/`** (**Develop requirement**, `DEV-REQ`).
 
 **Records:** **PDRs** for **new** product decisions at **outcome** scope (`outcomes/…/pdrs/`), or at product root if the decision is bigger than one outcome. **CRs** for meaningful edits to **this outcome’s** narrative under that outcome’s `crs/`.
 

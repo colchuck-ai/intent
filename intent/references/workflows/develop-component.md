@@ -2,7 +2,7 @@
 
 **`DEV-COMP`**
 
-You are writing a **component specification** under `docs/engineering/components/`—[`component-simple`](../../assets/component-simple.md) or [`component-complex`](../../assets/component-complex.md)—so ownership, interfaces, and behavior are clear enough to build and review against.
+You are writing a **component specification** under `docs/engineering/components/`—[`component-simple`](../../assets/component-simple.md) or [`component-complex`](../../assets/component-complex.md)—so ownership, interfaces, and behavior are clear enough to build and review against. The engineering tree is chunked **by component**; one pass of this workflow develops **one** component. **In scope:** that component’s spec only. **Out of scope:** other components, or treating this pass as full **architecture** or **component-index** work—those are **Develop architecture** and **Enumerate components**.
 
 **Records:** **ADRs** for **new** architectural decisions at component scope (`…/adrs/`). **CRs** for meaningful edits under that component’s `crs/`. If the engineering root table or overview must change to stay honest, that change follows **`ENG-CR…`** (or a focused edit session) so the root stays in sync.
 

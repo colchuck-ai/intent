@@ -2,7 +2,7 @@
 
 **`DEV-PROD`**
 
-You are establishing **`docs/product/README.md`** as a **product statement**: who the product serves, what value means, and the boundaries of the problem space. **Outcomes are not part of this workflow yet**—they belong in **Enumerate outcomes**.
+You are establishing **`docs/product/README.md`** as a **product statement**: who the product serves, what value means, and the boundaries of the problem space. **In scope:** that product root README only. **Out of scope:** outcome one-liners (**Enumerate outcomes**, `ENUM-OUT`) and outcome folders under `docs/product/outcomes/` (**Develop outcome**, `DEV-OUT`).
 
 Pick **one** root template—[`product-root-simple`](../../assets/product-root-simple.md) or [`product-root-jtbd`](../../assets/product-root-jtbd.md)—and stay with it for the life of that tree. If you use JTBD, optional background lives in [`jtbd-primer`](../guides/jtbd-primer.md); the template itself is allowed to omit sections that do not help.
 

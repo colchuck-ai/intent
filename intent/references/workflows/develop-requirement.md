@@ -2,9 +2,7 @@
 
 **`DEV-REQ`**
 
-This workflow **creates or edits** artifacts under `docs/product/outcomes/…/requirements/`—simple file or complex folder with `README.md`.
-
-You are writing the **full requirement** there using [`requirement-simple`](../../assets/requirement-simple.md) or [`requirement-complex`](../../assets/requirement-complex.md). Capability, acceptance, and edge cases live here.
+You are writing the **full requirement** under `docs/product/outcomes/…/requirements/`—simple file or complex folder with `README.md`—using [`requirement-simple`](../../assets/requirement-simple.md) or [`requirement-complex`](../../assets/requirement-complex.md). Capability, acceptance, and edge cases live here. Work on the product side is chunked **by outcome**, then **by requirement**; one pass of this workflow develops **one** requirement artifact (simple or complex shape as fits). **In scope:** that requirement’s body only. **Out of scope:** sibling requirements, the engineering root index, or component specs (**Enumerate components**, **Develop component**).
 
 **Records:** **PDRs** for **new** product decisions scoped to this requirement (`…/pdrs/` or a parent `pdrs/` if the decision spans more). **CRs** for meaningful edits under this requirement’s `crs/`.
 

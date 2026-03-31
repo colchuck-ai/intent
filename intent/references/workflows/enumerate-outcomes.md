@@ -2,9 +2,7 @@
 
 **`ENUM-OUT`**
 
-You are adding **outcome one-liners** to **`docs/product/README.md`**—a short list of the big jobs or results the product is supposed to enable. Each line should be enough to **name** an outcome; the **Develop outcome** workflow fills the folder and the real narrative later.
-
-This is still **index work**: you are not yet writing full outcome READMEs under `docs/product/outcomes/`.
+You are adding **outcome one-liners** to **`docs/product/README.md`**—a short list of the big jobs or results the product is supposed to enable. Each line should be enough to **name** an outcome; the **Develop outcome** workflow fills the folder and the real narrative later. **In scope:** the product root README only (this is **index work** at the root). **Out of scope:** creating or filling **`docs/product/outcomes/…`** folders and READMEs—that is **Develop outcome** (`DEV-OUT`).
 
 **Records:** **PDRs** when a **new strategic choice** appears while choosing or phrasing outcomes. **CRs** when the **product root** meaningfully changes—adding or reshaping the outcome list usually qualifies.
 

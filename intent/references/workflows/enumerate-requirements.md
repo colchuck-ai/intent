@@ -2,15 +2,9 @@
 
 **`ENUM-REQ`**
 
-**In scope for this workflow:** edits to the outcome **`README.md`** (risks table and requirement one-liner tables). **Out of scope:** creating or editing files under **`requirements/`**—that is **Develop requirement** (`DEV-REQ`).
-
-You are deriving **requirement one-liners** (and usually **risk rows**) on the **outcome README**. In practice that means asking how the outcome is achieved, asking **“how else?”** so you do not lock onto one design, and asking **why** each candidate requirement exists so it traces to the outcome. For risks: what could prevent the outcome from being true, naming each risk on the README and tying it to a **mitigating requirement** (existing or new). The goal is an **index** you trust before you open full requirement files.
+You are deriving **requirement one-liners** (and usually **risk rows**) on the **outcome README**. **In scope:** edits to that README’s tables—risks and requirement one-liners—only. **Out of scope:** creating or editing files under **`requirements/`**—that is **Develop requirement** (`DEV-REQ`). In practice, that means asking how the outcome is achieved, **“how else?”** so you do not lock onto one design, and **why** each candidate requirement exists so it traces to the outcome. For risks: what could prevent the outcome from being true, naming each risk on the README and tying it to a **mitigating requirement** (existing or new). The goal is an **index** you trust before you open full requirement files.
 
 **Records:** **PDRs** when framing requirements implies a **new** strategic choice. **CRs** when the **outcome README** changes in a meaningful way (including table work).
-
-### Automation / agents
-
-By default, propose one-liners and risk rows in review or in the outcome README only; do not create `requirements/` files unless the user explicitly asks to run **Develop requirement** or to materialize files.
 
 ---
 

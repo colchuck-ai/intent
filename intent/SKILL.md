@@ -35,8 +35,6 @@ Activities—developing or enumerating parts of the tree, modifying them, or rem
 
 **[`references/workflows/README.md`](references/workflows/README.md)**
 
-`ENUM-REQ` indexes on the outcome README only; requirement bodies live under `requirements/` in `DEV-REQ`.
-
 Templates for the concrete markdown shells live under **[`assets/`](assets/README.md)**.
 
 ## Guidance
