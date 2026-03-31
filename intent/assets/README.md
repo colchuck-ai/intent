@@ -1,6 +1,6 @@
 # Template index (`assets/`)
 
-Markdown shells for **`docs/product/`** and **`docs/engineering/`**. Trees, IDs, and naming: [`../references/guides/structure.md`](../references/guides/structure.md). **Workflows** (activities and sessions) live under [`../references/workflows/`](../references/workflows/README.md).
+Markdown shells for **`docs/product/`** and **`docs/engineering/`**. Trees, IDs, and naming: [`../references/guides/structure.md`](../references/guides/structure.md). **Tone:** fill templates with **[plain language](../references/guides/plain-language.md)**. **Workflows** (activities and sessions) live under [`../references/workflows/`](../references/workflows/README.md).
 
 **Product root (`docs/product/README.md`):** choose **simple** or **JTBD**—see [`../SKILL.md`](../SKILL.md) defaults. One style per product tree.
 

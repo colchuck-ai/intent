@@ -10,12 +10,12 @@ You are writing a **component specification** under `docs/engineering/components
 
 ### Draft
 
-Load the engineering root row for this component and the requirements it claims. Write the spec so it **does not silently contradict** the table or product intent. New technical decisions become **ADRs** here when scoped to this component.
+Load the engineering root row for this component and the requirements it claims. Write the spec so it **does not silently contradict** the table or product intent, in **[plain language](../guides/plain-language.md)**—short sentences, concrete terms, no clever or academic gloss. New technical decisions become **ADRs** here when scoped to this component.
 
 ### AI-assisted review
 
-Check interface clarity, requirement alignment, and whether sibling components are still consistent. On **traceability**, the row in **`docs/engineering/README.md`** carries the requirement links; the spec should reinforce intent without re-stating that mapping as a second registry. **CRs** for substantive spec edits; **ADRs** for new decisions caught in review.
+Check interface clarity, requirement alignment, and whether sibling components are still consistent. On **traceability**, the row in **`docs/engineering/README.md`** carries the requirement links; the spec should reinforce intent without re-stating that mapping as a second registry. Keep the prose plain and readable ([`plain-language.md`](../guides/plain-language.md)). **CRs** for substantive spec edits; **ADRs** for new decisions caught in review.
 
 ### Independent review
 
-Human judgment on readiness to build. Same pattern for **CRs** and **ADRs**.
+Human judgment on readiness to build, including whether the spec reads clearly for a junior engineer ([`plain-language.md`](../guides/plain-language.md)). Same pattern for **CRs** and **ADRs**.

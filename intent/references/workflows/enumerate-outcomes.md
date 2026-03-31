@@ -10,12 +10,12 @@ You are adding **outcome one-liners** to **`docs/product/README.md`**—a short 
 
 ### Draft
 
-Work from the product statement and any upstream constraints. Draft one-liners that are **distinct** enough to become separate outcome folders without overlapping so heavily that they collapse into one. If naming the list forces a new strategic decision, record a **PDR** at the right scope (often product root).
+Work from the product statement and any upstream constraints. Draft one-liners that are **distinct** enough to become separate outcome folders without overlapping so heavily that they collapse into one. Phrase each line in **[plain language](../guides/plain-language.md)**—short sentences, common words—so the list reads clearly for a junior engineer. If naming the list forces a new strategic decision, record a **PDR** at the right scope (often product root).
 
 ### AI-assisted review
 
-Look for overlap, gaps, and language that belongs in engineering instead of here. Updates that materially change the root README get a **CR** (`PROD-CR…`) when not already covered.
+Look for overlap, gaps, and language that belongs in engineering instead of here. Tighten phrasing so the list stays plain and readable ([`plain-language.md`](../guides/plain-language.md)). Updates that materially change the root README get a **CR** (`PROD-CR…`) when not already covered.
 
 ### Independent review
 
-A second human checks whether the list matches how the organization thinks about success. Emit **PDRs** only for **new** decisions caught late; emit **CRs** if the gate still moves substantive text.
+A second human checks whether the list matches how the organization thinks about success and whether the wording still reads clearly without extra decoding ([`plain-language.md`](../guides/plain-language.md)). Emit **PDRs** only for **new** decisions caught late; emit **CRs** if the gate still moves substantive text.

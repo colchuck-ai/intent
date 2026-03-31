@@ -12,12 +12,12 @@ You are **changing** the high-level story in **`docs/engineering/README.md`**: a
 
 ### Draft
 
-Example: renaming a major boundary might mean updating several component READMEs and the table in one conceptual change. Example: a principle shift might force new **ADRs** and then CRs that point to them.
+Example: renaming a major boundary might mean updating several component READMEs and the table in one conceptual change. Example: a principle shift might force new **ADRs** and then CRs that point to them. Keep the engineering root narrative in **[plain language](../guides/plain-language.md)**—short sentences, common words, teach-first—as you ripple the change.
 
 ### AI-assisted review
 
-Look for drift between root, table, and components. Capture **ADRs** where decisions deserve a durable record; **CRs** for traceability on edits.
+Look for drift between root, table, and components. Capture **ADRs** where decisions deserve a durable record; **CRs** for traceability on edits. Where the architecture story reads dense or clever, plain it out ([`plain-language.md`](../guides/plain-language.md)).
 
 ### Independent review
 
-Second human on whether the story still matches product intent and team reality. Same pattern for **CRs** and **ADRs**.
+Second human on whether the story still matches product intent and team reality, and whether the README reads clearly for a junior engineer ([`plain-language.md`](../guides/plain-language.md)). Same pattern for **CRs** and **ADRs**.

@@ -1,6 +1,6 @@
 # Workflows
 
-Each file is **one activity**: what you are trying to do, told as a story with **three sessions**—**draft**, then **AI-assisted review**, then **independent review**. You can run them back-to-back or spread them across days; the names describe **roles**, not calendar time.
+Each file is **one activity**: what you are trying to do, told as a story with **three sessions**—**draft**, then **AI-assisted review**, then **independent review**. You can run them back-to-back or spread them across days; the names describe **roles**, not calendar time. In each workflow, **[plain language](../guides/plain-language.md)** is **woven into** those session descriptions—how you draft, what the AI-assisted pass checks, and what the human gate expects—so wording stays junior-friendly alongside traceability and records, not as a standalone block.
 
 In **draft**, you gather enough context to write honestly—usually the artifact in focus and its parents, and sometimes siblings when overlap matters. In **modify** and **remove** workflows, that lens often has to widen to the **ripple** of the change (children, the engineering table, or the whole product tree).
 

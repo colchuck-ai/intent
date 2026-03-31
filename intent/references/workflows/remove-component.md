@@ -12,12 +12,12 @@ You are **retiring** a component: deleting or archiving its spec and **cleaning*
 
 ### Draft
 
-Decide what “gone” means for the system narrative, update the table and specs, and remove or redirect files as your repo conventions require. **Examples:** a merged component absorbs behavior—update the survivor’s spec and CR both sides; a retired service might leave an ADR that records the decision to shut it down.
+Decide what “gone” means for the system narrative, update the table and specs, and remove or redirect files as your repo conventions require. **Examples:** a merged component absorbs behavior—update the survivor’s spec and CR both sides; a retired service might leave an ADR that records the decision to shut it down. Write **CR** and ADR copy in **[plain language](../guides/plain-language.md)**—short sentences, concrete terms—so the retirement story is easy to follow.
 
 ### AI-assisted review
 
-Hunt for orphan links, stale requirement rows, and dangling references in sibling docs. **CRs** and **ADRs** to match the removal story.
+Hunt for orphan links, stale requirement rows, and dangling references in sibling docs. **CRs** and **ADRs** to match the removal story. Where prose is dense or performative, plain it ([`plain-language.md`](../guides/plain-language.md)).
 
 ### Independent review
 
-Human check that nothing still claims the old component exists. **CRs** if the gate finds more cleanup.
+Human check that nothing still claims the old component exists, and that **CR**s and touched specs read clearly for a junior engineer ([`plain-language.md`](../guides/plain-language.md)). **CRs** if the gate finds more cleanup.

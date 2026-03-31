@@ -12,12 +12,12 @@ You are **removing** a requirement: deleting the artifact and **updating** the *
 
 ### Draft
 
-**Example:** remove a requirement file, then scrub the outcome tables, then adjust the engineering table so no row links to a ghost. **Example:** if two components shared the requirement, both specs may need a sentence removed or replaced.
+**Example:** remove a requirement file, then scrub the outcome tables, then adjust the engineering table so no row links to a ghost. **Example:** if two components shared the requirement, both specs may need a sentence removed or replaced. Any **CR** or narrative you add should explain what changed in **[plain language](../guides/plain-language.md)**—short sentences, concrete words—so the removal is easy to follow.
 
 ### AI-assisted review
 
-Search for broken links and orphaned table cells. **CRs** to cover the narrative of what changed.
+Search for broken links and orphaned table cells. **CRs** to cover the narrative of what changed; scrub any leftover copy that sounds dense or showy ([`plain-language.md`](../guides/plain-language.md)).
 
 ### Independent review
 
-Confirm the outcome still hangs together and engineering no longer promises the removed work.
+Confirm the outcome still hangs together, engineering no longer promises the removed work, and any updated text still reads clearly for a junior engineer ([`plain-language.md`](../guides/plain-language.md)).

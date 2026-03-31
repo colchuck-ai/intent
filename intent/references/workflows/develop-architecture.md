@@ -12,12 +12,12 @@ You are writing **`docs/engineering/README.md`** as a **high-level architectural
 
 ### Draft
 
-Read enough product context that the engineering story does not contradict intent. Draft narrative and, if useful, a light diagram path. When a **new** technical decision appears (stack, boundary, pattern), prefer a short **ADR** rather than burying the decision only in prose.
+Read enough product context that the engineering story does not contradict intent. Draft narrative and, if useful, a light diagram path, in **[plain language](../guides/plain-language.md)**—short sentences, common words, teach-first. When a **new** technical decision appears (stack, boundary, pattern), prefer a short **ADR** rather than burying the decision only in prose.
 
 ### AI-assisted review
 
-Check for clarity, missing boundaries, and decisions that should be **ADRs**. Meaningful README edits get **CRs** if not already recorded.
+Check for clarity, missing boundaries, and decisions that should be **ADRs**. The README should read plainly for a junior engineer ([`plain-language.md`](../guides/plain-language.md))—no jargon theater. Meaningful README edits get **CRs** if not already recorded.
 
 ### Independent review
 
-Human read for coherence and fit with product. **ADRs** for decisions surfaced late; **CRs** if the review still shifts the engineering root materially.
+Human read for coherence and fit with product, and for plain readable prose ([`plain-language.md`](../guides/plain-language.md)). **ADRs** for decisions surfaced late; **CRs** if the review still shifts the engineering root materially.

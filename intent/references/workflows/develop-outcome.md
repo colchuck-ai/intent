@@ -10,12 +10,12 @@ You are creating **`docs/product/outcomes/O<NNN>-<slug>/`** with a real **outcom
 
 ### Draft
 
-Load the product root and the one-liner for this outcome so the detail **pulls upward** to the same language. Build the outcome README so someone could explain **why this outcome exists** without reading requirements yet. If you already know major risks, you can sketch them; it is fine to defer full risk→requirement mapping to **Enumerate requirements**.
+Load the product root and the one-liner for this outcome so the detail **pulls upward** to the same language. Build the outcome README so someone could explain **why this outcome exists** without reading requirements yet, using **[plain language](../guides/plain-language.md)**—plain words, short sentences, no performative tone. If you already know major risks, you can sketch them; it is fine to defer full risk→requirement mapping to **Enumerate requirements**.
 
 ### AI-assisted review
 
-Check alignment with the product root and sibling outcomes (peek at other outcome READMEs if boundaries might blur). Strategic surprises become **PDRs**; substantive edits to this README become **CRs** at outcome scope.
+Check alignment with the product root and sibling outcomes (peek at other outcome READMEs if boundaries might blur). Tighten wording so it stays plain and readable ([`plain-language.md`](../guides/plain-language.md)). Strategic surprises become **PDRs**; substantive edits to this README become **CRs** at outcome scope.
 
 ### Independent review
 
-Human judgment on whether the outcome is coherent and scoped. **PDRs** for late strategic clarity; **CRs** if this review still changes the document in a traceable way.
+Human judgment on whether the outcome is coherent and scoped, and whether the narrative reads clearly for a junior engineer without re-reading ([`plain-language.md`](../guides/plain-language.md)). **PDRs** for late strategic clarity; **CRs** if this review still changes the document in a traceable way.

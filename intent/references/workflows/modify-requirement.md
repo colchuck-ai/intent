@@ -12,12 +12,12 @@ You are **changing** an existing requirement. **Ripple** can reach the **parent 
 
 ### Draft
 
-Edit with traceability: update indices and tables when the requirement’s meaning moves. Avoid leaving stale links from engineering back to the wrong text.
+Edit with traceability: update indices and tables when the requirement’s meaning moves. Avoid leaving stale links from engineering back to the wrong text. Keep the requirement text in **[plain language](../guides/plain-language.md)**—plain words, short sentences—so the change is easy to follow.
 
 ### AI-assisted review
 
-Check outcome alignment, engineering **table** consistency, and component specs. If the requirement text still points at implementation, keep the **README table** as the canonical mapping list—do not grow a second registry inside the requirement. **CRs** for substantive edits; **PDRs** for new product decisions.
+Check outcome alignment, engineering **table** consistency, and component specs. If the requirement text still points at implementation, keep the **README table** as the canonical mapping list—do not grow a second registry inside the requirement. Tighten wording for plain readability ([`plain-language.md`](../guides/plain-language.md)). **CRs** for substantive edits; **PDRs** for new product decisions.
 
 ### Independent review
 
-Human judgment on whether the change is coherent end-to-end. **CRs** and **PDRs** as needed.
+Human judgment on whether the change is coherent end-to-end and reads clearly for a junior engineer without re-reading ([`plain-language.md`](../guides/plain-language.md)). **CRs** and **PDRs** as needed.

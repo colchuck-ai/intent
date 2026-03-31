@@ -10,12 +10,12 @@ You are deriving **requirement one-liners** (and usually **risk rows**) on the *
 
 ### Draft
 
-Stress-test the outcome: ask what must be true for success, what could go wrong, and whether each line traces back to the outcome. Lock **one-liners** (and risk links) on the outcome README before you invest in long requirement bodies. If the team makes a new strategic call while doing this, record a **PDR** at outcome or product scope as fits.
+Stress-test the outcome: ask what must be true for success, what could go wrong, and whether each line traces back to the outcome. Lock **one-liners** (and risk links) on the outcome README before you invest in long requirement bodies. Keep table and risk text in **[plain language](../guides/plain-language.md)**—plain words, short sentences—so the index is easy to scan. If the team makes a new strategic call while doing this, record a **PDR** at outcome or product scope as fits.
 
 ### AI-assisted review
 
-Look for missing risks, orphan requirements, and requirements that sound like implementation smuggled into product language. Table edits that shift meaning earn **CRs** at outcome scope.
+Look for missing risks, orphan requirements, and requirements that sound like implementation smuggled into product language. Where wording is dense or showy, bring it back to plain readable phrasing ([`plain-language.md`](../guides/plain-language.md)). Table edits that shift meaning earn **CRs** at outcome scope.
 
 ### Independent review
 
-Confirm the index is enough to prioritize and build from. **PDRs** only for decisions that surface at the gate; **CRs** if the reviewer’s edits are still substantial.
+Confirm the index is enough to prioritize and build from, and that a junior engineer can read the tables without re-reading ([`plain-language.md`](../guides/plain-language.md)). **PDRs** only for decisions that surface at the gate; **CRs** if the reviewer’s edits are still substantial.

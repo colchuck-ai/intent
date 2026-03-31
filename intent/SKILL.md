@@ -3,7 +3,8 @@ name: intent
 description: >-
   Intent tree lifecycle for docs/product and docs/engineering: creation, modification,
   and removal of product and engineering artifacts (outcomes, requirements, components,
-  PDRs, ADRs, CRs). Use when authoring, reviewing, or restructuring intent documentation.
+  PDRs, ADRs, CRs). Write in plain language (junior-friendly). Use when authoring,
+  reviewing, or restructuring intent documentation.
 compatibility: >-
   Markdown-only skill: no bundled scripts, no network or system packages required.
   Human-authored docs; templates are not validated by CI in this repo.
@@ -38,6 +39,8 @@ Activities—developing or enumerating parts of the tree, modifying them, or rem
 Templates for the concrete markdown shells live under **[`assets/`](assets/README.md)**.
 
 ## Guidance
+
+**Plain language.** Write so a **junior engineer** can follow without re-reading: short sentences, common words, concrete detail. The point is clarity for teammates, not sounding clever. Full checklist: **[`references/guides/plain-language.md`](references/guides/plain-language.md)**. Each **workflow** weaves that bar into its session text for **draft**, **AI-assisted review**, and **independent review**—follow the narrative there.
 
 **Ordering.** It is **strongly recommended** to shape **outcomes** and **requirements** on the product side before you invest heavily in **engineering** specifications and **component** decomposition. Architecture and components should answer a clear intent, not invent it. Exceptions exist; the default is product clarity first, then engineering.
 

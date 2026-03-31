@@ -12,12 +12,12 @@ You are **removing** an **outcome** and everything that **depends** on it: the *
 
 ### Draft
 
-**Example:** remove the outcome one-liner, then delete or archive the folder, then walk the engineering table for requirement links that no longer exist. **Example:** if requirements migrated elsewhere before deletion, this workflow might be mostly cleanup—still trace with **CRs**.
+**Example:** remove the outcome one-liner, then delete or archive the folder, then walk the engineering table for requirement links that no longer exist. **Example:** if requirements migrated elsewhere before deletion, this workflow might be mostly cleanup—still trace with **CRs**. Keep explanations and **CR** narratives in **[plain language](../guides/plain-language.md)**—plain words, short sentences—so the cascade is understandable.
 
 ### AI-assisted review
 
-Look for dangling links, empty table rows, and product copy that still mentions the outcome. **CRs** and **PDRs** as the story needs.
+Look for dangling links, empty table rows, and product copy that still mentions the outcome. **CRs** and **PDRs** as the story needs. Tighten any remaining prose that reads clever or academic ([`plain-language.md`](../guides/plain-language.md)).
 
 ### Independent review
 
-Human judgment that the product story still makes sense and nothing in engineering still assumes the old outcome.
+Human judgment that the product story still makes sense, nothing in engineering still assumes the old outcome, and the updated docs read clearly for a junior engineer ([`plain-language.md`](../guides/plain-language.md)).

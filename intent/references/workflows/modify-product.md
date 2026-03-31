@@ -12,12 +12,12 @@ You are **changing** **`docs/product/README.md`** after it already exists—posi
 
 ### Draft
 
-Make the product root change, then walk the consequences: outcome one-liners, requirement indices, and engineering table rows that no longer tell the same story. **Examples** help: a pivot might obsolete an outcome; a boundary shift might rename requirements without deleting them.
+Make the product root change, then walk the consequences: outcome one-liners, requirement indices, and engineering table rows that no longer tell the same story. **Examples** help: a pivot might obsolete an outcome; a boundary shift might rename requirements without deleting them. As you edit, keep **[plain language](../guides/plain-language.md)**—short sentences, common words—so the cascade stays readable.
 
 ### AI-assisted review
 
-Look for drift between root, outcomes, requirements, and engineering. **CRs** and **PDRs** to match the scope of what moved.
+Look for drift between root, outcomes, requirements, and engineering. Where copy grew dense or pretentious, plain it out ([`plain-language.md`](../guides/plain-language.md)). **CRs** and **PDRs** to match the scope of what moved.
 
 ### Independent review
 
-A human who understands the business judges whether the cascade was honest. **CRs** and **PDRs** for anything still missing.
+A human who understands the business judges whether the cascade was honest and whether the updated root still reads clearly for a junior engineer ([`plain-language.md`](../guides/plain-language.md)). **CRs** and **PDRs** for anything still missing.

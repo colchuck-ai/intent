@@ -10,12 +10,12 @@ You may emit **ADRs** if naming or slicing components implies a **new** architec
 
 ### Draft
 
-Work from architecture narrative and product requirements so rows are **defensible**. It is acceptable for a requirement to appear on **multiple** rows. Keep the table the **single** place for full requirement ↔ component mapping.
+Work from architecture narrative and product requirements so rows are **defensible**. It is acceptable for a requirement to appear on **multiple** rows. Keep the table the **single** place for full requirement ↔ component mapping. Write one-liners and cell text in **[plain language](../guides/plain-language.md)**—short sentences, concrete words—so the table stays scannable.
 
 ### AI-assisted review
 
-Look for orphan components, missing requirement links, and overlap. Confirm the **components table** remains the authoritative place for full requirement ↔ component mapping—component specs should not quietly replace that with duplicate matrices. Table or narrative changes that matter get **CRs**; new decisions get **ADRs**.
+Look for orphan components, missing requirement links, and overlap. Confirm the **components table** remains the authoritative place for full requirement ↔ component mapping—component specs should not quietly replace that with duplicate matrices. Fix any dense or clever phrasing in the README to match [`plain-language.md`](../guides/plain-language.md). Table or narrative changes that matter get **CRs**; new decisions get **ADRs**.
 
 ### Independent review
 
-Confirm the decomposition matches how the team builds and owns work. **CRs** and **ADRs** follow the same spirit as earlier sessions.
+Confirm the decomposition matches how the team builds and owns work, and that the text reads clearly for a junior engineer ([`plain-language.md`](../guides/plain-language.md)). **CRs** and **ADRs** follow the same spirit as earlier sessions.

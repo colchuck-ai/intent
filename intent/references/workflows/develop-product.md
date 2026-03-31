@@ -12,12 +12,12 @@ Pick **one** root template—[`product-root-simple`](../../assets/product-root-s
 
 ### Draft
 
-Settle enough surrounding context (charter, repo, constraints) that the README is not floating in a vacuum. Write the product root so a stranger understands **intent** without reading engineering yet. If a genuine strategic fork appears, capture it as a **PDR** at product scope under `docs/product/pdrs/`.
+Settle enough surrounding context (charter, repo, constraints) that the README is not floating in a vacuum. Write the product root so a stranger understands **intent** without reading engineering yet, in **[plain language](../guides/plain-language.md)**—short sentences, common words, teach-first; avoid performative or academic tone. If a genuine strategic fork appears, capture it as a **PDR** at product scope under `docs/product/pdrs/`.
 
 ### AI-assisted review
 
-Read the draft as someone who was not in the room. Check that language stays **product-level** (avoid sneaking implementation in as requirements). If review surfaces **new** strategic decisions, add **PDRs**; routine tightening rarely needs one.
+Read the draft as someone who was not in the room. Check that language stays **product-level** (avoid sneaking implementation in as requirements) and that the prose stays plain and readable ([`plain-language.md`](../guides/plain-language.md)). If review surfaces **new** strategic decisions, add **PDRs**; routine tightening rarely needs one.
 
 ### Independent review
 
-A human who did not author the draft decides whether the story holds. Same bar for **PDRs**: new decisions, not polish. If this pass changes meaning in a material way, a **CR** at product root scope (`docs/product/crs/`, `PROD-CR…` naming) records what moved.
+A human who did not author the draft decides whether the story holds and whether the README still reads clearly for a junior engineer ([`plain-language.md`](../guides/plain-language.md)). Same bar for **PDRs**: new decisions, not polish. If this pass changes meaning in a material way, a **CR** at product root scope (`docs/product/crs/`, `PROD-CR…` naming) records what moved.
