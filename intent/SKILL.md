@@ -2,7 +2,7 @@
 
 ## Elements
 
-This section defines the [product](#product), [engineering](#engineering), and [record](#records) elements used throughout the intent framework.
+This section defines the [product](#product), [engineering](#engineering), and [record](#records) elements used throughout the intent framework. [Files](#files) and [Structure](#structure) introduce paths and layout; [Context Tracing](#context-tracing) follows and describes how to load those files along vertical and horizontal traces.
 
 ### Product
 
@@ -889,6 +889,110 @@ docs/
     README.md
 ```
 
+## Context Tracing
+
+Use the paths and `docs/` tree from [Files](#files) and [Structure](#structure) as the concrete layout for what follows.
+
+Use **vertical** tracing to move along the spine: product, outcome, risk, requirement, architecture, component. Use **horizontal** tracing for lateral context. For **outcome** and **requirement**, **Horizontal** uses **self** (lateral links inside this element's document), **siblings** (peers under the same parent), and **cousins** (same depth, different branch — e.g. elements under a sibling of your parent). For **component**, **Horizontal** uses only **self** and **siblings** — components have no cousins. Risks and links between risks and requirements live in the outcome README. Requirement–component mapping and system structure live in the architecture document. **Do not** load CRs, PDRs, or ADRs until you need that history.
+
+Replace placeholder IDs (`J<NNN>`, `O<NNN>`, `R<NNN>`, `C<NNN>`, folder `<name>`) with the concrete IDs and paths in your repo.
+
+### Product
+
+#### Vertical
+
+- **self**
+  - `docs/product/README.md`
+- **ancestors**
+  - (none)
+- **descendants**
+  1. Each outcome: `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md`
+
+#### Horizontal
+
+- Singleton — there is only one product document, so there is no horizontal trace at this layer.
+
+### Outcome (example `J001-O001`)
+
+#### Vertical
+
+- **self**
+  - `docs/product/outcomes/J001-O001-<name>/README.md`
+- **ancestors**
+  1. `docs/product/README.md`
+- **descendants**
+  1. Each requirement for this outcome: `docs/product/outcomes/J001-O001-<name>/requirements/J001-O001-R<NNN>-<name>{.md,/README.md}`
+  2. `docs/engineering/README.md` — use it to see which components satisfy those requirement documents (that document's mapping of requirements to components and its component list).
+  3. Each component that satisfies those requirements: `docs/engineering/components/C<NNN>-<name>{.md,/README.md}`
+
+#### Horizontal
+
+- **self**
+  1. This outcome README's risk–requirement mapping and any other lateral links entirely within this file (many-to-many among requirements under this outcome).
+- **siblings**
+  1. Other outcomes under the same product: each additional `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md` when you need to compare scope, shared users, or dependencies between outcomes.
+- **cousins**
+  1. Requirements (and their documents) that live under a **sibling** outcome — open `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/...` under those sibling outcome folders when work spans outcomes or shares components across branches.
+
+### Requirement (example `J001-O001-R<NNN>` under outcome `J001-O001-<name>`)
+
+#### Vertical
+
+- **self**
+  - `docs/product/outcomes/J001-O001-<name>/requirements/J001-O001-R<NNN>-<name>{.md,/README.md}`
+- **ancestors**
+  1. `docs/product/outcomes/J001-O001-<name>/README.md`
+  2. `docs/product/README.md`
+- **descendants**
+  1. `docs/engineering/README.md` — find which component(s) implement this requirement ID in that document's requirement–component mapping.
+  2. Each component that satisfies this requirement: `docs/engineering/components/C<NNN>-<name>{.md,/README.md}`
+
+#### Horizontal
+
+- **self**
+  1. This requirement document: dependency lists, cross-references, and any lateral ties recorded here.
+- **siblings**
+  1. Other requirements under the same outcome: other `J001-O001-R<NNN>-<name>{.md,/README.md}` paths when this requirement depends on, conflicts with, or shares a risk or component with them (also use the parent outcome README as needed).
+- **cousins**
+  1. Requirements under a **sibling** outcome (same product, different outcome folder): use the architecture document's requirement–component mapping and the relevant outcome READMEs to find IDs, then open those `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/...` paths.
+
+### Architecture
+
+#### Vertical
+
+- **self**
+  - `docs/engineering/README.md`
+- **ancestors**
+  1. `docs/product/README.md`
+  2. Each outcome and requirement document in scope for what you are tracing (enumerate IDs from the architecture document's requirement–component mapping, then open the matching `docs/product/outcomes/.../README.md` and `.../requirements/...` paths).
+- **descendants**
+  1. Each component listed for the architecture: `docs/engineering/components/C<NNN>-<name>{.md,/README.md}`
+
+#### Horizontal
+
+- Singleton — there is only one architecture document, so there is no horizontal trace at this layer.
+
+### Component (example `C<NNN>`)
+
+#### Vertical
+
+- **self**
+  - `docs/engineering/components/C<NNN>-<name>{.md,/README.md}`
+- **ancestors**
+  1. `docs/engineering/README.md`
+  2. Each requirement this component fulfills (per the architecture document's requirement–component mapping): `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>{.md,/README.md}`
+  3. Each outcome README that owns those requirements: `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md`
+  4. `docs/product/README.md`
+- **descendants**
+  - (none) — components are leaves of this vertical trace.
+
+#### Horizontal
+
+- **self**
+  1. This component document: relationships, interfaces, behavior, and any other lateral detail in the same file.
+- **siblings**
+  1. Components that satisfy the same requirement(s) as this one or are named as peers in this doc or the architecture document: follow the requirement–component mapping and relationship and interface notes, then open those `docs/engineering/components/C<NNN>-<name>{.md,/README.md}` files as needed.
+
 ## Templates
 
 - product readme
@@ -927,4 +1031,4 @@ docs/
 - overlap is minimized
 - when overlapping, elements agree
 - their union is complete
-- in agreement with their parent (outcomes -> jobs, requirements -> outcome, components -> requirements)
+- in agreement with their parent (each outcome with its job, each requirement with its outcome, each component with its requirements)
