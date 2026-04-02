@@ -323,6 +323,24 @@ Paths: `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md`
 Template:
 
 ```md
+# J<NNN>-O<NNN> - <Outcome Name>
+
+[Verb] [Unit of Measure] [Object]
+
+## Risks
+
+- **J<NNN>-O<NNN>-RSK<NNN>** - <Risk Name>: [Condition/Event] [Negative Impact on Outcome]
+- **J<NNN>-O<NNN>-RSK<NNN>** - <Risk Name>: [Condition/Event] [Negative Impact on Outcome]
+
+## Requirements
+
+- **J<NNN>-O<NNN>-R<NNN>** - <Requirement Name>: [Product/Solution] must [Capability/Constraint]
+- **J<NNN>-O<NNN>-R<NNN>** - <Requirement Name>: [Product/Solution] must [Capability/Constraint]
+
+## Risk-Requirement Map
+
+- **J<NNN>-O<NNN>-RSK<NNN>**: J<NNN>-O<NNN>-R<NNN>, J<NNN>-O<NNN>-R<NNN>
+- **J<NNN>-O<NNN>-RSK<NNN>**: J<NNN>-O<NNN>-R<NNN>
 ```
 
 ### Requirement Documents
@@ -336,12 +354,86 @@ Paths:
 Simple Template (`...-R<NNN>-<name>.md`):
 
 ```md
+# J<NNN>-O<NNN>-R<NNN> - <Requirement Name>
+
+[Product/Solution] must [Capability/Constraint]
+
+## Detail
+
+<Expanded description of the requirement.>
+
+## Edge Cases
+
+- <Condition>: <Expected Behavior>
+- <Condition>: <Expected Behavior>
+
+## Examples
+
+### <Scenario Name>
+
+- Input: <Input>
+- Expected Output: <Expected Output>
+- Verification: <Verification Step(s)>
+
+## Acceptance Criteria
+
+- [ ] <Concrete, testable condition>
+- [ ] <Concrete, testable condition>
+
+## Dependencies
+
+- J<NNN>-O<NNN>-R<NNN>
+- J<NNN>-O<NNN>-R<NNN>
 ```
 
 
 Nested Template (`...-R<NNN>-<name>/README.md`):
 
 ```md
+# J<NNN>-O<NNN>-R<NNN> - <Requirement Name>
+
+[Product/Solution] must [Capability/Constraint]
+
+## Detail
+
+<Expanded description of the requirement.>
+
+## Edge Cases
+
+- <Condition>: <Expected Behavior>
+- <Condition>: <Expected Behavior>
+
+## Examples
+
+### <Scenario Name>
+
+- Input: <Input>
+- Expected Output: <Expected Output>
+- Verification: <Verification Step(s)>
+
+## Acceptance Criteria
+
+- [ ] <Concrete, testable condition>
+- [ ] <Concrete, testable condition>
+
+## Dependencies
+
+- J<NNN>-O<NNN>-R<NNN>
+- J<NNN>-O<NNN>-R<NNN>
+
+## See Also
+
+### Product Decision Records
+
+- [<PDR Name>](pdrs/<PDR filename>)
+
+### Change Records
+
+- [<CR Name>](crs/<CR filename>)
+
+### Other Materials
+
+- [<Material Name>](<path>)
 ```
 
 ### Architecture Document
@@ -352,6 +444,48 @@ Path: `docs/engineering/README.md`
 Template:
 
 ```md
+# <Architecture Name>
+
+<How components are organized, communicate, and constrain each other.>
+
+## Principles
+
+- <Principle>
+- <Principle>
+
+## Constraints
+
+- <Constraint>
+- <Constraint>
+
+## Technology Choices
+
+- <Technology>: <Rationale>
+- <Technology>: <Rationale>
+
+## Components
+
+### C<NNN> - <Component Name>
+
+<Responsibility>
+
+#### Relationships
+
+- → **C<NNN>**: <How they communicate/depend>
+- → **C<NNN>**: <How they communicate/depend>
+
+### C<NNN> - <Component Name>
+
+<Responsibility>
+
+#### Relationships
+
+- → **C<NNN>**: <How they communicate/depend>
+
+## Requirement-Component Map
+
+- **J<NNN>-O<NNN>-R<NNN>**: C<NNN>, C<NNN>
+- **J<NNN>-O<NNN>-R<NNN>**: C<NNN>
 ```
 
 ### Component Documents
