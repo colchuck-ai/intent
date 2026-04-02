@@ -2,6 +2,8 @@
 
 ## Elements
 
+This section defines the [product](#product), [engineering](#engineering), and [record](#records) elements used throughout the intent framework.
+
 ### Product
 
 A product is a solution people hire to get a job done.
@@ -152,17 +154,141 @@ Why they're bad: they're implementation details, not requirements. They specify 
 
 ### Engineering
 
+Engineering is how the product is built. It is defined by the architecture that shapes it and the components that compose it.
+
 #### Architecture
+
+An architecture is the set of decisions that define how components are organized, communicate, and constrain each other.
+
+An architecture is usually:
+
+- Structural: defines how parts relate, not what they do individually.
+- Requirement-driven: shaped by product requirements.
+
+Examples:
+
+**Good**
+
+> The system separates review analysis from comparison management, communicating through a shared option model. Both are stateless; session persistence is handled by the Comparison Session Store.
+
+Why it's good: structural (describes relationships and boundaries), requirement-driven (the separation traces to distinct product requirements).
+
+**Bad**
+
+> We use microservices and React.
+
+Why it's bad: names technologies, not structure. Doesn't describe how parts relate or why.
 
 #### Component
 
+A component is a distinct, implementable part of the system that fulfills one or more requirements.
+
+A component is usually:
+
+- Bounded: has a clear scope and responsibility.
+- Requirement-linked: exists to fulfill one or more requirements.
+- Implementable: concrete enough to build, test, and deploy.
+
+Minimal Pattern:
+
+> [Name] — [Responsibility]
+
+- Name: what the component is called.
+- Responsibility: what it does.
+
+Examples:
+
+**Good**
+
+- Review Analyzer — surfaces contradictions across reviews.
+- Comparison Session Store — persists and restores in-progress comparisons.
+
+Why they're good: bounded (clear scope), requirement-linked (maps to a specific product requirement), and named by what they do.
+
+**Bad**
+
+- Backend — handles stuff.
+- Utils — shared code.
+
+Why they're bad: unbounded scope, not linked to any requirement, names describe location or convenience rather than responsibility.
+
 ### Records
 
-### Change Record (CR)
+Records capture the decisions and changes made to product and engineering elements over time.
 
-### Product Decision Record (PDR)
+#### Change Record (CR)
 
-### Architectural Decision Record (ADR)
+A change record documents a modification to a product or engineering element — what changed, why, and what it affects.
+
+A change record is usually:
+
+- Scoped: tied to a specific element (product, outcome, requirement, architecture, component).
+- Traceable: explains what changed and why.
+- Temporal: captures a point-in-time modification.
+
+Examples:
+
+**Good**
+
+> Updated the Review Analyzer component to normalize star ratings across sources. Previously, ratings were passed through raw, causing contradictions to be missed when sources used different scales. This change affects the Review Analyzer component and the "surface contradictions across reviews" requirement.
+
+Why it's good: scoped (names the element changed), traceable (explains what changed and why), and temporal (describes a before/after).
+
+**Bad**
+
+> Fixed some stuff in the backend.
+
+Why it's bad: no scope, no rationale, no traceability to any element.
+
+#### Product Decision Record (PDR)
+
+A product decision record documents a product decision — the context, the options considered, and the choice made.
+
+A product decision record is usually:
+
+- Context-driven: explains the situation that prompted the decision.
+- Option-aware: captures alternatives that were considered.
+- Justified: states why the chosen option was selected.
+- Consequential: documents the expected consequences — both positive and negative — of the decision.
+
+Examples:
+
+**Good**
+
+> We decided to limit comparisons to three options at a time. Users comparing more than three reported decision fatigue and longer completion times. We considered unlimited comparisons and a five-option cap. Three balances thoroughness with cognitive load. Consequence: users comparing more than three options must run multiple sessions.
+
+Why it's good: context-driven, option-aware, justified, and states the consequence.
+
+**Bad**
+
+> We're only showing three options.
+
+Why it's bad: no context, no alternatives considered, no justification, no consequences.
+
+#### Architectural Decision Record (ADR)
+
+An architectural decision record documents an engineering decision — the context, the options considered, and the choice made.
+
+An architectural decision record is usually:
+
+- Context-driven: explains the situation that prompted the decision.
+- Option-aware: captures alternatives that were considered.
+- Justified: states why the chosen option was selected.
+- Consequential: documents the expected consequences — both positive and negative — of the decision.
+
+Examples:
+
+**Good**
+
+> We decided to make the Review Analyzer stateless, storing no session data. The Comparison Session Store already handles persistence, and duplicating state would create sync risks. We considered a stateful analyzer with local caching. Consequence: the Review Analyzer must re-fetch review data on every request.
+
+Why it's good: context-driven, option-aware, justified, and states the consequence.
+
+**Bad**
+
+> Review Analyzer is stateless.
+
+Why it's bad: states the decision but not the context, alternatives, justification, or consequences.
 
 ## Files
 
@@ -173,6 +299,20 @@ Path: `docs/product/README.md`
 Template:
 
 ```md
+# <Product Name>
+
+<What job(s) it serves and for whom.>
+
+## Jobs
+
+### J<NNN> - <Job Name>
+
+> When [Situation], I want to [Goal], so I can [Outcome].
+
+#### Outcomes
+
+- **J<NNN>-O<NNN>** - <Outcome Name>: [Verb] [Unit of Measure] [Object]
+- **J<NNN>-O<NNN>** - <Outcome Name>: [Verb] [Unit of Measure] [Object]
 ```
 
 ### Outcome Documents
