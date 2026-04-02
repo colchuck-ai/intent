@@ -119,14 +119,14 @@ Why they're bad: their product or implementation concerns are not customer-centr
 
 #### Requirement
 
-A requirement is what the product must do or respect to mitigate a risk.
+A requirement is what the product must do or respect to mitigate one or more risks.
 
 A requirement is usually:
 
-- Risk-linked: tied to a specific risk.
+- Risk-linked: tied to one or more specific risks.
 - Solution-aware: this is where the product enters the picture — what it must do, not how it's built.
 - Verifiable: you can test whether it's met or not.
-- Necessary: it exists to mitigate a risk, not for its own sake.
+- Necessary: it exists to mitigate one or more risks, not for its own sake.
 
 Minimal Pattern:
 
@@ -143,14 +143,14 @@ Examples:
 - The product must allow saving and resuming a comparison.
 - The product must confirm no better-matching options exist at time of decision.
 
-Why they're good: each is risk-linked (directly references a specific risk), solution-aware but not implementation-specific (says what the product must do, not how), and verifiable (you can test whether it's met).
+Why they're good: each is risk-linked (directly references one or more specific risks), solution-aware but not implementation-specific (says what the product must do, not how), and verifiable (you can test whether it's met).
 
 **Bad**
 
 - Build a review aggregation microservice.
 - Add a save button to the comparison page.
 
-Why they're bad: they're implementation details, not requirements. They specify *how* to build, not *what* the product must do. They aren't tied to a specific risk.
+Why they're bad: they're implementation details, not requirements. They specify *how* to build, not *what* the product must do. They aren't tied to any specific risks.
 
 ### Engineering
 
@@ -317,7 +317,7 @@ Template:
 
 ### Outcome Documents
 
-Paths: `docs/product/outcomes/O<NNN>-<name>/README.md`
+Paths: `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md`
 
 
 Template:
@@ -329,8 +329,8 @@ Template:
 
 Paths:
 
-- `docs/product/outcomes/O<NNN>-<name>/requirements/O<NNN>-R<NNN>-<name>.md`
-- `docs/product/outcomes/O<NNN>-<name>/requirements/O<NNN>-R<NNN>-<name>/README.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/README.md`
 
 
 Simple Template (`...-R<NNN>-<name>.md`):
@@ -379,10 +379,10 @@ Paths:
 
 - `docs/product/pdrs/PRD<NNN>-<name>.md`
 - `docs/product/pdrs/PRD<NNN>-<name>/README.md`
-- `docs/product/outcomes/O<NNN>-<name>/pdrs/O<NNN>-PRD<NNN>-<name>.md`
-- `docs/product/outcomes/O<NNN>-<name>/pdrs/O<NNN>-PRD<NNN>-<name>/README.md`
-- `docs/product/outcomes/O<NNN>-<name>/requirements/O<NNN>-R<NNN>-<name>/pdrs/O<NNN>-R<NNN>-PRD<NNN>-<name>.md`
-- `docs/product/outcomes/O<NNN>-<name>/requirements/O<NNN>-R<NNN>-<name>/pdrs/O<NNN>-R<NNN>-PRD<NNN>-<name>/README.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/pdrs/J<NNN>-O<NNN>-PRD<NNN>-<name>.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/pdrs/J<NNN>-O<NNN>-PRD<NNN>-<name>/README.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/pdrs/J<NNN>-O<NNN>-R<NNN>-PRD<NNN>-<name>.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/pdrs/J<NNN>-O<NNN>-R<NNN>-PRD<NNN>-<name>/README.md`
 
 Simple Template (`...PRD<NNN>-<name>.md`):
 
@@ -422,10 +422,10 @@ Paths:
 
 - `docs/product/crs/PROD-CR<NNN>-<name>.md`
 - `docs/product/crs/PROD-CR<NNN>-<name>/README.md`
-- `docs/product/outcomes/O<NNN>-<name>/crs/O<NNN>-CR<NNN>-<name>.md`
-- `docs/product/outcomes/O<NNN>-<name>/crs/O<NNN>-CR<NNN>-<name>/README.md`
-- `docs/product/outcomes/O<NNN>-<name>/requirements/O<NNN>-R<NNN>-<name>/crs/O<NNN>-R<NNN>-CR<NNN>-<name>.md`
-- `docs/product/outcomes/O<NNN>-<name>/requirements/O<NNN>-R<NNN>-<name>/crs/O<NNN>-R<NNN>-CR<NNN>-<name>/README.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/crs/J<NNN>-O<NNN>-CR<NNN>-<name>.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/crs/J<NNN>-O<NNN>-CR<NNN>-<name>/README.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/crs/J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>.md`
+- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/crs/J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>/README.md`
 - `docs/engineering/crs/ENG-CR<NNN>-<name>.md`
 - `docs/engineering/crs/ENG-CR<NNN>-<name>/README.md`
 - `docs/engineering/components/C<NNN>-<name>/crs/C<NNN>-CR<NNN>-<name>.md`
@@ -452,27 +452,27 @@ docs/
         README.md
       PROD-CR<NNN>-<name>.md
     outcomes/
-      O<NNN>-<name>/
+      J<NNN>-O<NNN>-<name>/
         crs/
-          O<NNN>-CR<NNN>-<name>/
+          J<NNN>-O<NNN>-CR<NNN>-<name>/
             README.md
-          O<NNN>-CR<NNN>-<name>.md
+          J<NNN>-O<NNN>-CR<NNN>-<name>.md
         pdrs/
-          O<NNN>-PDR<NNN>-<name>/
+          J<NNN>-O<NNN>-PDR<NNN>-<name>/
             README.md
-          O<NNN>-PDR<NNN>-<name>.md
+          J<NNN>-O<NNN>-PDR<NNN>-<name>.md
         requirements/
-          O<NNN>-R<NNN>-<name>/
+          J<NNN>-O<NNN>-R<NNN>-<name>/
             crs/
-              O<NNN>-R<NNN>-CR<NNN>-<name>/
+              J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>/
                 README.md
-              O<NNN>-R<NNN>-CR<NNN>-<name>.md
+              J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>.md
             pdrs/
-              O<NNN>-R<NNN>-PDR<NNN>-<name>/
+              J<NNN>-O<NNN>-R<NNN>-PDR<NNN>-<name>/
                 README.md
-              O<NNN>-R<NNN>-PDR<NNN>-<name>.md
+              J<NNN>-O<NNN>-R<NNN>-PDR<NNN>-<name>.md
             README.md
-          O<NNN>-R<NNN>-<name>.md
+          J<NNN>-O<NNN>-R<NNN>-<name>.md
         README.md
     pdrs/
       PDR<NNN>-<name>/
