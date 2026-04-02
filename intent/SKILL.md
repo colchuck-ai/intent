@@ -471,8 +471,8 @@ Template:
 
 #### Relationships
 
-- → **C<NNN>**: <How they communicate/depend>
-- → **C<NNN>**: <How they communicate/depend>
+- **C<NNN>**: <How they communicate or depend>
+- **C<NNN>**: <How they communicate or depend>
 
 ### C<NNN> - <Component Name>
 
@@ -480,7 +480,7 @@ Template:
 
 #### Relationships
 
-- → **C<NNN>**: <How they communicate/depend>
+- **C<NNN>**: <How they communicate or depend>
 
 ## Requirement-Component Map
 
@@ -499,12 +499,96 @@ Paths:
 Simple Template (`...C<NNN>-<name>.md`):
 
 ```md
+# C<NNN> - <Component Name>
+
+<Responsibility>
+
+## Data model
+
+<Owned or exposed entities, schemas, invariants. Omit section if trivial.>
+
+## Interfaces
+
+<APIs, events, protocols, or formats — inputs, outputs, versioning. Omit section if trivial.>
+
+## Behavior
+
+<Non-obvious logic: ordering, retries, idempotency, conflict handling, or core algorithms. Omit section if straightforward.>
+
+## Edge cases
+
+- <Condition>: <Expected handling>
+- <Condition>: <Expected handling>
+
+## Relationships
+
+- **C<NNN>**: <How this component communicates or depends on the other>
+- **C<NNN>**: <How this component communicates or depends on the other>
+
+## Success criteria
+
+- <Engineering-level check — e.g. SLO, invariant, load or correctness assumption>
+- <Engineering-level check>
+
+## Notes
+
+<Optional. Constraints, runbooks, or links not covered above.>
 ```
 
 
 Nested Template (`...C<NNN>-<name>/README.md`):
 
 ```md
+# C<NNN> - <Component Name>
+
+<Responsibility>
+
+<Optional paragraph: scope, boundaries, or context when the one-liner is not enough.>
+
+## Data model
+
+<Owned or exposed entities, schemas, invariants. Link to supplementary files in this folder if the model is large. Omit section if trivial.>
+
+## Interfaces
+
+<APIs, events, protocols, or formats — inputs, outputs, versioning. Link to OpenAPI specs, event catalogs, or similar in this folder if needed. Omit section if trivial.>
+
+## Behavior
+
+<Non-obvious logic: ordering, retries, idempotency, conflict handling, or core algorithms. Omit section if straightforward.>
+
+## Edge cases
+
+- <Condition>: <Expected handling>
+- <Condition>: <Expected handling>
+
+## Relationships
+
+- **C<NNN>**: <How this component communicates or depends on the other>
+- **C<NNN>**: <How this component communicates or depends on the other>
+
+## Success criteria
+
+- <Engineering-level check — e.g. SLO, invariant, load or correctness assumption>
+- <Engineering-level check>
+
+## Notes
+
+<Optional. Constraints, runbooks, or operational detail not covered above.>
+
+## See Also
+
+### Architectural Decision Records
+
+- [<ADR Name>](adrs/<ADR filename>)
+
+### Change Records
+
+- [<CR Name>](crs/<CR filename>)
+
+### Other Materials
+
+- [<Material Name>](<path>)
 ```
 
 ### Product Decision Records
@@ -518,15 +602,75 @@ Paths:
 - `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/pdrs/J<NNN>-O<NNN>-R<NNN>-PRD<NNN>-<name>.md`
 - `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/pdrs/J<NNN>-O<NNN>-R<NNN>-PRD<NNN>-<name>/README.md`
 
-Simple Template (`...PRD<NNN>-<name>.md`):
+`<PDR ID>` is the filename prefix before `-<name>` — e.g. `PRD<NNN>`, `J<NNN>-O<NNN>-PRD<NNN>`, or `J<NNN>-O<NNN>-R<NNN>-PRD<NNN>`, depending on which path above the file lives under.
+
+Simple Template (`...<PDR ID>-<name>.md`):
 
 ```md
+# <PDR ID> - <Decision Name>
+
+<What this decision is about — a concise summary.>
+
+## Context
+
+<The situation, constraints, or triggers that prompted the decision.>
+
+## Options
+
+- <Option A>: <tradeoffs or notes>
+- <Option B>: <tradeoffs or notes>
+
+## Decision
+
+<What was chosen and why — the justification.>
+
+## Consequences
+
+- <Positive or enabling consequence>
+- <Negative, cost, or follow-up consequence>
 ```
 
 
-Nested Template (`...PRD<NNN>-<name>/README.md`):
+Nested Template (`...<PDR ID>-<name>/README.md`):
 
 ```md
+# <PDR ID> - <Decision Name>
+
+<What this decision is about — a concise summary.>
+
+<Optional paragraph: supporting detail, stakeholder input, or links to files in this folder (research, mockups, data).>
+
+## Context
+
+<The situation, constraints, or triggers that prompted the decision.>
+
+## Options
+
+- <Option A>: <tradeoffs or notes>
+- <Option B>: <tradeoffs or notes>
+
+## Decision
+
+<What was chosen and why — the justification.>
+
+## Consequences
+
+- <Positive or enabling consequence>
+- <Negative, cost, or follow-up consequence>
+
+## See Also
+
+### Change Records
+
+- [<CR Name>](<path>)
+
+### Related product elements
+
+- [<Outcome, job, requirement, or other parent doc>](<path>)
+
+### Other Materials
+
+- [<Material Name>](<path>)
 ```
 
 ### Architectural Decision Records
@@ -538,15 +682,75 @@ Paths:
 - `docs/engineering/components/C<NNN>-<name>/adrs/C<NNN>-ADR<NNN>-<name>.md`
 - `docs/engineering/components/C<NNN>-<name>/adrs/C<NNN>-ADR<NNN>-<name>/README.md`
 
-Simple Template (`...-ADR<NNN>-<name>.md`):
+`<ADR ID>` is the filename prefix before `-<name>` — e.g. `ADR<NNN>` or `C<NNN>-ADR<NNN>`, depending on which path above the file lives under.
+
+Simple Template (`...<ADR ID>-<name>.md`):
 
 ```md
+# <ADR ID> - <Decision Name>
+
+<What this engineering decision is about — a concise summary.>
+
+## Context
+
+<The situation, constraints, or triggers that prompted the decision.>
+
+## Options
+
+- <Option A>: <tradeoffs or notes>
+- <Option B>: <tradeoffs or notes>
+
+## Decision
+
+<What was chosen and why — the justification.>
+
+## Consequences
+
+- <Positive or enabling consequence>
+- <Negative, cost, or follow-up consequence>
 ```
 
 
-Nested Template (`...-ADR<NNN>-<name>/README.md`):
+Nested Template (`...<ADR ID>-<name>/README.md`):
 
 ```md
+# <ADR ID> - <Decision Name>
+
+<What this engineering decision is about — a concise summary.>
+
+<Optional paragraph: supporting detail, benchmarks, spikes, or links to files in this folder.>
+
+## Context
+
+<The situation, constraints, or triggers that prompted the decision.>
+
+## Options
+
+- <Option A>: <tradeoffs or notes>
+- <Option B>: <tradeoffs or notes>
+
+## Decision
+
+<What was chosen and why — the justification.>
+
+## Consequences
+
+- <Positive or enabling consequence>
+- <Negative, cost, or follow-up consequence>
+
+## See Also
+
+### Change Records
+
+- [<CR Name>](<path>)
+
+### Related engineering elements
+
+- [<Architecture, component, or other doc>](<path>)
+
+### Other Materials
+
+- [<Material Name>](<path>)
 ```
 
 
@@ -565,15 +769,63 @@ Paths:
 - `docs/engineering/components/C<NNN>-<name>/crs/C<NNN>-CR<NNN>-<name>.md`
 - `docs/engineering/components/C<NNN>-<name>/crs/C<NNN>-CR<NNN>-<name>/README.md`
 
-Simple Template (`...-CR<NNN>-<name>.md`):
+`<CR ID>` is the filename prefix before `-<name>` — e.g. `PROD-CR<NNN>`, `J<NNN>-O<NNN>-CR<NNN>`, `J<NNN>-O<NNN>-R<NNN>-CR<NNN>`, `ENG-CR<NNN>`, or `C<NNN>-CR<NNN>`, depending on which path above the file lives under.
+
+Simple Template (`...<CR ID>-<name>.md`):
 
 ```md
+# <CR ID> - <Change Name>
+
+<What changed — name the scoped element(s) (e.g. outcome, requirement, architecture, component) and summarize the modification.>
+
+## Change
+
+<Before and after, or fuller narrative.>
+
+## Rationale
+
+<Why the change was made.>
+
+## Affects
+
+<What else this modification impacts — elements, requirements, or follow-up work.>
 ```
 
 
-Nested Template (`...-CR<NNN>-<name>/README.md`):
+Nested Template (`...<CR ID>-<name>/README.md`):
 
 ```md
+# <CR ID> - <Change Name>
+
+<What changed — name the scoped element(s) (e.g. outcome, requirement, architecture, component) and summarize the modification.>
+
+<Optional paragraph: diffs, migration notes, or links to files in this folder.>
+
+## Change
+
+<Before and after, or fuller narrative.>
+
+## Rationale
+
+<Why the change was made.>
+
+## Affects
+
+<What else this modification impacts — elements, requirements, or follow-up work.>
+
+## See Also
+
+### Decision Records
+
+- [<PDR or ADR title>](<path>)
+
+### Related elements
+
+- [<Outcome, requirement, component, architecture, or other doc>](<path>)
+
+### Other Materials
+
+- [<Material Name>](<path>)
 ```
 
 ## Structure
