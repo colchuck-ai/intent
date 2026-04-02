@@ -2,7 +2,7 @@
 
 ## Elements
 
-This section defines the [product](#product), [engineering](#engineering), and [record](#records) elements used throughout the intent framework (ending with [Records](#records)). Next, [Context Tracing](#context-tracing) explains which elements to load together on vertical and horizontal traces. Then [Files](#files) and [Structure](#structure) document paths and on-disk layout for each element's documents.
+This section defines the [product](#product), [engineering](#engineering), and [record](#records) elements used throughout the intent framework (ending with [Records](#records), then [Context Tracing](#context-tracing) as the last subsection). [Files](#files) and [Structure](#structure) follow and document paths and on-disk layout for each element's documents.
 
 ### Product
 
@@ -15,15 +15,19 @@ It is defined not by its features but by:
 - The risks that threaten those outcomes
 - The requirements that constrain how it delivers
 
+Consistency:
+
+- **Vertical:** The product reads as one story from its jobs through outcomes, risks, and requirements; nothing downstream contradicts what the product claims.
+- **Horizontal:** There is only one product element in this framework, so consistency is vertical only.
+
 #### Job
 
-A job is a goal someone is trying to achieve in a specific situation - the progress they want to make, not the product they use.
+A job is a goal someone is trying to achieve in a specific situation — the progress they want to make, not the product they use. It is functional, situational, and stable across changes to tools and features.
 
-A job is usually:
+Consistency:
 
-- Functional: what they're trying to get done (the task or result).
-- Situational: when/where/why it matters (context, trigger, constraints).
-- Stable: it persists even as tools and features change.
+- **Vertical:** Each job aligns with the product; the outcomes under it express progress toward that job without pulling against the product narrative.
+- **Horizontal:** Sibling jobs (other jobs on the same product) are well scoped; overlap is minimal; where two jobs touch the same situation, they agree; together they cover the product's scope without gaps.
 
 Minimal Pattern:
 
@@ -49,20 +53,19 @@ Why it's bad: it's a solution, not a job. Name is a product. Skips the situation
 
 #### Outcome
 
-An outcome is a measurable way the customer judges success while (or after) getting a job done. It answers: "What would 'better' look like?" in terms they care about - not in terms of your product.
+An outcome is a measurable way the customer judges success while (or after) getting a job done. It answers: "What would 'better' look like?" in terms they care about — not in terms of your product. It is stated from the customer's perspective, measurable in principle, and free of solution naming.
 
-An outcome is usually:
+Consistency:
 
-- Customer-centric: stated from their perspective (e.g., minimize, maximize, etc.)
-- Measureable in principle: you could score or compare (e.g., time, effort, errors, confidence, cost, risk) - even if some are qualitative scales in practice.
-- Solution-free: it doesn't name your feature or technology; it names the result they want (e.g., "time to find X", "likelihood of making a mistake")
+- **Vertical:** Each outcome is consistent with its job and with the product; downstream risks and requirements trace cleanly to this outcome.
+- **Horizontal:** Sibling outcomes (under the same product) are well scoped; overlap with siblings and with cousin requirements (under sibling outcomes) is minimal; where outcomes or cousin requirements overlap, they agree; taken together, the outcomes cover the job; their union with cousin-related scope is complete without contradiction.
 
 Minimal Pattern:
 
 > [Verb] [Unit of Measure] [Object]
 
-- Verb: usually minimize or maximize
-- Unit of Measure: usually time, number, or likelihood
+- Verb: minimize or maximize (among others)
+- Unit of Measure: time, number, or likelihood
 - Object: the specific thing being measured
 
 Examples:
@@ -84,14 +87,12 @@ Why they're bad: they're feature requests, not measurable success metrics. They 
 
 #### Risk
 
-A risk is a condition or event that negatively impacts a desired outcome.
+A risk is a condition or event that negatively impacts a desired outcome. It is tied to that outcome, measurable by likelihood and impact on the outcome, stated from the customer's perspective, and free of product or feature naming.
 
-A risk is usually:
+Consistency:
 
-- Outcome-linked: tied to a specific desired outcome.
-- Measureable: scored by likelihood x impact on the outcome.
-- Customer-centric: stated from the customer's perspective, not the team's.
-- Solution-free: names the condition or event, not a product or feature.
+- **Vertical:** Each risk belongs to its outcome; mitigations flow to requirements without orphan or misaligned risks.
+- **Horizontal:** Sibling risks under the same outcome avoid duplicating the same failure mode; where two risks bear on the same requirement, the narrative agrees.
 
 Minimal Pattern:
 
@@ -119,14 +120,12 @@ Why they're bad: their product or implementation concerns are not customer-centr
 
 #### Requirement
 
-A requirement is what the product must do or respect to mitigate one or more risks.
+A requirement is what the product must do or respect to mitigate one or more risks. It is tied to specific risks, states what the product must do (not how it is built), is verifiable, and exists only to mitigate those risks.
 
-A requirement is usually:
+Consistency:
 
-- Risk-linked: tied to one or more specific risks.
-- Solution-aware: this is where the product enters the picture — what it must do, not how it's built.
-- Verifiable: you can test whether it's met or not.
-- Necessary: it exists to mitigate one or more risks, not for its own sake.
+- **Vertical:** Each requirement is consistent with its outcome and risks, and with the product story; architecture and components honor it without drift.
+- **Horizontal:** Sibling requirements under the same outcome are well scoped; overlap is minimal; where they overlap, they agree; cousin requirements (under sibling outcomes) impose compatible demands when traced through shared architecture; together, requirements cover the mitigations the outcomes need.
 
 Minimal Pattern:
 
@@ -158,12 +157,12 @@ Engineering is how the product is built. It is defined by the architecture that 
 
 #### Architecture
 
-An architecture is the set of decisions that define how components are organized, communicate, and constrain each other.
+An architecture is the set of decisions that define how components are organized, communicate, and constrain each other. It describes structure and relationships, not individual features in isolation, and is driven by product requirements.
 
-An architecture is usually:
+Consistency:
 
-- Structural: defines how parts relate, not what they do individually.
-- Requirement-driven: shaped by product requirements.
+- **Vertical:** The architecture carries every requirement it is meant to satisfy and stays aligned with the product and outcomes above it.
+- **Horizontal:** There is only one architecture element in this framework, so peer consistency is internal: structure, principles, and technology choices do not contradict each other.
 
 Examples:
 
@@ -181,13 +180,12 @@ Why it's bad: names technologies, not structure. Doesn't describe how parts rela
 
 #### Component
 
-A component is a distinct, implementable part of the system that fulfills one or more requirements.
+A component is a distinct, implementable part of the system that fulfills one or more requirements. It has a clear scope, maps to those requirements, and is concrete enough to build, test, and deploy.
 
-A component is usually:
+Consistency:
 
-- Bounded: has a clear scope and responsibility.
-- Requirement-linked: exists to fulfill one or more requirements.
-- Implementable: concrete enough to build, test, and deploy.
+- **Vertical:** Each component is consistent with the architecture and with every requirement it fulfills; behavior matches the product line above it.
+- **Horizontal:** Sibling components are well scoped; overlap in responsibility is minimal; where responsibilities meet, they agree; together they cover the architecture's obligations without gaps.
 
 Minimal Pattern:
 
@@ -218,13 +216,12 @@ Records capture the decisions and changes made to product and engineering elemen
 
 #### Change Record (CR)
 
-A change record documents a modification to a product or engineering element — what changed, why, and what it affects.
+A change record documents a modification to a product or engineering element — what changed, why, and what it affects. It is scoped to a specific element, explains what changed and why, and reads as a point-in-time modification.
 
-A change record is usually:
+Consistency:
 
-- Scoped: tied to a specific element (product, outcome, requirement, architecture, component).
-- Traceable: explains what changed and why.
-- Temporal: captures a point-in-time modification.
+- **Vertical:** The change ties to the element it names and remains coherent with that element's ancestors and descendants on the trace.
+- **Horizontal:** Other change records on sibling elements do not tell conflicting stories about the same fact; where two CRs touch the same interface, they agree.
 
 Examples:
 
@@ -242,14 +239,12 @@ Why it's bad: no scope, no rationale, no traceability to any element.
 
 #### Product Decision Record (PDR)
 
-A product decision record documents a product decision — the context, the options considered, and the choice made.
+A product decision record documents a product decision — the context, the options considered, and the choice made. It states the situation, alternatives, rationale, and consequences (including costs and follow-ups).
 
-A product decision record is usually:
+Consistency:
 
-- Context-driven: explains the situation that prompted the decision.
-- Option-aware: captures alternatives that were considered.
-- Justified: states why the chosen option was selected.
-- Consequential: documents the expected consequences — both positive and negative — of the decision.
+- **Vertical:** The decision stays aligned with the product outcomes and requirements it affects; consequences read through to downstream elements.
+- **Horizontal:** Sibling PDRs on the same scope do not contradict each other; where decisions overlap, they agree on facts and intent.
 
 Examples:
 
@@ -267,14 +262,12 @@ Why it's bad: no context, no alternatives considered, no justification, no conse
 
 #### Architectural Decision Record (ADR)
 
-An architectural decision record documents an engineering decision — the context, the options considered, and the choice made.
+An architectural decision record documents an engineering decision — the context, the options considered, and the choice made. It states the situation, alternatives, rationale, and consequences (including costs and follow-ups).
 
-An architectural decision record is usually:
+Consistency:
 
-- Context-driven: explains the situation that prompted the decision.
-- Option-aware: captures alternatives that were considered.
-- Justified: states why the chosen option was selected.
-- Consequential: documents the expected consequences — both positive and negative — of the decision.
+- **Vertical:** The decision fits the architecture and components it constrains; tradeoffs trace to requirements and product intent above.
+- **Horizontal:** Sibling ADRs on the same scope do not contradict each other; where decisions overlap, they agree on facts and intent.
 
 Examples:
 
@@ -290,15 +283,15 @@ Why it's good: context-driven, option-aware, justified, and states the consequen
 
 Why it's bad: states the decision but not the context, alternatives, justification, or consequences.
 
-## Context Tracing
+### Context Tracing
 
 Trace context by **element** (which parts of the model to load together). File paths, templates, and the `docs/` tree are defined in [Files](#files) and [Structure](#structure); this section only names elements and relationships.
 
 Use **vertical** tracing along the spine: product, outcome, risk, requirement, architecture, component. Use **horizontal** tracing for lateral context. For **outcome** and **requirement**, **Horizontal** uses **self** (lateral links recorded on that element), **siblings** (peers under the same parent), and **cousins** (same depth, different branch — e.g. elements under a sibling of your parent). For **component**, **Horizontal** uses only **self** and **siblings** — components have no cousins. Risks and risk–requirement links live on the **outcome** element. Requirement–component mapping and system structure live on the **architecture** element. **Do not** load record types (CRs, PDRs, ADRs) until you need that history.
 
-### Product
+#### Product
 
-#### Vertical
+##### Vertical
 
 - **self**
   - The product element.
@@ -307,13 +300,13 @@ Use **vertical** tracing along the spine: product, outcome, risk, requirement, a
 - **descendants**
   1. Each outcome element for this product.
 
-#### Horizontal
+##### Horizontal
 
 - Singleton — only one product element; no horizontal trace.
 
-### Outcome
+#### Outcome
 
-#### Vertical
+##### Vertical
 
 - **self**
   - This outcome element.
@@ -324,7 +317,7 @@ Use **vertical** tracing along the spine: product, outcome, risk, requirement, a
   2. The architecture element (to see which components satisfy those requirements).
   3. Each component element that satisfies those requirements.
 
-#### Horizontal
+##### Horizontal
 
 - **self**
   1. Risk–requirement mapping and any other lateral links recorded on this outcome (many-to-many among requirements under this outcome).
@@ -333,9 +326,9 @@ Use **vertical** tracing along the spine: product, outcome, risk, requirement, a
 - **cousins**
   1. Requirement elements under a sibling outcome (when work spans outcomes or shared components).
 
-### Requirement
+#### Requirement
 
-#### Vertical
+##### Vertical
 
 - **self**
   - This requirement element.
@@ -346,7 +339,7 @@ Use **vertical** tracing along the spine: product, outcome, risk, requirement, a
   1. The architecture element (for requirement–component mapping).
   2. Each component element that satisfies this requirement.
 
-#### Horizontal
+##### Horizontal
 
 - **self**
   1. Dependencies and cross-references recorded on this requirement.
@@ -355,9 +348,9 @@ Use **vertical** tracing along the spine: product, outcome, risk, requirement, a
 - **cousins**
   1. Requirement elements under a sibling outcome (use the architecture element and relevant outcomes to identify them).
 
-### Architecture
+#### Architecture
 
-#### Vertical
+##### Vertical
 
 - **self**
   - The architecture element.
@@ -367,13 +360,13 @@ Use **vertical** tracing along the spine: product, outcome, risk, requirement, a
 - **descendants**
   1. Each component element the architecture defines.
 
-#### Horizontal
+##### Horizontal
 
 - Singleton — only one architecture element; no horizontal trace.
 
-### Component
+#### Component
 
-#### Vertical
+##### Vertical
 
 - **self**
   - This component element.
@@ -385,7 +378,7 @@ Use **vertical** tracing along the spine: product, outcome, risk, requirement, a
 - **descendants**
   - (none) — components are leaves of this vertical trace.
 
-#### Horizontal
+##### Horizontal
 
 - **self**
   1. Relationships, interfaces, and behavior recorded on this component.
@@ -1022,10 +1015,3 @@ docs/
 - architecture
 - component
 
-## Review Criteria for Outcomes, Requirements, and Components
-
-- scope is well defined
-- overlap is minimized
-- when overlapping, elements agree
-- their union is complete
-- in agreement with their parent (each outcome with its job, each requirement with its outcome, each component with its requirements)
