@@ -2,7 +2,7 @@
 
 ## Elements
 
-This section defines the [product](#product), [engineering](#engineering), and [record](#records) elements used throughout the intent framework. [Files](#files) and [Structure](#structure) introduce paths and layout; [Context Tracing](#context-tracing) follows and describes how to load those files along vertical and horizontal traces.
+This section defines the [product](#product), [engineering](#engineering), and [record](#records) elements used throughout the intent framework (ending with [Records](#records)). Next, [Context Tracing](#context-tracing) explains which elements to load together on vertical and horizontal traces. Then [Files](#files) and [Structure](#structure) document paths and on-disk layout for each element's documents.
 
 ### Product
 
@@ -290,6 +290,108 @@ Why it's good: context-driven, option-aware, justified, and states the consequen
 
 Why it's bad: states the decision but not the context, alternatives, justification, or consequences.
 
+## Context Tracing
+
+Trace context by **element** (which parts of the model to load together). File paths, templates, and the `docs/` tree are defined in [Files](#files) and [Structure](#structure); this section only names elements and relationships.
+
+Use **vertical** tracing along the spine: product, outcome, risk, requirement, architecture, component. Use **horizontal** tracing for lateral context. For **outcome** and **requirement**, **Horizontal** uses **self** (lateral links recorded on that element), **siblings** (peers under the same parent), and **cousins** (same depth, different branch — e.g. elements under a sibling of your parent). For **component**, **Horizontal** uses only **self** and **siblings** — components have no cousins. Risks and risk–requirement links live on the **outcome** element. Requirement–component mapping and system structure live on the **architecture** element. **Do not** load record types (CRs, PDRs, ADRs) until you need that history.
+
+### Product
+
+#### Vertical
+
+- **self**
+  - The product element.
+- **ancestors**
+  - (none)
+- **descendants**
+  1. Each outcome element for this product.
+
+#### Horizontal
+
+- Singleton — only one product element; no horizontal trace.
+
+### Outcome
+
+#### Vertical
+
+- **self**
+  - This outcome element.
+- **ancestors**
+  1. The product element.
+- **descendants**
+  1. Each requirement element belonging to this outcome.
+  2. The architecture element (to see which components satisfy those requirements).
+  3. Each component element that satisfies those requirements.
+
+#### Horizontal
+
+- **self**
+  1. Risk–requirement mapping and any other lateral links recorded on this outcome (many-to-many among requirements under this outcome).
+- **siblings**
+  1. Other outcome elements under the same product (compare scope, users, or dependencies).
+- **cousins**
+  1. Requirement elements under a sibling outcome (when work spans outcomes or shared components).
+
+### Requirement
+
+#### Vertical
+
+- **self**
+  - This requirement element.
+- **ancestors**
+  1. The owning outcome element.
+  2. The product element.
+- **descendants**
+  1. The architecture element (for requirement–component mapping).
+  2. Each component element that satisfies this requirement.
+
+#### Horizontal
+
+- **self**
+  1. Dependencies and cross-references recorded on this requirement.
+- **siblings**
+  1. Other requirement elements under the same outcome (depends, conflicts, shared risk or component — use the parent outcome as needed).
+- **cousins**
+  1. Requirement elements under a sibling outcome (use the architecture element and relevant outcomes to identify them).
+
+### Architecture
+
+#### Vertical
+
+- **self**
+  - The architecture element.
+- **ancestors**
+  1. The product element.
+  2. Each outcome and requirement element in scope for your trace (per the requirement–component mapping on the architecture element).
+- **descendants**
+  1. Each component element the architecture defines.
+
+#### Horizontal
+
+- Singleton — only one architecture element; no horizontal trace.
+
+### Component
+
+#### Vertical
+
+- **self**
+  - This component element.
+- **ancestors**
+  1. The architecture element.
+  2. Each requirement element this component fulfills (per the requirement–component mapping).
+  3. Each outcome element that owns those requirements.
+  4. The product element.
+- **descendants**
+  - (none) — components are leaves of this vertical trace.
+
+#### Horizontal
+
+- **self**
+  1. Relationships, interfaces, and behavior recorded on this component.
+- **siblings**
+  1. Other component elements that satisfy the same requirement(s) or are named as peers (use the architecture element's mapping and this component's relationships).
+
 ## Files
 
 ### Product Document 
@@ -318,7 +420,6 @@ Template:
 ### Outcome Documents
 
 Paths: `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md`
-
 
 Template:
 
@@ -888,110 +989,6 @@ docs/
       ENG-CR<NNN>-<name>.md
     README.md
 ```
-
-## Context Tracing
-
-Use the paths and `docs/` tree from [Files](#files) and [Structure](#structure) as the concrete layout for what follows.
-
-Use **vertical** tracing to move along the spine: product, outcome, risk, requirement, architecture, component. Use **horizontal** tracing for lateral context. For **outcome** and **requirement**, **Horizontal** uses **self** (lateral links inside this element's document), **siblings** (peers under the same parent), and **cousins** (same depth, different branch — e.g. elements under a sibling of your parent). For **component**, **Horizontal** uses only **self** and **siblings** — components have no cousins. Risks and links between risks and requirements live in the outcome README. Requirement–component mapping and system structure live in the architecture document. **Do not** load CRs, PDRs, or ADRs until you need that history.
-
-Replace placeholder IDs (`J<NNN>`, `O<NNN>`, `R<NNN>`, `C<NNN>`, folder `<name>`) with the concrete IDs and paths in your repo.
-
-### Product
-
-#### Vertical
-
-- **self**
-  - `docs/product/README.md`
-- **ancestors**
-  - (none)
-- **descendants**
-  1. Each outcome: `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md`
-
-#### Horizontal
-
-- Singleton — there is only one product document, so there is no horizontal trace at this layer.
-
-### Outcome (example `J001-O001`)
-
-#### Vertical
-
-- **self**
-  - `docs/product/outcomes/J001-O001-<name>/README.md`
-- **ancestors**
-  1. `docs/product/README.md`
-- **descendants**
-  1. Each requirement for this outcome: `docs/product/outcomes/J001-O001-<name>/requirements/J001-O001-R<NNN>-<name>{.md,/README.md}`
-  2. `docs/engineering/README.md` — use it to see which components satisfy those requirement documents (that document's mapping of requirements to components and its component list).
-  3. Each component that satisfies those requirements: `docs/engineering/components/C<NNN>-<name>{.md,/README.md}`
-
-#### Horizontal
-
-- **self**
-  1. This outcome README's risk–requirement mapping and any other lateral links entirely within this file (many-to-many among requirements under this outcome).
-- **siblings**
-  1. Other outcomes under the same product: each additional `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md` when you need to compare scope, shared users, or dependencies between outcomes.
-- **cousins**
-  1. Requirements (and their documents) that live under a **sibling** outcome — open `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/...` under those sibling outcome folders when work spans outcomes or shares components across branches.
-
-### Requirement (example `J001-O001-R<NNN>` under outcome `J001-O001-<name>`)
-
-#### Vertical
-
-- **self**
-  - `docs/product/outcomes/J001-O001-<name>/requirements/J001-O001-R<NNN>-<name>{.md,/README.md}`
-- **ancestors**
-  1. `docs/product/outcomes/J001-O001-<name>/README.md`
-  2. `docs/product/README.md`
-- **descendants**
-  1. `docs/engineering/README.md` — find which component(s) implement this requirement ID in that document's requirement–component mapping.
-  2. Each component that satisfies this requirement: `docs/engineering/components/C<NNN>-<name>{.md,/README.md}`
-
-#### Horizontal
-
-- **self**
-  1. This requirement document: dependency lists, cross-references, and any lateral ties recorded here.
-- **siblings**
-  1. Other requirements under the same outcome: other `J001-O001-R<NNN>-<name>{.md,/README.md}` paths when this requirement depends on, conflicts with, or shares a risk or component with them (also use the parent outcome README as needed).
-- **cousins**
-  1. Requirements under a **sibling** outcome (same product, different outcome folder): use the architecture document's requirement–component mapping and the relevant outcome READMEs to find IDs, then open those `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/...` paths.
-
-### Architecture
-
-#### Vertical
-
-- **self**
-  - `docs/engineering/README.md`
-- **ancestors**
-  1. `docs/product/README.md`
-  2. Each outcome and requirement document in scope for what you are tracing (enumerate IDs from the architecture document's requirement–component mapping, then open the matching `docs/product/outcomes/.../README.md` and `.../requirements/...` paths).
-- **descendants**
-  1. Each component listed for the architecture: `docs/engineering/components/C<NNN>-<name>{.md,/README.md}`
-
-#### Horizontal
-
-- Singleton — there is only one architecture document, so there is no horizontal trace at this layer.
-
-### Component (example `C<NNN>`)
-
-#### Vertical
-
-- **self**
-  - `docs/engineering/components/C<NNN>-<name>{.md,/README.md}`
-- **ancestors**
-  1. `docs/engineering/README.md`
-  2. Each requirement this component fulfills (per the architecture document's requirement–component mapping): `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>{.md,/README.md}`
-  3. Each outcome README that owns those requirements: `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md`
-  4. `docs/product/README.md`
-- **descendants**
-  - (none) — components are leaves of this vertical trace.
-
-#### Horizontal
-
-- **self**
-  1. This component document: relationships, interfaces, behavior, and any other lateral detail in the same file.
-- **siblings**
-  1. Components that satisfy the same requirement(s) as this one or are named as peers in this doc or the architecture document: follow the requirement–component mapping and relationship and interface notes, then open those `docs/engineering/components/C<NNN>-<name>{.md,/README.md}` files as needed.
 
 ## Templates
 
