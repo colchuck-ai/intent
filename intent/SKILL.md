@@ -15,19 +15,15 @@ It is defined not by its features but by:
 - The risks that threaten those outcomes
 - The requirements that constrain how it delivers
 
-Consistency:
-
-- **Vertical:** The product reads as one story from its jobs through outcomes, risks, and requirements; nothing downstream contradicts what the product claims.
-- **Horizontal:** There is only one product element in this framework, so consistency is vertical only.
+The product has no ancestors above it in this framework. Its descendants—jobs, outcomes, risks, and requirements—should read as one story with the product: nothing downstream should contradict what the product claims.
 
 #### Job
 
 A job is a goal someone is trying to achieve in a specific situation — the progress they want to make, not the product they use. It is functional, situational, and stable across changes to tools and features.
 
-Consistency:
+A job should align with the product. Outcomes under that job should express progress toward the job without pulling against the product narrative.
 
-- **Vertical:** Each job aligns with the product; the outcomes under it express progress toward that job without pulling against the product narrative.
-- **Horizontal:** Sibling jobs (other jobs on the same product) are well scoped; overlap is minimal; where two jobs touch the same situation, they agree; together they cover the product's scope without gaps.
+Sibling jobs on the same product should be well scoped: overlap should be minimal; where two jobs touch the same situation, they should agree; together they should cover the product's scope without gaps.
 
 Minimal Pattern:
 
@@ -55,10 +51,9 @@ Why it's bad: it's a solution, not a job. Name is a product. Skips the situation
 
 An outcome is a measurable way the customer judges success while (or after) getting a job done. It answers: "What would 'better' look like?" in terms they care about — not in terms of your product. It is stated from the customer's perspective, measurable in principle, and free of solution naming.
 
-Consistency:
+An outcome should align with its owning job and with the product. Risks tied to this outcome should express harms to this outcome without orphan or misaligned risks relative to it.
 
-- **Vertical:** Each outcome is consistent with its job and with the product; downstream risks and requirements trace cleanly to this outcome.
-- **Horizontal:** Sibling outcomes (under the same product) are well scoped; overlap with siblings and with cousin requirements (under sibling outcomes) is minimal; where outcomes or cousin requirements overlap, they agree; taken together, the outcomes cover the job; their union with cousin-related scope is complete without contradiction.
+Sibling outcomes under the same product should be well scoped: overlap should be minimal; where peer outcomes touch the same situation, they should agree; taken together, they should cover the jobs they serve. Cousin outcomes should stay distinct in scope where possible; where they bear on the same situation, they should agree; taken together with peer outcomes, their scope should be complete without contradiction.
 
 Minimal Pattern:
 
@@ -89,10 +84,9 @@ Why they're bad: they're feature requests, not measurable success metrics. They 
 
 A risk is a condition or event that negatively impacts a desired outcome. It is tied to that outcome, measurable by likelihood and impact on the outcome, stated from the customer's perspective, and free of product or feature naming.
 
-Consistency:
+A risk should belong to its outcome. Requirements that mitigate it should connect to that outcome without orphan or misaligned risks.
 
-- **Vertical:** Each risk belongs to its outcome; mitigations flow to requirements without orphan or misaligned risks.
-- **Horizontal:** Sibling risks under the same outcome avoid duplicating the same failure mode; where two risks bear on the same requirement, the narrative agrees.
+Sibling risks under the same outcome should avoid duplicating the same failure mode; where two risks bear on the same requirement, the narrative should agree. Cousin risks should stay distinct where possible; where mitigations span outcomes, shared facts and requirement links should agree.
 
 Minimal Pattern:
 
@@ -122,10 +116,9 @@ Why they're bad: their product or implementation concerns are not customer-centr
 
 A requirement is what the product must do or respect to mitigate one or more risks. It is tied to specific risks, states what the product must do (not how it is built), is verifiable, and exists only to mitigate those risks.
 
-Consistency:
+A requirement should align with its outcome and the risks it mitigates, and with the product story; architecture and components should honor it without drift.
 
-- **Vertical:** Each requirement is consistent with its outcome and risks, and with the product story; architecture and components honor it without drift.
-- **Horizontal:** Sibling requirements under the same outcome are well scoped; overlap is minimal; where they overlap, they agree; cousin requirements (under sibling outcomes) impose compatible demands when traced through shared architecture; together, requirements cover the mitigations the outcomes need.
+Sibling requirements under the same outcome should be well scoped: overlap should be minimal; where they overlap, they should agree. Cousin requirements should impose compatible demands when traced through shared architecture; together, requirements should cover the mitigations the outcomes need.
 
 Minimal Pattern:
 
@@ -155,14 +148,15 @@ Why they're bad: they're implementation details, not requirements. They specify 
 
 Engineering is how the product is built. It is defined by the architecture that shapes it and the components that compose it.
 
+Engineering should align with product intent: the architecture and components should trace to the product's requirements and outcomes; components should realize the architecture and fulfill its obligations without contradicting upstream intent.
+
+Product-facing and engineering-facing descriptions that refer to the same requirement, component, or boundary should agree.
+
 #### Architecture
 
 An architecture is the set of decisions that define how components are organized, communicate, and constrain each other. It describes structure and relationships, not individual features in isolation, and is driven by product requirements.
 
-Consistency:
-
-- **Vertical:** The architecture carries every requirement it is meant to satisfy and stays aligned with the product and outcomes above it.
-- **Horizontal:** There is only one architecture element in this framework, so peer consistency is internal: structure, principles, and technology choices do not contradict each other.
+The architecture should carry every requirement it is meant to satisfy and stay aligned with the product and outcomes above it; components should realize the structure without contradicting those requirements. Structure, principles, and technology choices within the architecture should not contradict each other.
 
 Examples:
 
@@ -182,10 +176,9 @@ Why it's bad: names technologies, not structure. Doesn't describe how parts rela
 
 A component is a distinct, implementable part of the system that fulfills one or more requirements. It has a clear scope, maps to those requirements, and is concrete enough to build, test, and deploy.
 
-Consistency:
+A component should align with the architecture and with every requirement it fulfills; behavior should match the product line above it.
 
-- **Vertical:** Each component is consistent with the architecture and with every requirement it fulfills; behavior matches the product line above it.
-- **Horizontal:** Sibling components are well scoped; overlap in responsibility is minimal; where responsibilities meet, they agree; together they cover the architecture's obligations without gaps.
+Sibling components should be well scoped: overlap in responsibility should be minimal; where responsibilities meet, they should agree; together they should cover the architecture's obligations without gaps.
 
 Minimal Pattern:
 
@@ -214,14 +207,17 @@ Why they're bad: unbounded scope, not linked to any requirement, names describe 
 
 Records capture the decisions and changes made to product and engineering elements over time.
 
+A record should tie to the product or engineering elements it concerns and remain coherent with those elements' ancestors and descendants on the trace.
+
+Records at related scope should not contradict each other on the same fact without an explicit superseding record; where two records touch the same interface or decision surface, they should agree.
+
 #### Change Record (CR)
 
 A change record documents a modification to a product or engineering element — what changed, why, and what it affects. It is scoped to a specific element, explains what changed and why, and reads as a point-in-time modification.
 
-Consistency:
+A change record should tie to the element it names and remain coherent with that element's ancestors and descendants on the trace.
 
-- **Vertical:** The change ties to the element it names and remains coherent with that element's ancestors and descendants on the trace.
-- **Horizontal:** Other change records on sibling elements do not tell conflicting stories about the same fact; where two CRs touch the same interface, they agree.
+Other change records that bear on the same fact or touch the same interface should not tell conflicting stories; where they affect shared boundaries, they should agree on facts.
 
 Examples:
 
@@ -241,10 +237,9 @@ Why it's bad: no scope, no rationale, no traceability to any element.
 
 A product decision record documents a product decision — the context, the options considered, and the choice made. It states the situation, alternatives, rationale, and consequences (including costs and follow-ups).
 
-Consistency:
+A product decision record should stay aligned with the product outcomes and requirements it affects; consequences should read through to downstream elements.
 
-- **Vertical:** The decision stays aligned with the product outcomes and requirements it affects; consequences read through to downstream elements.
-- **Horizontal:** Sibling PDRs on the same scope do not contradict each other; where decisions overlap, they agree on facts and intent.
+Product decision records at overlapping or related scope should not contradict without an explicit superseding record; where decisions overlap, they should agree on facts and intent.
 
 Examples:
 
@@ -264,10 +259,9 @@ Why it's bad: no context, no alternatives considered, no justification, no conse
 
 An architectural decision record documents an engineering decision — the context, the options considered, and the choice made. It states the situation, alternatives, rationale, and consequences (including costs and follow-ups).
 
-Consistency:
+An architectural decision record should fit the architecture and components it constrains; tradeoffs should trace to requirements and product intent above.
 
-- **Vertical:** The decision fits the architecture and components it constrains; tradeoffs trace to requirements and product intent above.
-- **Horizontal:** Sibling ADRs on the same scope do not contradict each other; where decisions overlap, they agree on facts and intent.
+Architectural decision records at overlapping or related scope should not contradict without an explicit superseding record; where decisions overlap, they should agree on facts and intent.
 
 Examples:
 
