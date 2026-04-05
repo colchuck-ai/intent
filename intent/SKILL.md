@@ -1,4 +1,11 @@
+---
+name: intent
+description: Structure and maintain product and engineering documentation using the intent framework. Use when defining jobs, outcomes, risks, requirements, architecture, components, or decision records with full traceability.
+---
+
 # Intent
+
+A framework for structuring product and engineering intent as a traceable hierarchy — from jobs and outcomes through risks and requirements down to architecture and components — with decision and change records that keep the whole narrative coherent over time.
 
 ## Elements
 
