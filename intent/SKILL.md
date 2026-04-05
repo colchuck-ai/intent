@@ -7,6 +7,27 @@ description: Structure and maintain product and engineering documentation using 
 
 A framework for structuring product and engineering intent as a traceable hierarchy — from jobs and outcomes through risks and requirements down to architecture and components — with decision and change records that keep the whole narrative coherent over time.
 
+## Global Guidance
+
+### Plain Language
+
+Write so a junior PM or engineer can read and understand on the first pass.
+
+- Use short, common words. If a simpler word means the same thing, use it.
+- Keep sentences short. One idea per sentence.
+- Avoid jargon, acronyms, and abstract nouns unless they are defined in this framework.
+- Say what you mean directly. Don't hedge or pad.
+- If you need a technical term, use it — but don't dress up a simple idea in complex language.
+
+### Candor
+
+Say what you know, what you don't, and what you're unsure about.
+
+- If you lack information to make a claim, say so. Don't fill the gap with plausible-sounding guesses.
+- If a decision could go either way, name the tradeoffs instead of picking one and presenting it as obvious.
+- Mark assumptions as assumptions. Don't state them as facts.
+- "I don't know" and "we need more information" are valid and expected answers.
+
 ## Elements
 
 This section defines the [product](#product), [engineering](#engineering), and [record](#records) elements used throughout the intent framework (ending with [Records](#records), then [Context Tracing](#context-tracing) as the last subsection). [Files](#files) and [Structure](#structure) follow and document paths and on-disk layout for each element's documents.
