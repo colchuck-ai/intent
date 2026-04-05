@@ -279,105 +279,7 @@ Why it's bad: states the decision but not the context, alternatives, justificati
 
 ### Context Tracing
 
-Trace context by **element** (which parts of the model to load together). File paths, templates, and the `docs/` tree are defined in [Files](#files) and [Structure](#structure); this section only names elements and relationships.
-
-Use **vertical** tracing along the spine: product, outcome, risk, requirement, architecture, component. Use **horizontal** tracing for lateral context. For **outcome** and **requirement**, **Horizontal** uses **self** (lateral links recorded on that element), **siblings** (peers under the same parent), and **cousins** (same depth, different branch — e.g. elements under a sibling of your parent). For **component**, **Horizontal** uses only **self** and **siblings** — components have no cousins. Risks and risk–requirement links live on the **outcome** element. Requirement–component mapping and system structure live on the **architecture** element. **Do not** load record types (CRs, PDRs, ADRs) until you need that history.
-
-#### Product
-
-##### Vertical
-
-- **self**
-  - The product element.
-- **ancestors**
-  - (none)
-- **descendants**
-  1. Each outcome element for this product.
-
-##### Horizontal
-
-- Singleton — only one product element; no horizontal trace.
-
-#### Outcome
-
-##### Vertical
-
-- **self**
-  - This outcome element.
-- **ancestors**
-  1. The product element.
-- **descendants**
-  1. Each requirement element belonging to this outcome.
-  2. The architecture element (to see which components satisfy those requirements).
-  3. Each component element that satisfies those requirements.
-
-##### Horizontal
-
-- **self**
-  1. Risk–requirement mapping and any other lateral links recorded on this outcome (many-to-many among requirements under this outcome).
-- **siblings**
-  1. Other outcome elements under the same product (compare scope, users, or dependencies).
-- **cousins**
-  1. Requirement elements under a sibling outcome (when work spans outcomes or shared components).
-
-#### Requirement
-
-##### Vertical
-
-- **self**
-  - This requirement element.
-- **ancestors**
-  1. The owning outcome element.
-  2. The product element.
-- **descendants**
-  1. The architecture element (for requirement–component mapping).
-  2. Each component element that satisfies this requirement.
-
-##### Horizontal
-
-- **self**
-  1. Dependencies and cross-references recorded on this requirement.
-- **siblings**
-  1. Other requirement elements under the same outcome (depends, conflicts, shared risk or component — use the parent outcome as needed).
-- **cousins**
-  1. Requirement elements under a sibling outcome (use the architecture element and relevant outcomes to identify them).
-
-#### Architecture
-
-##### Vertical
-
-- **self**
-  - The architecture element.
-- **ancestors**
-  1. The product element.
-  2. Each outcome and requirement element in scope for your trace (per the requirement–component mapping on the architecture element).
-- **descendants**
-  1. Each component element the architecture defines.
-
-##### Horizontal
-
-- Singleton — only one architecture element; no horizontal trace.
-
-#### Component
-
-##### Vertical
-
-- **self**
-  - This component element.
-- **ancestors**
-  1. The architecture element.
-  2. Each requirement element this component fulfills (per the requirement–component mapping).
-  3. Each outcome element that owns those requirements.
-  4. The product element.
-- **descendants**
-  - (none) — components are leaves of this vertical trace.
-
-##### Horizontal
-
-- **self**
-  1. Relationships, interfaces, and behavior recorded on this component.
-- **siblings**
-  1. Other component elements that satisfy the same requirement(s) or are named as peers (use the architecture element's mapping and this component's relationships).
+See [references/context-tracing.md](references/context-tracing.md) for the full vertical and horizontal tracing rules per element type.
 
 ## Files
 
@@ -385,51 +287,13 @@ Use **vertical** tracing along the spine: product, outcome, risk, requirement, a
 
 Path: `docs/product/README.md`
 
-Template:
-
-```md
-# <Product Name>
-
-<What job(s) it serves and for whom.>
-
-## Jobs
-
-### J<NNN> - <Job Name>
-
-> When [Situation], I want to [Goal], so I can [Outcome].
-
-#### Outcomes
-
-- **J<NNN>-O<NNN>** - <Outcome Name>: [Verb] [Unit of Measure] [Object]
-- **J<NNN>-O<NNN>** - <Outcome Name>: [Verb] [Unit of Measure] [Object]
-```
+Template: [product.md](assets/templates/product.md)
 
 ### Outcome Documents
 
 Paths: `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md`
 
-Template:
-
-```md
-# J<NNN>-O<NNN> - <Outcome Name>
-
-[Verb] [Unit of Measure] [Object]
-
-## Risks
-
-- **J<NNN>-O<NNN>-RSK<NNN>** - <Risk Name>: [Condition/Event] [Negative Impact on Outcome]
-- **J<NNN>-O<NNN>-RSK<NNN>** - <Risk Name>: [Condition/Event] [Negative Impact on Outcome]
-
-## Requirements
-
-- **J<NNN>-O<NNN>-R<NNN>** - <Requirement Name>: [Product/Solution] must [Capability/Constraint]
-- **J<NNN>-O<NNN>-R<NNN>** - <Requirement Name>: [Product/Solution] must [Capability/Constraint]
-
-## Risk-Requirement Map
-
-- **J<NNN>-O<NNN>-RSK<NNN>**: J<NNN>-O<NNN>-R<NNN>, J<NNN>-O<NNN>-R<NNN>
-- **J<NNN>-O<NNN>-RSK<NNN>**: J<NNN>-O<NNN>-R<NNN>
-```
+Template: [outcome.md](assets/templates/outcome.md)
 
 ### Requirement Documents
 
@@ -439,142 +303,17 @@ Paths:
 - `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/README.md`
 
 
-Simple Template (`...-R<NNN>-<name>.md`):
-
-```md
-# J<NNN>-O<NNN>-R<NNN> - <Requirement Name>
-
-[Product/Solution] must [Capability/Constraint]
-
-## Detail
-
-<Expanded description of the requirement.>
-
-## Edge Cases
-
-- <Condition>: <Expected Behavior>
-- <Condition>: <Expected Behavior>
-
-## Examples
-
-### <Scenario Name>
-
-- Input: <Input>
-- Expected Output: <Expected Output>
-- Verification: <Verification Step(s)>
-
-## Acceptance Criteria
-
-- [ ] <Concrete, testable condition>
-- [ ] <Concrete, testable condition>
-
-## Dependencies
-
-- J<NNN>-O<NNN>-R<NNN>
-- J<NNN>-O<NNN>-R<NNN>
-```
+Simple Template (`...-R<NNN>-<name>.md`): [requirement-simple.md](assets/templates/requirement-simple.md)
 
 
-Nested Template (`...-R<NNN>-<name>/README.md`):
-
-```md
-# J<NNN>-O<NNN>-R<NNN> - <Requirement Name>
-
-[Product/Solution] must [Capability/Constraint]
-
-## Detail
-
-<Expanded description of the requirement.>
-
-## Edge Cases
-
-- <Condition>: <Expected Behavior>
-- <Condition>: <Expected Behavior>
-
-## Examples
-
-### <Scenario Name>
-
-- Input: <Input>
-- Expected Output: <Expected Output>
-- Verification: <Verification Step(s)>
-
-## Acceptance Criteria
-
-- [ ] <Concrete, testable condition>
-- [ ] <Concrete, testable condition>
-
-## Dependencies
-
-- J<NNN>-O<NNN>-R<NNN>
-- J<NNN>-O<NNN>-R<NNN>
-
-## See Also
-
-### Product Decision Records
-
-- [<PDR Name>](pdrs/<PDR filename>)
-
-### Change Records
-
-- [<CR Name>](crs/<CR filename>)
-
-### Other Materials
-
-- [<Material Name>](<path>)
-```
+Nested Template (`...-R<NNN>-<name>/README.md`): [requirement-nested.md](assets/templates/requirement-nested.md)
 
 ### Architecture Document
 
 Path: `docs/engineering/README.md`
 
 
-Template:
-
-```md
-# <Architecture Name>
-
-<How components are organized, communicate, and constrain each other.>
-
-## Principles
-
-- <Principle>
-- <Principle>
-
-## Constraints
-
-- <Constraint>
-- <Constraint>
-
-## Technology Choices
-
-- <Technology>: <Rationale>
-- <Technology>: <Rationale>
-
-## Components
-
-### C<NNN> - <Component Name>
-
-<Responsibility>
-
-#### Relationships
-
-- **C<NNN>**: <How they communicate or depend>
-- **C<NNN>**: <How they communicate or depend>
-
-### C<NNN> - <Component Name>
-
-<Responsibility>
-
-#### Relationships
-
-- **C<NNN>**: <How they communicate or depend>
-
-## Requirement-Component Map
-
-- **J<NNN>-O<NNN>-R<NNN>**: C<NNN>, C<NNN>
-- **J<NNN>-O<NNN>-R<NNN>**: C<NNN>
-```
+Template: [architecture.md](assets/templates/architecture.md)
 
 ### Component Documents
 
@@ -584,100 +323,10 @@ Paths:
 - `docs/engineering/components/C<NNN>-<name>/README.md`
 
 
-Simple Template (`...C<NNN>-<name>.md`):
-
-```md
-# C<NNN> - <Component Name>
-
-<Responsibility>
-
-## Data model
-
-<Owned or exposed entities, schemas, invariants. Omit section if trivial.>
-
-## Interfaces
-
-<APIs, events, protocols, or formats — inputs, outputs, versioning. Omit section if trivial.>
-
-## Behavior
-
-<Non-obvious logic: ordering, retries, idempotency, conflict handling, or core algorithms. Omit section if straightforward.>
-
-## Edge cases
-
-- <Condition>: <Expected handling>
-- <Condition>: <Expected handling>
-
-## Relationships
-
-- **C<NNN>**: <How this component communicates or depends on the other>
-- **C<NNN>**: <How this component communicates or depends on the other>
-
-## Success criteria
-
-- <Engineering-level check — e.g. SLO, invariant, load or correctness assumption>
-- <Engineering-level check>
-
-## Notes
-
-<Optional. Constraints, runbooks, or links not covered above.>
-```
+Simple Template (`...C<NNN>-<name>.md`): [component-simple.md](assets/templates/component-simple.md)
 
 
-Nested Template (`...C<NNN>-<name>/README.md`):
-
-```md
-# C<NNN> - <Component Name>
-
-<Responsibility>
-
-<Optional paragraph: scope, boundaries, or context when the one-liner is not enough.>
-
-## Data model
-
-<Owned or exposed entities, schemas, invariants. Link to supplementary files in this folder if the model is large. Omit section if trivial.>
-
-## Interfaces
-
-<APIs, events, protocols, or formats — inputs, outputs, versioning. Link to OpenAPI specs, event catalogs, or similar in this folder if needed. Omit section if trivial.>
-
-## Behavior
-
-<Non-obvious logic: ordering, retries, idempotency, conflict handling, or core algorithms. Omit section if straightforward.>
-
-## Edge cases
-
-- <Condition>: <Expected handling>
-- <Condition>: <Expected handling>
-
-## Relationships
-
-- **C<NNN>**: <How this component communicates or depends on the other>
-- **C<NNN>**: <How this component communicates or depends on the other>
-
-## Success criteria
-
-- <Engineering-level check — e.g. SLO, invariant, load or correctness assumption>
-- <Engineering-level check>
-
-## Notes
-
-<Optional. Constraints, runbooks, or operational detail not covered above.>
-
-## See Also
-
-### Architectural Decision Records
-
-- [<ADR Name>](adrs/<ADR filename>)
-
-### Change Records
-
-- [<CR Name>](crs/<CR filename>)
-
-### Other Materials
-
-- [<Material Name>](<path>)
-```
+Nested Template (`...C<NNN>-<name>/README.md`): [component-nested.md](assets/templates/component-nested.md)
 
 ### Product Decision Records
 
@@ -692,74 +341,10 @@ Paths:
 
 `<PDR ID>` is the filename prefix before `-<name>` — e.g. `PRD<NNN>`, `J<NNN>-O<NNN>-PRD<NNN>`, or `J<NNN>-O<NNN>-R<NNN>-PRD<NNN>`, depending on which path above the file lives under.
 
-Simple Template (`...<PDR ID>-<name>.md`):
-
-```md
-# <PDR ID> - <Decision Name>
-
-<What this decision is about — a concise summary.>
-
-## Context
-
-<The situation, constraints, or triggers that prompted the decision.>
-
-## Options
-
-- <Option A>: <tradeoffs or notes>
-- <Option B>: <tradeoffs or notes>
-
-## Decision
-
-<What was chosen and why — the justification.>
-
-## Consequences
-
-- <Positive or enabling consequence>
-- <Negative, cost, or follow-up consequence>
-```
+Simple Template (`...<PDR ID>-<name>.md`): [pdr-simple.md](assets/templates/pdr-simple.md)
 
 
-Nested Template (`...<PDR ID>-<name>/README.md`):
-
-```md
-# <PDR ID> - <Decision Name>
-
-<What this decision is about — a concise summary.>
-
-<Optional paragraph: supporting detail, stakeholder input, or links to files in this folder (research, mockups, data).>
-
-## Context
-
-<The situation, constraints, or triggers that prompted the decision.>
-
-## Options
-
-- <Option A>: <tradeoffs or notes>
-- <Option B>: <tradeoffs or notes>
-
-## Decision
-
-<What was chosen and why — the justification.>
-
-## Consequences
-
-- <Positive or enabling consequence>
-- <Negative, cost, or follow-up consequence>
-
-## See Also
-
-### Change Records
-
-- [<CR Name>](<path>)
-
-### Related product elements
-
-- [<Outcome, job, requirement, or other parent doc>](<path>)
-
-### Other Materials
-
-- [<Material Name>](<path>)
-```
+Nested Template (`...<PDR ID>-<name>/README.md`): [pdr-nested.md](assets/templates/pdr-nested.md)
 
 ### Architectural Decision Records
 
@@ -772,74 +357,10 @@ Paths:
 
 `<ADR ID>` is the filename prefix before `-<name>` — e.g. `ADR<NNN>` or `C<NNN>-ADR<NNN>`, depending on which path above the file lives under.
 
-Simple Template (`...<ADR ID>-<name>.md`):
-
-```md
-# <ADR ID> - <Decision Name>
-
-<What this engineering decision is about — a concise summary.>
-
-## Context
-
-<The situation, constraints, or triggers that prompted the decision.>
-
-## Options
-
-- <Option A>: <tradeoffs or notes>
-- <Option B>: <tradeoffs or notes>
-
-## Decision
-
-<What was chosen and why — the justification.>
-
-## Consequences
-
-- <Positive or enabling consequence>
-- <Negative, cost, or follow-up consequence>
-```
+Simple Template (`...<ADR ID>-<name>.md`): [adr-simple.md](assets/templates/adr-simple.md)
 
 
-Nested Template (`...<ADR ID>-<name>/README.md`):
-
-```md
-# <ADR ID> - <Decision Name>
-
-<What this engineering decision is about — a concise summary.>
-
-<Optional paragraph: supporting detail, benchmarks, spikes, or links to files in this folder.>
-
-## Context
-
-<The situation, constraints, or triggers that prompted the decision.>
-
-## Options
-
-- <Option A>: <tradeoffs or notes>
-- <Option B>: <tradeoffs or notes>
-
-## Decision
-
-<What was chosen and why — the justification.>
-
-## Consequences
-
-- <Positive or enabling consequence>
-- <Negative, cost, or follow-up consequence>
-
-## See Also
-
-### Change Records
-
-- [<CR Name>](<path>)
-
-### Related engineering elements
-
-- [<Architecture, component, or other doc>](<path>)
-
-### Other Materials
-
-- [<Material Name>](<path>)
-```
+Nested Template (`...<ADR ID>-<name>/README.md`): [adr-nested.md](assets/templates/adr-nested.md)
 
 
 ### Change Records
@@ -859,153 +380,15 @@ Paths:
 
 `<CR ID>` is the filename prefix before `-<name>` — e.g. `PROD-CR<NNN>`, `J<NNN>-O<NNN>-CR<NNN>`, `J<NNN>-O<NNN>-R<NNN>-CR<NNN>`, `ENG-CR<NNN>`, or `C<NNN>-CR<NNN>`, depending on which path above the file lives under.
 
-Simple Template (`...<CR ID>-<name>.md`):
-
-```md
-# <CR ID> - <Change Name>
-
-<What changed — name the scoped element(s) (e.g. outcome, requirement, architecture, component) and summarize the modification.>
-
-## Change
-
-<Before and after, or fuller narrative.>
-
-## Rationale
-
-<Why the change was made.>
-
-## Affects
-
-<What else this modification impacts — elements, requirements, or follow-up work.>
-```
+Simple Template (`...<CR ID>-<name>.md`): [cr-simple.md](assets/templates/cr-simple.md)
 
 
-Nested Template (`...<CR ID>-<name>/README.md`):
-
-```md
-# <CR ID> - <Change Name>
-
-<What changed — name the scoped element(s) (e.g. outcome, requirement, architecture, component) and summarize the modification.>
-
-<Optional paragraph: diffs, migration notes, or links to files in this folder.>
-
-## Change
-
-<Before and after, or fuller narrative.>
-
-## Rationale
-
-<Why the change was made.>
-
-## Affects
-
-<What else this modification impacts — elements, requirements, or follow-up work.>
-
-## See Also
-
-### Decision Records
-
-- [<PDR or ADR title>](<path>)
-
-### Related elements
-
-- [<Outcome, requirement, component, architecture, or other doc>](<path>)
-
-### Other Materials
-
-- [<Material Name>](<path>)
-```
+Nested Template (`...<CR ID>-<name>/README.md`): [cr-nested.md](assets/templates/cr-nested.md)
 
 ## Structure
 
-```txt
-docs/
-  product/
-    crs/
-      PROD-CR<NNN>-<name>/
-        README.md
-      PROD-CR<NNN>-<name>.md
-    outcomes/
-      J<NNN>-O<NNN>-<name>/
-        crs/
-          J<NNN>-O<NNN>-CR<NNN>-<name>/
-            README.md
-          J<NNN>-O<NNN>-CR<NNN>-<name>.md
-        pdrs/
-          J<NNN>-O<NNN>-PDR<NNN>-<name>/
-            README.md
-          J<NNN>-O<NNN>-PDR<NNN>-<name>.md
-        requirements/
-          J<NNN>-O<NNN>-R<NNN>-<name>/
-            crs/
-              J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>/
-                README.md
-              J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>.md
-            pdrs/
-              J<NNN>-O<NNN>-R<NNN>-PDR<NNN>-<name>/
-                README.md
-              J<NNN>-O<NNN>-R<NNN>-PDR<NNN>-<name>.md
-            README.md
-          J<NNN>-O<NNN>-R<NNN>-<name>.md
-        README.md
-    pdrs/
-      PDR<NNN>-<name>/
-        README.md
-      PDR<NNN>-<name>.md
-    README.md
-  engineering/
-    adrs/
-      ADR<NNN>-<name>/
-        README.md
-      ADR<NNN>-<name>.md
-    components/
-      C<NNN>-<name>/
-        adrs/
-          C<NNN>-ADR<NNN>-<name>/
-            README.md
-          C<NNN>-ADR<NNN>-<name>.md
-        crs/
-          C<NNN>-CR<NNN>-<name>/
-            README.md
-          C<NNN>-CR<NNN>-<name>.md
-        README.md
-      C<NNN>-<name>.md
-    crs/
-      ENG-CR<NNN>-<name>/
-        README.md
-      ENG-CR<NNN>-<name>.md
-    README.md
-```
+See [references/structure.md](references/structure.md) for the full `docs/` directory tree.
 
 ## Workflows
 
-The intent documentation forms a tree: product and engineering elements, plus records. The discipline is familiar from engineering practice; the gap was usually on the intent side, where it is easy to drift straight into implementation. Assistants make it practical to draft, check, and review intent documents the same way you would code.
-
-The verbs create, read, update, and delete describe what you do to elements and files. Read is the workflow for loading context and building a shared picture without changing documents. Create, update, and delete are modifications and follow the three-session workflow below (unless you are only exploring, in which case use read).
-
-Focus for any workflow is one or more elements among product (including jobs), outcomes (including risks), requirements, architecture, and components — as defined in [Elements](#elements) and located on disk in [Files](#files) and [Structure](#structure).
-
-### Loading context
-
-For any workflow below, loading appropriate context means:
-
-1. Load this skill (`intent/SKILL.md`).
-2. For the element under discussion, trace context vertically and horizontally as described in [Context Tracing](#context-tracing).
-
-Load [Records](#records) (CRs, PDRs, ADRs) only when you need that history or those decisions for the task.
-
-### Read
-
-Use read when you want an assistant to build an understanding of an element without changing documents. Load context as above. Read does not emit change records or decision records.
-
-### Modification sessions
-
-For create, update, or delete, work across three sessions with clear handoffs:
-
-1. Drafting session — Load context, then work with an assistant to draft the change (new or edited documents, and any new record files you intend to add).
-2. Judge session — Load context again, then prompt an assistant to judge the draft using the subsection for the relevant element type under [Elements](#elements) as the rubric. When the draft includes or implies decision or history artifacts, also use [Records](#records) as the reference for what each type is for: [Change Record (CR)](#change-record-cr), [Product Decision Record (PDR)](#product-decision-record-pdr), and [Architectural Decision Record (ADR)](#architectural-decision-record-adr). The author incorporates feedback, then commits, pushes, and opens a pull or merge request.
-3. Review session — An independent reviewer either reviews that PR/MR in the host, or checks out the branch locally for an agent-assisted review. They load context, run the same judge prompt against that subsection (and [Records](#records) when relevant), then combine the assistant’s feedback with their own judgment and leave suggestions for the author.
-
-For update or delete, consider impact on all descendants of the changed element in the trace, and adjust or verify downstream documents so the tree stays coherent. For create, there is no prior element state, so there is no change in the sense a CR describes; create does not produce a Change Record. For update and delete, add a [Change Record (CR)](#change-record-cr) scoped to the modification when the change is material to the success of outcomes; trivial edits do not need one. [PDRs](#product-decision-record-pdr) and [ADRs](#architectural-decision-record-adr) may be added during any modification when a product or engineering decision should be captured; they are optional and depend on whether a decision worth recording was made.
-
-
+See [references/workflows.md](references/workflows.md) for the read, create, update, and delete workflows including the three-session modification process.
