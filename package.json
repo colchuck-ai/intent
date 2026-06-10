@@ -1,5 +1,5 @@
 {
-  "name": "intent-skill",
+  "name": "intent",
   "private": true,
   "description": "Agent Skill (agentskills.io) for product/engineering intent documentation",
   "scripts": {

@@ -284,4 +284,4 @@ Ulwick lists four **distinct** application areas (each may need different tools)
 
 ## 12. Document status
 
-This file is a **research synthesis** for the intent-skill project. It reflects the cited Medium/JTBD publication posts and Strategyn’s public ODI descriptions as of the date of writing. It is not endorsed by Strategyn; for authoritative process detail, use their official materials and training.
+This file is a **research synthesis** for the intent project. It reflects the cited Medium/JTBD publication posts and Strategyn’s public ODI descriptions as of the date of writing. It is not endorsed by Strategyn; for authoritative process detail, use their official materials and training.
