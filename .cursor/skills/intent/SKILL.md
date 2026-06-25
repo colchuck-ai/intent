@@ -311,6 +311,31 @@ See [references/context-tracing.md](references/context-tracing.md) for the full 
 
 ## Files
 
+### Naming
+
+File and folder names (**slugs**) use only the local ID segment for that element type. Parent context is encoded by the directory path — do not repeat ancestor IDs in slugs.
+
+Cross-tree references in document bodies and record titles use **logical IDs** that qualify from the product or engineering root so they are unambiguous outside their folder:
+
+| Element | Slug (filename/folder) | Logical ID (in document body) |
+|---|---|---|
+| Outcome | `O<NNN>-<name>` | `O<NNN>` |
+| Risk | (recorded on outcome doc) | `O<NNN>-RSK<NNN>` |
+| Requirement | `R<NNN>-<name>` | `O<NNN>-R<NNN>` |
+| Component | `C<NNN>-<name>` | `C<NNN>` |
+| Product PDR | `PDR<NNN>-<name>` | `PDR<NNN>` |
+| Outcome PDR | `PDR<NNN>-<name>` | `O<NNN>-PDR<NNN>` |
+| Requirement PDR | `PDR<NNN>-<name>` | `O<NNN>-R<NNN>-PDR<NNN>` |
+| Product CR | `CR<NNN>-<name>` | `CR<NNN>` |
+| Outcome CR | `CR<NNN>-<name>` | `O<NNN>-CR<NNN>` |
+| Requirement CR | `CR<NNN>-<name>` | `O<NNN>-R<NNN>-CR<NNN>` |
+| Architecture ADR | `ADR<NNN>-<name>` | `ADR<NNN>` |
+| Component ADR | `ADR<NNN>-<name>` | `C<NNN>-ADR<NNN>` |
+| Engineering CR | `CR<NNN>-<name>` | `CR<NNN>` |
+| Component CR | `CR<NNN>-<name>` | `C<NNN>-CR<NNN>` |
+
+Product- and engineering-level CRs share the same slug and logical ID form; the path (`docs/product/crs/` vs `docs/engineering/crs/`) distinguishes them.
+
 ### Product Document 
 
 Path: `docs/product/README.md`
@@ -319,7 +344,7 @@ Template: [product.md](assets/templates/product.md)
 
 ### Outcome Documents
 
-Paths: `docs/product/outcomes/J<NNN>-O<NNN>-<name>/README.md`
+Paths: `docs/product/outcomes/O<NNN>-<name>/README.md`
 
 Template: [outcome.md](assets/templates/outcome.md)
 
@@ -327,8 +352,8 @@ Template: [outcome.md](assets/templates/outcome.md)
 
 Paths:
 
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>.md`
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/README.md`
+- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>.md`
+- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/README.md`
 
 
 Simple Template (`...-R<NNN>-<name>.md`): [requirement-simple.md](assets/templates/requirement-simple.md)
@@ -360,14 +385,14 @@ Nested Template (`...C<NNN>-<name>/README.md`): [component-nested.md](assets/tem
 
 Paths:
 
-- `docs/product/pdrs/PRD<NNN>-<name>.md`
-- `docs/product/pdrs/PRD<NNN>-<name>/README.md`
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/pdrs/J<NNN>-O<NNN>-PRD<NNN>-<name>.md`
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/pdrs/J<NNN>-O<NNN>-PRD<NNN>-<name>/README.md`
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/pdrs/J<NNN>-O<NNN>-R<NNN>-PRD<NNN>-<name>.md`
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/pdrs/J<NNN>-O<NNN>-R<NNN>-PRD<NNN>-<name>/README.md`
+- `docs/product/pdrs/PDR<NNN>-<name>.md`
+- `docs/product/pdrs/PDR<NNN>-<name>/README.md`
+- `docs/product/outcomes/O<NNN>-<name>/pdrs/PDR<NNN>-<name>.md`
+- `docs/product/outcomes/O<NNN>-<name>/pdrs/PDR<NNN>-<name>/README.md`
+- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/pdrs/PDR<NNN>-<name>.md`
+- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/pdrs/PDR<NNN>-<name>/README.md`
 
-`<PDR ID>` is the filename prefix before `-<name>` — e.g. `PRD<NNN>`, `J<NNN>-O<NNN>-PRD<NNN>`, or `J<NNN>-O<NNN>-R<NNN>-PRD<NNN>`, depending on which path above the file lives under.
+`<PDR ID>` is the **logical ID** for that record (see [Naming](#naming)). The slug is `PDR<NNN>-<name>`.
 
 Simple Template (`...<PDR ID>-<name>.md`): [pdr-simple.md](assets/templates/pdr-simple.md)
 
@@ -380,10 +405,10 @@ Paths:
 
 - `docs/engineering/adrs/ADR<NNN>-<name>.md`
 - `docs/engineering/adrs/ADR<NNN>-<name>/README.md`
-- `docs/engineering/components/C<NNN>-<name>/adrs/C<NNN>-ADR<NNN>-<name>.md`
-- `docs/engineering/components/C<NNN>-<name>/adrs/C<NNN>-ADR<NNN>-<name>/README.md`
+- `docs/engineering/components/C<NNN>-<name>/adrs/ADR<NNN>-<name>.md`
+- `docs/engineering/components/C<NNN>-<name>/adrs/ADR<NNN>-<name>/README.md`
 
-`<ADR ID>` is the filename prefix before `-<name>` — e.g. `ADR<NNN>` or `C<NNN>-ADR<NNN>`, depending on which path above the file lives under.
+`<ADR ID>` is the **logical ID** for that record (see [Naming](#naming)). The slug is `ADR<NNN>-<name>`.
 
 Simple Template (`...<ADR ID>-<name>.md`): [adr-simple.md](assets/templates/adr-simple.md)
 
@@ -395,18 +420,18 @@ Nested Template (`...<ADR ID>-<name>/README.md`): [adr-nested.md](assets/templat
 
 Paths:
 
-- `docs/product/crs/PROD-CR<NNN>-<name>.md`
-- `docs/product/crs/PROD-CR<NNN>-<name>/README.md`
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/crs/J<NNN>-O<NNN>-CR<NNN>-<name>.md`
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/crs/J<NNN>-O<NNN>-CR<NNN>-<name>/README.md`
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/crs/J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>.md`
-- `docs/product/outcomes/J<NNN>-O<NNN>-<name>/requirements/J<NNN>-O<NNN>-R<NNN>-<name>/crs/J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>/README.md`
-- `docs/engineering/crs/ENG-CR<NNN>-<name>.md`
-- `docs/engineering/crs/ENG-CR<NNN>-<name>/README.md`
-- `docs/engineering/components/C<NNN>-<name>/crs/C<NNN>-CR<NNN>-<name>.md`
-- `docs/engineering/components/C<NNN>-<name>/crs/C<NNN>-CR<NNN>-<name>/README.md`
+- `docs/product/crs/CR<NNN>-<name>.md`
+- `docs/product/crs/CR<NNN>-<name>/README.md`
+- `docs/product/outcomes/O<NNN>-<name>/crs/CR<NNN>-<name>.md`
+- `docs/product/outcomes/O<NNN>-<name>/crs/CR<NNN>-<name>/README.md`
+- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/crs/CR<NNN>-<name>.md`
+- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/crs/CR<NNN>-<name>/README.md`
+- `docs/engineering/crs/CR<NNN>-<name>.md`
+- `docs/engineering/crs/CR<NNN>-<name>/README.md`
+- `docs/engineering/components/C<NNN>-<name>/crs/CR<NNN>-<name>.md`
+- `docs/engineering/components/C<NNN>-<name>/crs/CR<NNN>-<name>/README.md`
 
-`<CR ID>` is the filename prefix before `-<name>` — e.g. `PROD-CR<NNN>`, `J<NNN>-O<NNN>-CR<NNN>`, `J<NNN>-O<NNN>-R<NNN>-CR<NNN>`, `ENG-CR<NNN>`, or `C<NNN>-CR<NNN>`, depending on which path above the file lives under.
+`<CR ID>` is the **logical ID** for that record (see [Naming](#naming)). The slug is `CR<NNN>-<name>`.
 
 Simple Template (`...<CR ID>-<name>.md`): [cr-simple.md](assets/templates/cr-simple.md)
 

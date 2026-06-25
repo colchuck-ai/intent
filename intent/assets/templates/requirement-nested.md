@@ -1,4 +1,4 @@
-# J<NNN>-O<NNN>-R<NNN> - <Requirement Name>
+# O<NNN>-R<NNN> - <Requirement Name>
 
 [Product/Solution] must [Capability/Constraint]
 
@@ -26,8 +26,8 @@
 
 ## Dependencies
 
-- J<NNN>-O<NNN>-R<NNN>
-- J<NNN>-O<NNN>-R<NNN>
+- O<NNN>-R<NNN>
+- O<NNN>-R<NNN>
 
 ## See Also
 
