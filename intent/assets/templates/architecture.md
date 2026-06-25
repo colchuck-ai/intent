@@ -43,14 +43,14 @@
 
 ## Appendix: Change Records
 
-<!-- Omit when empty. Each entry follows cr-inline.md. -->
+<!-- Omit when empty. Each entry follows the cr-inline.md template. -->
 
-### <CR ID> - <Change Name>
+## See Also
 
-<What changed — name the scoped element(s) and summarize the modification.>
+### Architectural Decision Records
 
-**Change:** <Before and after, or fuller narrative.>
+- [<ADR Name>](adrs/<ADR filename>)
 
-**Rationale:** <Why the change was made.>
+### Change Records
 
-**Affects:** <What else this modification impacts.>
+- [<CR Name>](crs/<CR filename>)
