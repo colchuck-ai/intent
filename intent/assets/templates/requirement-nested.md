@@ -26,8 +26,8 @@
 
 ## Dependencies
 
-- O<NNN>-R<NNN>
-- O<NNN>-R<NNN>
+- **O<NNN>-R<NNN>** - <Requirement Name>
+- **O<NNN>-R<NNN>** - <Requirement Name>
 
 ## See Also
 

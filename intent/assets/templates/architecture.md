@@ -25,8 +25,8 @@
 
 #### Relationships
 
-- **C<NNN>**: <How they communicate or depend>
-- **C<NNN>**: <How they communicate or depend>
+- **C<NNN> - <Component Name>**: <How they communicate or depend>
+- **C<NNN> - <Component Name>**: <How they communicate or depend>
 
 ### C<NNN> - <Component Name>
 
@@ -34,9 +34,23 @@
 
 #### Relationships
 
-- **C<NNN>**: <How they communicate or depend>
+- **C<NNN> - <Component Name>**: <How they communicate or depend>
 
 ## Requirement-Component Map
 
-- **O<NNN>-R<NNN>**: C<NNN>, C<NNN>
-- **O<NNN>-R<NNN>**: C<NNN>
+- **O<NNN>-R<NNN> - <Requirement Name>**: C<NNN> - <Component Name>, C<NNN> - <Component Name>
+- **O<NNN>-R<NNN> - <Requirement Name>**: C<NNN> - <Component Name>
+
+## Appendix: Change Records
+
+<!-- Omit when empty. Each entry follows cr-inline.md. -->
+
+### <CR ID> - <Change Name>
+
+<What changed — name the scoped element(s) and summarize the modification.>
+
+**Change:** <Before and after, or fuller narrative.>
+
+**Rationale:** <Why the change was made.>
+
+**Affects:** <What else this modification impacts.>
