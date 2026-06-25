@@ -67,6 +67,20 @@ Demote only when you are deliberately simplifying scope — never to hide unreso
 
 **Stay lower when** the product is small and the parent stays readable; detail is still provisional.
 
+## Child rendering
+
+How a parent document represents a child element follows mechanically from the child's tier — there are exactly two modes, with no middle "summary on the parent" form. This keeps the source of truth singular and removes any need to keep a parent summary in sync with a child's canonical doc.
+
+- **Tier 0 child → inline.** The parent contains the child's full minimal pattern. When the child itself has nested descendants (risks and requirements under an outcome, relationships under a component), they live as sub-bullets under the child, grouped to match the section headings the child's own doc would use if promoted (e.g. `Risks:`, `Requirements:`, `Risk-Requirement Map:`).
+- **Tier 1 or Tier 2 child → reference only.** The parent shows a single link bullet (`- [<Logical ID> — <Name>](path)`) and nothing more. The child's own document is the canonical home for its content.
+
+A parent document mixes the two modes per child: each child renders according to *its own* tier, not the parent's. The product doc therefore reads as a complete outline when every descendant is Tier 0, and degrades naturally into a table of contents (with pockets of inline detail) as children are promoted.
+
+Records (CRs, PDRs, ADRs) follow the same rule by tier:
+
+- **Inline records (Tier 0)** live in the element's (or, for a Tier-0 element, the parent's) `## Appendix: Decision Records` or `## Appendix: Change Records` section.
+- **Simple or Nested records (Tier 1+)** are linked from the element's `## See Also` section; their content lives in the dedicated file or folder.
+
 ## Naming
 
 File and folder names (**slugs**) use only the local ID segment for that element type. Parent context is encoded by the directory path — do not repeat ancestor IDs in slugs.

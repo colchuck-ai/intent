@@ -12,7 +12,7 @@ Resolve where each element lives on disk from structure before tracing verticall
 
 When referencing a Tier 0 element from another document, use its logical ID (structure Naming) and quote the minimal pattern from the parent — do not invent a path.
 
-When promoting during an update: Tier 0 → Tier 1 moves content into the new simple file and leaves a summary on the parent; Tier 1 → Tier 2 moves the file to `/<slug>/README.md` before adding child folders.
+When promoting during an update: Tier 0 → Tier 1 moves the inline content from the parent into the new simple file and replaces it on the parent with a reference link (see [Child rendering](structure.md#child-rendering)); Tier 1 → Tier 2 moves the file to `/<slug>/README.md` before adding child folders.
 
 Use **vertical** tracing along the spine: product, job, outcome, risk, requirement, architecture, component. Use **horizontal** tracing for lateral context. For **outcome** and **requirement**, **Horizontal** uses **self** (lateral links recorded on that element), **siblings** (peers under the same parent), and **cousins** (same depth, different branch — e.g. elements under a sibling of your parent). For **component**, **Horizontal** uses only **self** and **siblings** — components have no cousins. Risks and risk–requirement links live on the **outcome** element. Jobs live on the **product** element. Requirement–component mapping and system structure live on the **architecture** element.
 
