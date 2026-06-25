@@ -4,31 +4,31 @@
 docs/
   product/
     crs/
-      PROD-CR<NNN>-<name>/
+      CR<NNN>-<name>/
         README.md
-      PROD-CR<NNN>-<name>.md
+      CR<NNN>-<name>.md
     outcomes/
-      J<NNN>-O<NNN>-<name>/
+      O<NNN>-<name>/
         crs/
-          J<NNN>-O<NNN>-CR<NNN>-<name>/
+          CR<NNN>-<name>/
             README.md
-          J<NNN>-O<NNN>-CR<NNN>-<name>.md
+          CR<NNN>-<name>.md
         pdrs/
-          J<NNN>-O<NNN>-PDR<NNN>-<name>/
+          PDR<NNN>-<name>/
             README.md
-          J<NNN>-O<NNN>-PDR<NNN>-<name>.md
+          PDR<NNN>-<name>.md
         requirements/
-          J<NNN>-O<NNN>-R<NNN>-<name>/
+          R<NNN>-<name>/
             crs/
-              J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>/
+              CR<NNN>-<name>/
                 README.md
-              J<NNN>-O<NNN>-R<NNN>-CR<NNN>-<name>.md
+              CR<NNN>-<name>.md
             pdrs/
-              J<NNN>-O<NNN>-R<NNN>-PDR<NNN>-<name>/
+              PDR<NNN>-<name>/
                 README.md
-              J<NNN>-O<NNN>-R<NNN>-PDR<NNN>-<name>.md
+              PDR<NNN>-<name>.md
             README.md
-          J<NNN>-O<NNN>-R<NNN>-<name>.md
+          R<NNN>-<name>.md
         README.md
     pdrs/
       PDR<NNN>-<name>/
@@ -43,18 +43,18 @@ docs/
     components/
       C<NNN>-<name>/
         adrs/
-          C<NNN>-ADR<NNN>-<name>/
+          ADR<NNN>-<name>/
             README.md
-          C<NNN>-ADR<NNN>-<name>.md
+          ADR<NNN>-<name>.md
         crs/
-          C<NNN>-CR<NNN>-<name>/
+          CR<NNN>-<name>/
             README.md
-          C<NNN>-CR<NNN>-<name>.md
+          CR<NNN>-<name>.md
         README.md
       C<NNN>-<name>.md
     crs/
-      ENG-CR<NNN>-<name>/
+      CR<NNN>-<name>/
         README.md
-      ENG-CR<NNN>-<name>.md
+      CR<NNN>-<name>.md
     README.md
 ```

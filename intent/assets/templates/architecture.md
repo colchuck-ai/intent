@@ -38,5 +38,5 @@
 
 ## Requirement-Component Map
 
-- **J<NNN>-O<NNN>-R<NNN>**: C<NNN>, C<NNN>
-- **J<NNN>-O<NNN>-R<NNN>**: C<NNN>
+- **O<NNN>-R<NNN>**: C<NNN>, C<NNN>
+- **O<NNN>-R<NNN>**: C<NNN>

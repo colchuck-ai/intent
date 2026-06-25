@@ -4,11 +4,11 @@
 
 ## Jobs
 
-### J<NNN> - <Job Name>
+### <Job Name>
 
 > When [Situation], I want to [Goal], so I can [Outcome].
 
 #### Outcomes
 
-- **J<NNN>-O<NNN>** - <Outcome Name>: [Verb] [Unit of Measure] [Object]
-- **J<NNN>-O<NNN>** - <Outcome Name>: [Verb] [Unit of Measure] [Object]
+- **O<NNN>** - <Outcome Name>: [Verb] [Unit of Measure] [Object]
+- **O<NNN>** - <Outcome Name>: [Verb] [Unit of Measure] [Object]
