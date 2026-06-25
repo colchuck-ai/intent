@@ -33,6 +33,10 @@
 
 <Optional. Constraints, runbooks, or links not covered above.>
 
+## Appendix: Decision Records
+
+<!-- Omit when empty. Each entry follows the adr-inline.md template. -->
+
 ## Appendix: Change Records
 
 <!-- Omit when empty. Each entry follows the cr-inline.md template. -->

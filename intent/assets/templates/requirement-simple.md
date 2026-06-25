@@ -29,6 +29,10 @@
 - **O<NNN>-R<NNN>** - <Requirement Name>
 - **O<NNN>-R<NNN>** - <Requirement Name>
 
+## Appendix: Decision Records
+
+<!-- Omit when empty. Each entry follows the pdr-inline.md template. -->
+
 ## Appendix: Change Records
 
 <!-- Omit when empty. Each entry follows the cr-inline.md template. -->

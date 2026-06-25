@@ -45,7 +45,7 @@ Demote only when you are deliberately simplifying scope — never to hide unreso
 
 **Architecture and components** — Architecture is always Tier 1 (`docs/engineering/README.md`). Components start at Tier 0 on the architecture document; promote to Tier 1 for interfaces, behavior, or success criteria; to Tier 2 for record files or large supplementary specs.
 
-**Records** — Change records use all four levels (none, inline, simple, nested). When the scoped parent has no `crs/` subfolder, use inline. A Tier-0 element's inline CR lives in the appendix of the parent document that hosts the element, keyed by the element-scoped logical ID. Product- and engineering-scoped simple and nested CRs do not require promoting the parent. PDRs and ADRs use none, simple, or nested only.
+**Records** — All record types (CRs, PDRs, ADRs) use the same four levels (none, inline, simple, nested). When the scoped parent has no record subfolder (`crs/`, `pdrs/`, `adrs/`), use inline. A Tier-0 element's inline record lives in an appendix of the parent document that hosts the element, keyed by the element-scoped logical ID; inline records on a Tier-1+ element live in an appendix of that element's own document. Inline CRs go in `## Appendix: Change Records`; inline PDRs and ADRs go in `## Appendix: Decision Records` (kept separate so a running changelog and a deliberation do not intermix). Product- and engineering-scoped simple and nested records do not require promoting the parent.
 
 #### Product scale profiles
 
@@ -61,7 +61,7 @@ Demote only when you are deliberately simplifying scope — never to hide unreso
 
 **Change records:** (1) trivial edit → none; (2) brief appendix entry → inline; (3) own file, no supplementary folder → simple; (4) supplementary files → nested.
 
-**Decision records:** (1) no decision worth capturing → none; (2) own file → simple; (3) supplementary files → nested.
+**Decision records (PDR/ADR):** (1) no decision worth capturing → none; (2) brief appendix entry → inline; (3) own file → simple; (4) supplementary files → nested.
 
 **Promote to Tier 1 when** the element needs any of: its own acceptance criteria; enumerated edge cases; dependencies or cross-references that don't fit inline; its own record file; or a child file. **Promote to Tier 2 when** it needs child folders (requirement files, record files, or supplementary materials). **Promote a record when** the entry needs its own file (inline → simple) or needs supplementary files (simple → nested).
 
@@ -90,12 +90,14 @@ Cross-tree references in document bodies and record titles use **logical IDs** t
 | Product PDR | `PDR<NNN>-<name>` | `PDR<NNN>` |
 | Outcome PDR | `PDR<NNN>-<name>` | `O<NNN>-PDR<NNN>` |
 | Requirement PDR | `PDR<NNN>-<name>` | `O<NNN>-R<NNN>-PDR<NNN>` |
+| Inline PDR | (recorded in element/parent doc appendix) | `<element-id>-PDR<NNN>` |
 | Inline CR (Tier-0 element) | (recorded in parent doc appendix) | `<element-id>-CR<NNN>` |
 | Product CR | `CR<NNN>-<name>` | `PROD-CR<NNN>` |
 | Outcome CR | `CR<NNN>-<name>` | `O<NNN>-CR<NNN>` |
 | Requirement CR | `CR<NNN>-<name>` | `O<NNN>-R<NNN>-CR<NNN>` |
 | Architecture ADR | `ADR<NNN>-<name>` | `ADR<NNN>` |
 | Component ADR | `ADR<NNN>-<name>` | `C<NNN>-ADR<NNN>` |
+| Inline ADR | (recorded in element/parent doc appendix) | `<element-id>-ADR<NNN>` |
 | Engineering CR | `CR<NNN>-<name>` | `ENG-CR<NNN>` |
 | Component CR | `CR<NNN>-<name>` | `C<NNN>-CR<NNN>` |
 
@@ -185,6 +187,12 @@ Child folders: `adrs/`, `crs/`
 
 ### Product decision records
 
+Tier 0 — inline
+
+Path: none — recorded in the `## Appendix: Decision Records` section of the element's own document, or of the parent document when the element is Tier 0 (the element has no document of its own). Key the entry by the element-scoped logical ID, e.g. `O<NNN>-PDR<NNN>` for a decision on a Tier-0 outcome recorded on `docs/product/README.md`, or `O<NNN>-R<NNN>-PDR<NNN>` for a decision on a Tier-1 requirement recorded on that requirement's document.
+
+Template: [pdr-inline.md](../assets/templates/pdr-inline.md)
+
 Tier 1 — simple
 
 Paths:
@@ -206,6 +214,12 @@ Paths:
 Template: [pdr-nested.md](../assets/templates/pdr-nested.md)
 
 ### Architectural decision records
+
+Tier 0 — inline
+
+Path: none — recorded in the `## Appendix: Decision Records` section of the element's own document, or of the parent document when the element is Tier 0 (the element has no document of its own). Key the entry by the element-scoped logical ID, e.g. `C<NNN>-ADR<NNN>` for a decision on a Tier-0 component recorded on `docs/engineering/README.md`, or `ADR<NNN>` for an architecture-scoped decision recorded on `docs/engineering/README.md`.
+
+Template: [adr-inline.md](../assets/templates/adr-inline.md)
 
 Tier 1 — simple
 
@@ -263,7 +277,7 @@ Same scoping rules as Tier 1.
 
 ### Minimal directory tree
 
-The layout below is the floor for a [minimal product](#product-scale-profiles) — two Tier 1 documents with all other elements at Tier 0 inline on them. Material changes may appear as inline CRs in appendices; no other paths are required.
+The layout below is the floor for a [minimal product](#product-scale-profiles) — two Tier 1 documents with all other elements at Tier 0 inline on them. Material changes may appear as inline CRs, and material decisions as inline PDRs/ADRs, in the documents' appendices; no other paths are required.
 
 ```txt
 docs/

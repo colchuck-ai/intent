@@ -41,6 +41,10 @@
 - **O<NNN>-R<NNN> - <Requirement Name>**: C<NNN> - <Component Name>, C<NNN> - <Component Name>
 - **O<NNN>-R<NNN> - <Requirement Name>**: C<NNN> - <Component Name>
 
+## Appendix: Decision Records
+
+<!-- Omit when empty. Each entry follows the adr-inline.md template. -->
+
 ## Appendix: Change Records
 
 <!-- Omit when empty. Each entry follows the cr-inline.md template. -->

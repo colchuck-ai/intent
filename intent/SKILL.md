@@ -20,7 +20,7 @@ A framework for structuring product and engineering intent as a traceable hierar
 
 Non-obvious traps in this framework. Read before diving into a reference file.
 
-- Tier prerequisites cascade: a Tier-1 requirement file needs a Tier-2 *nested* outcome folder first, and Tier-1 outcome/requirement/component change records need a Tier-2 nested parent (product- and engineering-scoped CRs do not). Promote the parent before creating the deeper path. See [references/structure.md](references/structure.md).
+- Tier prerequisites cascade: a Tier-1 requirement file needs a Tier-2 *nested* outcome folder first, and Tier-1 outcome/requirement/component record files (CRs, PDRs, ADRs) need a Tier-2 nested parent (product- and engineering-scoped records do not). Promote the parent before creating the deeper path — or record the entry inline in the element's (or parent's) appendix to avoid promotion. See [references/structure.md](references/structure.md).
 - Creating a brand-new element produces no Change Record — there is no prior state. CRs are only for updates and deletes. See [references/workflows.md](references/workflows.md).
 - A Change Record is not a decision record: a CR logs *what changed and why*; PDRs/ADRs capture *a decision and its alternatives*. Don't conflate them. See [references/elements.md](references/elements.md).
 - Slug vs logical ID: filenames/folders (slugs) use only the local ID segment (e.g. `O001-<name>`); cross-tree references in document bodies use fully-qualified logical IDs (e.g. `O001-R001`). Don't repeat ancestor IDs in slugs. See [references/structure.md](references/structure.md).
