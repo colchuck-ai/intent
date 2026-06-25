@@ -23,8 +23,8 @@
 
 ## Relationships
 
-- **C<NNN>**: <How this component communicates or depends on the other>
-- **C<NNN>**: <How this component communicates or depends on the other>
+- **C<NNN> - <Component Name>**: <How this component communicates or depends on the other>
+- **C<NNN> - <Component Name>**: <How this component communicates or depends on the other>
 
 ## Success criteria
 
