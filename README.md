@@ -6,8 +6,8 @@ An [Agent Skill](https://agentskills.io/home) that teaches an AI assistant to wr
 
 Two spines that connect product intent to how it's built:
 
-- **Product** — Product → Jobs → Outcomes → Risks → Requirements
-- **Engineering** — Architecture → Components
+- **Product** — Product, Jobs, Outcomes, Risks, Requirements
+- **Engineering** — Architecture, Components
 
 Plus **records** that keep the story coherent over time:
 
@@ -27,11 +27,11 @@ You don't scaffold a directory tree up front. Every element starts as a one-line
 | **1 — simple** | its own `<slug>.md` file | it needs detail, edge cases, or its own records |
 | **2 — nested** | a `<slug>/` folder | it needs child files or folders |
 
-A minimal product is just two files (`docs/product/README.md`, `docs/engineering/README.md`); a complex one nests as far as it needs to. Records follow the same ladder (none → inline → simple → nested).
+A minimal product is just two files (`docs/product/README.md`, `docs/engineering/README.md`); a complex one nests as far as it needs to. Records follow the same ladder (none, inline, simple, nested).
 
 ## How to use it
 
-This is an Agent Skill — point your assistant at it and ask it to create, trace, or review intent docs. It handles IDs, paths, tiers, and a draft → judge → review workflow for changes.
+This is an Agent Skill — point your assistant at it and ask it to create, trace, or review intent docs. It handles IDs, paths, tiers, and a draft, judge, review workflow for changes.
 
 Install it (defaults to Cursor, `~/.cursor/skills/intent/`):
 
@@ -42,7 +42,7 @@ curl -fsSL https://raw.githubusercontent.com/colchuck-ai/intent/main/install.sh 
 For another agent, pass an `--agent` (`cursor`, `claude`, `agents`) or a target directory:
 
 ```bash
-# Claude → ~/.claude/skills/intent
+# Claude install location: ~/.claude/skills/intent
 curl -fsSL https://raw.githubusercontent.com/colchuck-ai/intent/main/install.sh | bash -s -- --agent claude
 
 # Custom directory

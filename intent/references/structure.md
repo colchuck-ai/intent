@@ -27,11 +27,11 @@ Not every element needs its own file, folder, or decision history. Use the **sim
 
 The intent framework scales from a single product document to a fully nested tree with records and supplementary materials.
 
-**Promote an element from Tier 0 → Tier 1** when it needs ANY of: its own acceptance criteria; enumerated edge cases; dependencies or cross-references that don't fit inline; its own change or decision record file; or a child file or folder.
+**Promote an element from Tier 0 to Tier 1** when it needs ANY of: its own acceptance criteria; enumerated edge cases; dependencies or cross-references that don't fit inline; its own change or decision record file; or a child file or folder.
 
-**Promote an element from Tier 1 → Tier 2** when it needs child folders — requirement files under an outcome, record files (`crs/`, `pdrs/`, `adrs/`), or supplementary materials that need a stable home.
+**Promote an element from Tier 1 to Tier 2** when it needs child folders — requirement files under an outcome, record files (`crs/`, `pdrs/`, `adrs/`), or supplementary materials that need a stable home.
 
-**Promote a record** by the same kind of concrete trigger: none → inline when an entry is worth capturing; inline → simple when the entry needs its own file; simple → nested when the record needs supplementary files.
+**Promote a record** by the same kind of concrete trigger: none becomes inline when an entry is worth capturing; inline becomes simple when the entry needs its own file; simple becomes nested when the record needs supplementary files.
 
 Demote only when you are deliberately simplifying scope — never to hide unresolved ambiguity.
 
@@ -57,13 +57,13 @@ Demote only when you are deliberately simplifying scope — never to hide unreso
 
 #### Choosing a tier
 
-**Elements:** (1) minimal pattern enough on parent → Tier 0; (2) own document, no child folders → Tier 1; (3) child folders needed → Tier 2.
+**Elements:** (1) minimal pattern enough on parent: Tier 0; (2) own document, no child folders: Tier 1; (3) child folders needed: Tier 2.
 
-**Change records:** (1) trivial edit → none; (2) brief appendix entry → inline; (3) own file, no supplementary folder → simple; (4) supplementary files → nested.
+**Change records:** (1) trivial edit: none; (2) brief appendix entry: inline; (3) own file, no supplementary folder: simple; (4) supplementary files: nested.
 
-**Decision records (PDR/ADR):** (1) no decision worth capturing → none; (2) brief appendix entry → inline; (3) own file → simple; (4) supplementary files → nested.
+**Decision records (PDR/ADR):** (1) no decision worth capturing: none; (2) brief appendix entry: inline; (3) own file: simple; (4) supplementary files: nested.
 
-**Promote to Tier 1 when** the element needs any of: its own acceptance criteria; enumerated edge cases; dependencies or cross-references that don't fit inline; its own record file; or a child file. **Promote to Tier 2 when** it needs child folders (requirement files, record files, or supplementary materials). **Promote a record when** the entry needs its own file (inline → simple) or needs supplementary files (simple → nested).
+**Promote to Tier 1 when** the element needs any of: its own acceptance criteria; enumerated edge cases; dependencies or cross-references that don't fit inline; its own record file; or a child file. **Promote to Tier 2 when** it needs child folders (requirement files, record files, or supplementary materials). **Promote a record when** the entry needs its own file (from inline to simple) or needs supplementary files (from simple to nested).
 
 **Stay lower when** the product is small and the parent stays readable; detail is still provisional.
 
@@ -71,10 +71,14 @@ Demote only when you are deliberately simplifying scope — never to hide unreso
 
 How a parent document represents a child element follows mechanically from the child's tier — there are exactly two modes, with no middle "summary on the parent" form. This keeps the source of truth singular and removes any need to keep a parent summary in sync with a child's canonical doc.
 
-- **Tier 0 child → inline.** The parent contains the child's full minimal pattern. When the child itself has nested descendants (risks and requirements under an outcome, relationships under a component), they live as sub-bullets under the child, grouped to match the section headings the child's own doc would use if promoted (e.g. `Risks:`, `Requirements:`, `Risk-Requirement Map:`).
-- **Tier 1 or Tier 2 child → reference only.** The parent shows a single link bullet (`- [<Logical ID> — <Name>](path)`) and nothing more. The child's own document is the canonical home for its content.
+Both modes announce each child with a **heading one level deeper than its container** (e.g. inline outcomes under an H3 job become H4 blocks; inline or referenced components under an H2 `## Components` section become H3 blocks). This gives a parent doc a uniform outline regardless of how its children are tiered, and avoids the readability problems of bulleted lists nested inside bulleted lists.
+
+- **Tier 0 child — inline block.** Under the child's heading, write the child's minimal pattern as a short paragraph (no bullet). When the child itself has nested descendants (risks and requirements under an outcome, relationships under a component), group each kind under a **bold paragraph label** (`**Risks**`, `**Requirements**`, `**Relationships**`, `**Risk-Requirement Map**`) followed by a **flat bulleted list**. Never nest a bulleted list inside another bulleted list — sub-bullets are how trees grow.
+- **Tier 1 or Tier 2 child — reference block.** Under the child's heading, write a single line: `See [<Logical ID> - <Name>](path).` The child's own document is the canonical home for its content.
 
 A parent document mixes the two modes per child: each child renders according to *its own* tier, not the parent's. The product doc therefore reads as a complete outline when every descendant is Tier 0, and degrades naturally into a table of contents (with pockets of inline detail) as children are promoted.
+
+Many-to-many mapping sections (`## Risk-Requirement Map`, `## Requirement-Component Map`, and their bold-labeled inline counterparts) are always flat bulleted lists, keyed by `**<Source ID> - <Source Name>**` with the comma-separated `<Target ID> - <Target Name>` pairs after the colon. Always include the human-readable name on both sides of the colon — IDs alone are unscannable.
 
 Records (CRs, PDRs, ADRs) follow the same rule by tier:
 

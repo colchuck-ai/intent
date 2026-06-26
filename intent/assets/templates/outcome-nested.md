@@ -10,8 +10,8 @@
 ## Requirements
 
 <!-- Render each requirement by its tier (see references/structure.md#child-rendering): -->
-<!--   - Tier 0 requirement → inline form: bullet with the minimal pattern. -->
-<!--   - Tier 1+ requirement → reference form: a single link bullet. -->
+<!--   - Tier 0 requirement — inline form: bullet with the minimal pattern. -->
+<!--   - Tier 1+ requirement — reference form: a single link bullet. -->
 
 <!-- Inline form (Tier 0 requirement) -->
 - **O<NNN>-R<NNN>** - <Requirement Name>: [Product/Solution] must [Capability/Constraint]
