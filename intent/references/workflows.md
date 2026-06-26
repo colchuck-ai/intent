@@ -22,7 +22,7 @@ Use read when you want an assistant to build an understanding of an element with
 
 ## Modification sessions
 
-The three-session flow below is for a shared/team repo with team review: Draft → Judge (validation loop) → commit/push/open a PR or MR → independent Review. A solo author, or any repo without a second reviewer, collapses it to draft → self-run the same Judge validation loop → finalize/commit — no PR/MR or separate reviewer required, but the same binary checklist (element rubric + [Alignment check](elements.md#alignment-check) + [Records](elements.md#records) when relevant) must still pass before finalizing.
+The three-session flow below is for a shared/team repo with team review: Draft, then Judge (validation loop), then commit/push/open a PR or MR, then independent Review. A solo author, or any repo without a second reviewer, collapses it to draft, then self-run the same Judge validation loop, then finalize/commit — no PR/MR or separate reviewer required, but the same binary checklist (element rubric + [Alignment check](elements.md#alignment-check) + [Records](elements.md#records) when relevant) must still pass before finalizing.
 
 For create, update, or delete, work across these sessions with clear handoffs:
 
@@ -30,7 +30,7 @@ For create, update, or delete, work across these sessions with clear handoffs:
 2. Judge session — Trace context again, then run a validation loop on the draft that already exists from the drafting session:
    1. Validate the draft against a binary checklist — every check is pass/fail. The checklist is the good/bad rubric plus the Minimal Pattern from the subsection for the relevant element type under [elements.md](elements.md), plus the shared [Alignment check](elements.md#alignment-check). When the draft includes or implies decision or history artifacts, also check it against [Records](elements.md#records) for what each type is for: [Change Record (CR)](elements.md#change-record-cr), [Product Decision Record (PDR)](elements.md#product-decision-record-pdr), and [Architectural Decision Record (ADR)](elements.md#architectural-decision-record-adr).
    2. Fix the failures.
-   3. Repeat validate → fix until every check passes.
+   3. Repeat the validate-and-fix cycle until every check passes.
    4. Only then finalize: commit (and, if the repo uses pull/merge requests, push and open a PR or MR). A solo author stops here.
 3. Review session (shared repo / second person only) — An independent reviewer either reviews that PR/MR in the host, or checks out the branch locally for an agent-assisted review. They trace context, run the same validation loop (the same binary checklist: the subsection rubric, [Alignment check](elements.md#alignment-check), and [Records](elements.md#records) when relevant), then combine the assistant's feedback with their own judgment and leave suggestions for the author.
 

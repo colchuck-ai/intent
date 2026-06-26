@@ -6,7 +6,7 @@ For naming, paths, and tiers, see [structure.md](structure.md). For how to read,
 
 ## Alignment check
 
-Run these yes/no checks against any element. Any "no" is a fail. Read "parent" and "descendants" along the spine: product → job → outcome → risk → requirement → architecture → component.
+Run these yes/no checks against any element. Any "no" is a fail. Read "parent" and "descendants" along the spine: product, job, outcome, risk, requirement, architecture, component.
 
 Vertical alignment:
 

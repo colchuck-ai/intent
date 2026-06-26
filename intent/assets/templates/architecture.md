@@ -20,17 +20,23 @@
 ## Components
 
 <!-- Render each component by its tier (see references/structure.md#child-rendering): -->
-<!--   - Tier 0 component → inline form: component bullet with a Relationships sub-bullet. -->
-<!--   - Tier 1+ component → reference form: a single link bullet. -->
+<!--   - Tier 0 component — inline block: H3 heading + bold-labeled flat list. -->
+<!--   - Tier 1+ component — reference block: H3 heading + single "See [link]" line. -->
 
 <!-- Inline form (Tier 0 component) -->
-- **C<NNN>** - <Component Name> — <Responsibility>
-  - Relationships:
-    - **C<NNN>** - <Component Name>: <How they communicate or depend>
-    - **C<NNN>** - <Component Name>: <How they communicate or depend>
+### C<NNN> - <Component Name>
+
+<Responsibility>
+
+**Relationships**
+
+- **C<NNN> - <Component Name>**: <How they communicate or depend>
+- **C<NNN> - <Component Name>**: <How they communicate or depend>
 
 <!-- Reference form (Tier 1+ component) -->
-- [C<NNN> - <Component Name>](components/C<NNN>-<name>.md)
+### C<NNN> - <Component Name>
+
+See [C<NNN> - <Component Name>](components/C<NNN>-<name>.md).
 
 ## Requirement-Component Map
 
