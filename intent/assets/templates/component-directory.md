@@ -37,13 +37,15 @@
 
 ## See Also
 
+<!-- Omit any subsection with no entries; omit this entire `## See Also` if every subsection would be empty. Records about this component live in the central directories under docs/engineering/; paths below are relative to this file at docs/engineering/components/C<NNN>-<name>/README.md. -->
+
 ### Architectural Decision Records
 
-- [<ADR Name>](adrs/<ADR filename>)
+- [ADR<NNN> - <ADR Name>](../../drs/ADR<NNN>-<name>.md)
 
 ### Change Records
 
-- [<CR Name>](crs/<CR filename>)
+- [CR<NNN> - <CR Name>](../../crs/CR<NNN>-<name>.md)
 
 ### Other Materials
 

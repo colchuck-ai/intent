@@ -4,90 +4,62 @@ How elements and records map to files under `docs/`. Create a path only when the
 
 ## Complexity Tiers
 
-Not every element needs its own file, folder, or decision history. Use the **simplest tier that still captures what readers and implementers need**. The hard default: **every element starts at Tier 0** — a statement recorded inline on its parent document — unless a concrete trigger below forces promotion. (Fixed exceptions: the product and architecture are always Tier 1; jobs and risks are always Tier 0.)
+This framework treats every item in the hierarchy as an **element**, in two categories with different tier rules: **spine elements** (product, jobs, outcomes, risks, requirements, architecture, components) and **record elements** (CRs, PDRs, ADRs). Documents are the current state; records are the history and rationale — they never share a file.
 
-**Elements** use three tiers:
+Use the **simplest tier that captures what readers and implementers need**. Demote only when deliberately simplifying scope — never to hide unresolved ambiguity.
 
-| Tier | Name | On disk |
-|---|---|---|
-| 0 | **Statement** | No dedicated file. The minimal pattern lives on the parent element. |
-| 1 | **Simple** | Single `<slug>.md` file. |
-| 2 | **Nested** | Folder `<slug>/README.md` with optional child folders for requirements, records, or materials. |
+### Spine elements
 
-**Records** use the same three tiers, plus **none** when no record is warranted:
+Default to Tier 0. Fixed exceptions: product and architecture are always Tier 1; jobs and risks are always Tier 0.
 
-| Tier | Name | On disk |
-|---|---|---|
-| — | **None** | No record. |
-| 0 | **Inline** | No dedicated file. Recorded in the appendix of the element's document, or of the parent document when the element is Tier 0. |
-| 1 | **Simple** | Single record file. |
-| 2 | **Nested** | Record folder with supplementary materials. |
+| Tier | Name | On disk | Promote when |
+|---|---|---|---|
+| 0 | **Statement** | Minimal pattern lives on the parent document. | (default) |
+| 1 | **Own document** | Single `<slug>.md` file. | Needs acceptance criteria, edge cases, cross-references that don't fit inline, or a child file. |
+| 2 | **Own directory** | `<slug>/README.md` with child folders for requirements (outcomes only) or supplementary materials. | Needs child folders. |
 
-**Logical IDs** are assigned at every tier so tracing works even when there is no file.
+Per-element promotion rules for outcomes, requirements, and components appear in their [Paths](#paths) sections.
 
-The intent framework scales from a single product document to a fully nested tree with records and supplementary materials.
+### Record elements
 
-**Promote an element from Tier 0 to Tier 1** when it needs ANY of: its own acceptance criteria; enumerated edge cases; dependencies or cross-references that don't fit inline; its own change or decision record file; or a child file or folder.
+Every CR, PDR, and ADR lives in one of four central directories — `docs/product/crs/`, `docs/product/drs/`, `docs/engineering/crs/`, `docs/engineering/drs/` — never inline, never in per-element folders, never in appendices. The scoped element backlinks via `## See Also` (Tier 1+) or a bold-label list in its inline block (Tier 0). **Capturing a record never promotes the element it concerns.**
 
-**Promote an element from Tier 1 to Tier 2** when it needs child folders — requirement files under an outcome, record files (`crs/`, `pdrs/`, `adrs/`), or supplementary materials that need a stable home.
+| Tier | Name | On disk | Promote when |
+|---|---|---|---|
+| — | **None** | No record. | Change or decision not worth capturing. |
+| 1 | **Own document** | `<slug>.md` in the central directory. | Capturing is warranted. |
+| 2 | **Own directory** | `<slug>/README.md` in the central directory. | Needs supplementary files. |
 
-**Promote a record** by the same kind of concrete trigger: none becomes inline when an entry is worth capturing; inline becomes simple when the entry needs its own file; simple becomes nested when the record needs supplementary files.
+### Product scale profiles
 
-Demote only when you are deliberately simplifying scope — never to hide unresolved ambiguity.
+**Minimal** — Two documents (product, architecture) with everything else at Tier 0; no records. See the [minimal directory tree](#minimal-directory-tree).
 
-#### By element
-
-**Product and jobs** — The product is always Tier 1 (`docs/product/README.md`). Jobs are always Tier 0 statements on that document, keyed `J<NNN>`.
-
-**Outcomes and risks** — Outcomes start at Tier 0 on the product document. Promote to Tier 1 when risks and requirements need their own document but still fit inline. Promote to Tier 2 when you need requirement files, outcome-scoped record files, or supplementary materials. Risks are always Tier 0 on the outcome.
-
-**Requirements** — Start at Tier 0 on the owning outcome. Promote to Tier 1 for detail, edge cases, acceptance criteria, or dependencies (requires a Tier 2 nested outcome folder). Promote to Tier 2 when the requirement accumulates record files or supplementary materials.
-
-**Architecture and components** — Architecture is always Tier 1 (`docs/engineering/README.md`). Components start at Tier 0 on the architecture document; promote to Tier 1 for interfaces, behavior, or success criteria; to Tier 2 for record files or large supplementary specs.
-
-**Records** — All record types (CRs, PDRs, ADRs) use the same four levels (none, inline, simple, nested). When the scoped parent has no record subfolder (`crs/`, `pdrs/`, `adrs/`), use inline. A Tier-0 element's inline record lives in an appendix of the parent document that hosts the element, keyed by the element-scoped logical ID; inline records on a Tier-1+ element live in an appendix of that element's own document. Inline CRs go in `## Appendix: Change Records`; inline PDRs and ADRs go in `## Appendix: Decision Records` (kept separate so a running changelog and a deliberation do not intermix). Product- and engineering-scoped simple and nested records do not require promoting the parent.
-
-#### Product scale profiles
-
-**Minimal** — Two documents (product and architecture) with jobs, outcomes, risks, requirements, and components at Tier 0. Inline CRs in appendices when worth capturing. See the [minimal directory tree](#minimal-directory-tree).
-
-**Standard** — Outcomes at Tier 1 or 2. Requirements and components at Tier 0 or Tier 1 where detail is needed. Records when material decisions or changes occur.
+**Standard** — Outcomes at Tier 1 or 2; requirements and components at Tier 0 or 1 where detail is needed. Records appear in the central directories as material decisions or changes occur.
 
 **Complex** — Full nesting where warranted; use the [maximum directory tree](#maximum-directory-tree) as the ceiling.
 
-#### Choosing a tier
-
-**Elements:** (1) minimal pattern enough on parent: Tier 0; (2) own document, no child folders: Tier 1; (3) child folders needed: Tier 2.
-
-**Change records:** (1) trivial edit: none; (2) brief appendix entry: inline; (3) own file, no supplementary folder: simple; (4) supplementary files: nested.
-
-**Decision records (PDR/ADR):** (1) no decision worth capturing: none; (2) brief appendix entry: inline; (3) own file: simple; (4) supplementary files: nested.
-
-**Promote to Tier 1 when** the element needs any of: its own acceptance criteria; enumerated edge cases; dependencies or cross-references that don't fit inline; its own record file; or a child file. **Promote to Tier 2 when** it needs child folders (requirement files, record files, or supplementary materials). **Promote a record when** the entry needs its own file (from inline to simple) or needs supplementary files (from simple to nested).
-
-**Stay lower when** the product is small and the parent stays readable; detail is still provisional.
-
 ## Child rendering
 
-How a parent document represents a child element follows mechanically from the child's tier — there are exactly two modes, with no middle "summary on the parent" form. This keeps the source of truth singular and removes any need to keep a parent summary in sync with a child's canonical doc.
+A parent document represents a child element in one of two modes, determined by the child's tier:
 
-Both modes announce each child with a **heading one level deeper than its container** (e.g. inline outcomes under an H3 job become H4 blocks; inline or referenced components under an H2 `## Components` section become H3 blocks). This gives a parent doc a uniform outline regardless of how its children are tiered, and avoids the readability problems of bulleted lists nested inside bulleted lists.
+- **Tier 0 child — inline.** The child's full content lives on the parent document (minimal pattern plus any bold-labeled sub-lists).
+- **Tier 1 or Tier 2 child — reference.** The parent keeps the child's heading or bullet, one line of substance (the child's minimal pattern, or the Responsibility line for components), and a `See [<Logical ID> - <Name>](path).` link to the canonical document. No paragraphs, no sub-lists, no restated detail beyond that line; everything else lives on the child's own document.
 
-- **Tier 0 child — inline block.** Under the child's heading, write the child's minimal pattern as a short paragraph (no bullet). When the child itself has nested descendants (risks and requirements under an outcome, relationships under a component), group each kind under a **bold paragraph label** (`**Risks**`, `**Requirements**`, `**Relationships**`, `**Risk-Requirement Map**`) followed by a **flat bulleted list**. Never nest a bulleted list inside another bulleted list — sub-bullets are how trees grow.
-- **Tier 1 or Tier 2 child — reference block.** Under the child's heading, write a single line: `See [<Logical ID> - <Name>](path).` The child's own document is the canonical home for its content.
+The concrete form per element type — which children get their own heading vs. render as a bullet, what bold labels to use for inlined sub-content, where record backlinks attach — is shown in the parent templates: [product.md](../assets/templates/product.md), [architecture.md](../assets/templates/architecture.md), [outcome-document.md](../assets/templates/outcome-document.md), [outcome-directory.md](../assets/templates/outcome-directory.md). Follow them as the canonical form; this section only states the rules every form must obey.
 
-A parent document mixes the two modes per child: each child renders according to *its own* tier, not the parent's. The product doc therefore reads as a complete outline when every descendant is Tier 0, and degrades naturally into a table of contents (with pockets of inline detail) as children are promoted.
+A parent doc mixes modes per child — each child renders by *its own* tier, not the parent's. The product doc therefore reads as a complete outline when every descendant is Tier 0, and stays a scannable outline (one-liner per child plus a link) as children are promoted — never collapsing into a bare table of contents.
 
-Many-to-many mapping sections (`## Risk-Requirement Map`, `## Requirement-Component Map`, and their bold-labeled inline counterparts) are always flat bulleted lists, keyed by `**<Source ID> - <Source Name>**` with the comma-separated `<Target ID> - <Target Name>` pairs after the colon. Always include the human-readable name on both sides of the colon — IDs alone are unscannable.
+**Form rules** (both modes):
 
-Records (CRs, PDRs, ADRs) follow the same rule by tier:
-
-- **Inline records (Tier 0)** live in the element's (or, for a Tier-0 element, the parent's) `## Appendix: Decision Records` or `## Appendix: Change Records` section.
-- **Simple or Nested records (Tier 1+)** are linked from the element's `## See Also` section; their content lives in the dedicated file or folder.
+- Promoting a child from Tier 0 to Tier 1 collapses the parent's block down to that one-liner plus the link, and moves every bold-labeled sub-list (Risks, Requirements, Relationships, record backlinks, etc.) onto the child.
+- Keep the one-liner in sync with the child's canonical statement: if the minimal pattern on the child changes, update the parent's reference block in the same change.
+- Never emit an empty heading. Omit any heading whose content — including every subsection beneath it — would be empty; do not leave bare placeholders. This applies to inline record sub-lists (e.g. `**Product Decision Records**`, `**Change Records**`), to `## See Also` when all of its subsections would be empty, and to any other optional section in a template. Subsections of an otherwise-populated section are also omitted individually when empty.
+- Never nest a bulleted list inside another bulleted list. Use a bold-labeled group or a sub-heading instead.
+- Many-to-many mapping sections (e.g. `## Risk-Requirement Map`, `## Requirement-Component Map`, and their inline counterparts) are flat bulleted lists keyed by `**<Source ID> - <Source Name>**` with comma-separated `<Target ID> - <Target Name>` pairs after the colon. Always include the human-readable name on both sides — IDs alone are unscannable.
 
 ## Naming
 
-File and folder names (**slugs**) use only the local ID segment for that element type. Parent context is encoded by the directory path — do not repeat ancestor IDs in slugs.
+Logical IDs are assigned at every tier so tracing works even when there is no file. File and folder names (**slugs**) use only the local ID segment for that element type. Parent context is encoded by the directory path — do not repeat ancestor IDs in slugs.
 
 Conventions for the `<name>` and `<NNN>` segments:
 
@@ -102,24 +74,14 @@ Cross-tree references in document bodies and record titles use **logical IDs** t
 |---|---|---|
 | Job | (recorded on product doc) | `J<NNN>` |
 | Outcome | `O<NNN>-<name>` | `O<NNN>` |
-| Risk | (recorded on outcome doc) | `O<NNN>-RSK<NNN>` |
+| Risk | (recorded inline with the outcome) | `O<NNN>-RSK<NNN>` |
 | Requirement | `R<NNN>-<name>` | `O<NNN>-R<NNN>` |
 | Component | `C<NNN>-<name>` | `C<NNN>` |
-| Product PDR | `PDR<NNN>-<name>` | `PDR<NNN>` |
-| Outcome PDR | `PDR<NNN>-<name>` | `O<NNN>-PDR<NNN>` |
-| Requirement PDR | `PDR<NNN>-<name>` | `O<NNN>-R<NNN>-PDR<NNN>` |
-| Inline PDR | (recorded in element/parent doc appendix) | `<element-id>-PDR<NNN>` |
-| Inline CR (Tier-0 element) | (recorded in parent doc appendix) | `<element-id>-CR<NNN>` |
-| Product CR | `CR<NNN>-<name>` | `PROD-CR<NNN>` |
-| Outcome CR | `CR<NNN>-<name>` | `O<NNN>-CR<NNN>` |
-| Requirement CR | `CR<NNN>-<name>` | `O<NNN>-R<NNN>-CR<NNN>` |
-| Architecture ADR | `ADR<NNN>-<name>` | `ADR<NNN>` |
-| Component ADR | `ADR<NNN>-<name>` | `C<NNN>-ADR<NNN>` |
-| Inline ADR | (recorded in element/parent doc appendix) | `<element-id>-ADR<NNN>` |
-| Engineering CR | `CR<NNN>-<name>` | `ENG-CR<NNN>` |
-| Component CR | `CR<NNN>-<name>` | `C<NNN>-CR<NNN>` |
+| PDR | `PDR<NNN>-<name>` | `PDR<NNN>` |
+| ADR | `ADR<NNN>-<name>` | `ADR<NNN>` |
+| CR | `CR<NNN>-<name>` | `CR<NNN>` |
 
-Product- and engineering-level CRs share the same slug form; the directory path (`docs/product/crs/` vs `docs/engineering/crs/`) distinguishes the files, and the `PROD-`/`ENG-` prefix keeps their logical IDs unambiguous.
+Records carry no element prefix in their logical ID — the record document itself names the element(s) it scopes. PDRs and ADRs live in a single directory each (`docs/product/drs/` and `docs/engineering/drs/`), giving each one a globally unique number. CRs share a single logical-ID namespace (`CR<NNN>`); each file lives in `docs/product/crs/` or `docs/engineering/crs/` depending on which side of the tree the change touches. To resolve a bare `CR<NNN>` reference, follow the link from the element's `## See Also` (or inline `**Change Records**` list), or search both `crs/` directories.
 
 ## Paths
 
@@ -127,175 +89,123 @@ All paths are under `docs/`. Create a path only when the element's tier calls fo
 
 ### Product
 
-Tier 1 — simple
+Tier 1 — own document
 
 Path: `docs/product/README.md`
 
-Template: [product.md](../assets/templates/product.md)
+Templates: [product.md](../assets/templates/product.md) (Tier 1). See [Templates](#templates) for the full index.
 
 ### Outcomes
+
+Promote to Tier 1 when risks and requirements need their own document but still fit inline; Tier 2 when they need requirement files or supplementary materials.
 
 Tier 0 — statement
 
 Path: none — recorded on `docs/product/README.md`
 
-Tier 1 — simple
+Tier 1 — own document
 
 Path: `docs/product/outcomes/O<NNN>-<name>.md`
 
-Template: [outcome-simple.md](../assets/templates/outcome-simple.md)
-
-Tier 2 — nested
+Tier 2 — own directory
 
 Path: `docs/product/outcomes/O<NNN>-<name>/README.md`
 
-Template: [outcome-nested.md](../assets/templates/outcome-nested.md)
+Child folders: `requirements/`. Records about this outcome live in the central `docs/product/drs/` and `docs/product/crs/` directories; the outcome backlinks to them from `## See Also`.
 
-Child folders: `requirements/`, `pdrs/`, `crs/`
+Templates: [outcome-document.md](../assets/templates/outcome-document.md) (Tier 1), [outcome-directory.md](../assets/templates/outcome-directory.md) (Tier 2). See [Templates](#templates) for the full index.
 
 ### Requirements
+
+A requirement at Tier 1 or above requires its owning outcome at Tier 2 — the requirement file lives inside the outcome's `requirements/` child folder. Use Tier 2 only when the requirement needs supplementary materials.
 
 Tier 0 — statement
 
 Path: none — recorded on the owning outcome document
 
-Tier 1 — simple
+Tier 1 — own document
 
 Path: `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>.md`
 
-Template: [requirement-simple.md](../assets/templates/requirement-simple.md)
-
-Requires a Tier 2 nested outcome folder.
-
-Tier 2 — nested
+Tier 2 — own directory
 
 Path: `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/README.md`
 
-Template: [requirement-nested.md](../assets/templates/requirement-nested.md)
+No record child folders — records about this requirement live in the central `docs/product/drs/` and `docs/product/crs/` directories.
 
-Child folders: `pdrs/`, `crs/`
+Templates: [requirement-document.md](../assets/templates/requirement-document.md) (Tier 1), [requirement-directory.md](../assets/templates/requirement-directory.md) (Tier 2). See [Templates](#templates) for the full index.
 
 ### Architecture
 
-Tier 1 — simple
+Tier 1 — own document
 
 Path: `docs/engineering/README.md`
 
-Template: [architecture.md](../assets/templates/architecture.md)
+Templates: [architecture.md](../assets/templates/architecture.md) (Tier 1). See [Templates](#templates) for the full index.
 
 ### Components
+
+Promote to Tier 1 for interfaces, behavior, or success criteria; Tier 2 only for large supplementary specs.
 
 Tier 0 — statement
 
 Path: none — recorded on `docs/engineering/README.md`
 
-Tier 1 — simple
+Tier 1 — own document
 
 Path: `docs/engineering/components/C<NNN>-<name>.md`
 
-Template: [component-simple.md](../assets/templates/component-simple.md)
-
-Tier 2 — nested
+Tier 2 — own directory
 
 Path: `docs/engineering/components/C<NNN>-<name>/README.md`
 
-Template: [component-nested.md](../assets/templates/component-nested.md)
+No record child folders — records about this component live in the central `docs/engineering/drs/` and `docs/engineering/crs/` directories.
 
-Child folders: `adrs/`, `crs/`
+Templates: [component-document.md](../assets/templates/component-document.md) (Tier 1), [component-directory.md](../assets/templates/component-directory.md) (Tier 2). See [Templates](#templates) for the full index.
 
 ### Product decision records
 
-Tier 0 — inline
-
-Path: none — recorded in the `## Appendix: Decision Records` section of the element's own document, or of the parent document when the element is Tier 0 (the element has no document of its own). Key the entry by the element-scoped logical ID, e.g. `O<NNN>-PDR<NNN>` for a decision on a Tier-0 outcome recorded on `docs/product/README.md`, or `O<NNN>-R<NNN>-PDR<NNN>` for a decision on a Tier-1 requirement recorded on that requirement's document.
-
-Template: [pdr-inline.md](../assets/templates/pdr-inline.md)
-
-Tier 1 — simple
+The record document names the affected element(s); each scoped element backlinks to it.
 
 Paths:
 
-- `docs/product/pdrs/PDR<NNN>-<name>.md`
-- `docs/product/outcomes/O<NNN>-<name>/pdrs/PDR<NNN>-<name>.md`
-- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/pdrs/PDR<NNN>-<name>.md`
+- `docs/product/drs/PDR<NNN>-<name>.md` (Tier 1 — own document)
+- `docs/product/drs/PDR<NNN>-<name>/README.md` (Tier 2 — own directory)
 
-Template: [pdr-simple.md](../assets/templates/pdr-simple.md)
-
-Tier 2 — nested
-
-Paths:
-
-- `docs/product/pdrs/PDR<NNN>-<name>/README.md`
-- `docs/product/outcomes/O<NNN>-<name>/pdrs/PDR<NNN>-<name>/README.md`
-- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/pdrs/PDR<NNN>-<name>/README.md`
-
-Template: [pdr-nested.md](../assets/templates/pdr-nested.md)
+Templates: [pdr-document.md](../assets/templates/pdr-document.md) (Tier 1), [pdr-directory.md](../assets/templates/pdr-directory.md) (Tier 2). See [Record elements](#record-elements) for tier selection.
 
 ### Architectural decision records
 
-Tier 0 — inline
-
-Path: none — recorded in the `## Appendix: Decision Records` section of the element's own document, or of the parent document when the element is Tier 0 (the element has no document of its own). Key the entry by the element-scoped logical ID, e.g. `C<NNN>-ADR<NNN>` for a decision on a Tier-0 component recorded on `docs/engineering/README.md`, or `ADR<NNN>` for an architecture-scoped decision recorded on `docs/engineering/README.md`.
-
-Template: [adr-inline.md](../assets/templates/adr-inline.md)
-
-Tier 1 — simple
+The record document names the affected element(s); each scoped element backlinks to it.
 
 Paths:
 
-- `docs/engineering/adrs/ADR<NNN>-<name>.md`
-- `docs/engineering/components/C<NNN>-<name>/adrs/ADR<NNN>-<name>.md`
+- `docs/engineering/drs/ADR<NNN>-<name>.md` (Tier 1 — own document)
+- `docs/engineering/drs/ADR<NNN>-<name>/README.md` (Tier 2 — own directory)
 
-Template: [adr-simple.md](../assets/templates/adr-simple.md)
-
-Tier 2 — nested
-
-Paths:
-
-- `docs/engineering/adrs/ADR<NNN>-<name>/README.md`
-- `docs/engineering/components/C<NNN>-<name>/adrs/ADR<NNN>-<name>/README.md`
-
-Template: [adr-nested.md](../assets/templates/adr-nested.md)
+Templates: [adr-document.md](../assets/templates/adr-document.md) (Tier 1), [adr-directory.md](../assets/templates/adr-directory.md) (Tier 2). See [Record elements](#record-elements) for tier selection.
 
 ### Change records
 
-Tier 0 — inline
+CRs live in one of two central directories, chosen by which side of the tree the change touches:
 
-Path: none — recorded in the appendix of the parent document that hosts the Tier-0 element (the element has no document of its own). Key the entry by the element-scoped logical ID, e.g. `O<NNN>-CR<NNN>` for a Tier-0 outcome on `docs/product/README.md`, or `C<NNN>-CR<NNN>` for a Tier-0 component on `docs/engineering/README.md`.
+- `docs/product/crs/` — changes to product, outcomes, risks, requirements, or jobs.
+- `docs/engineering/crs/` — changes to architecture or components.
 
-Template: [cr-inline.md](../assets/templates/cr-inline.md)
-
-Tier 1 — simple
-
-Paths:
-
-- `docs/product/crs/CR<NNN>-<name>.md`
-- `docs/product/outcomes/O<NNN>-<name>/crs/CR<NNN>-<name>.md`
-- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/crs/CR<NNN>-<name>.md`
-- `docs/engineering/crs/CR<NNN>-<name>.md`
-- `docs/engineering/components/C<NNN>-<name>/crs/CR<NNN>-<name>.md`
-
-Template: [cr-simple.md](../assets/templates/cr-simple.md)
-
-Outcome-, requirement-, and component-scoped Tier 1 paths require a Tier 2 nested parent. Product- and engineering-scoped Tier 1 paths do not.
-
-Tier 2 — nested
+The record document names the affected element(s); each scoped element backlinks to it. A CR that legitimately touches both sides is recorded once on the side most central to the change, and the other side's affected element(s) still backlink to it from their `## See Also`.
 
 Paths:
 
-- `docs/product/crs/CR<NNN>-<name>/README.md`
-- `docs/product/outcomes/O<NNN>-<name>/crs/CR<NNN>-<name>/README.md`
-- `docs/product/outcomes/O<NNN>-<name>/requirements/R<NNN>-<name>/crs/CR<NNN>-<name>/README.md`
-- `docs/engineering/crs/CR<NNN>-<name>/README.md`
-- `docs/engineering/components/C<NNN>-<name>/crs/CR<NNN>-<name>/README.md`
+- `docs/product/crs/CR<NNN>-<name>.md` (Tier 1 — own document)
+- `docs/engineering/crs/CR<NNN>-<name>.md` (Tier 1 — own document)
+- `docs/product/crs/CR<NNN>-<name>/README.md` (Tier 2 — own directory)
+- `docs/engineering/crs/CR<NNN>-<name>/README.md` (Tier 2 — own directory)
 
-Template: [cr-nested.md](../assets/templates/cr-nested.md)
-
-Same scoping rules as Tier 1.
+Templates: [cr-document.md](../assets/templates/cr-document.md) (Tier 1), [cr-directory.md](../assets/templates/cr-directory.md) (Tier 2). See [Record elements](#record-elements) for tier selection.
 
 ### Minimal directory tree
 
-The layout below is the floor for a [minimal product](#product-scale-profiles) — two Tier 1 documents with all other elements at Tier 0 inline on them. Material changes may appear as inline CRs, and material decisions as inline PDRs/ADRs, in the documents' appendices; no other paths are required.
+The layout below is the floor for a [minimal product](#product-scale-profiles) — two Tier 1 documents with all other elements at Tier 0 inline on them. No records are present. Capturing the first record adds the relevant central directory (`docs/product/crs/`, `docs/product/drs/`, `docs/engineering/crs/`, or `docs/engineering/drs/`) without touching any element.
 
 ```txt
 docs/
@@ -307,7 +217,7 @@ docs/
 
 ### Maximum directory tree
 
-The layout below is the ceiling — create each path only when its tier requires it. `.md` = Tier 1 simple file. `/<slug>/README.md` = Tier 2 nested folder.
+The layout below is the ceiling — create each path only when its tier requires it. `.md` = Tier 1 (own document). `/<slug>/README.md` = Tier 2 (own directory).
 
 ```txt
 docs/
@@ -319,52 +229,49 @@ docs/
     outcomes/
       O<NNN>-<name>.md
       O<NNN>-<name>/
-        crs/
-          CR<NNN>-<name>/
-            README.md
-          CR<NNN>-<name>.md
-        pdrs/
-          PDR<NNN>-<name>/
-            README.md
-          PDR<NNN>-<name>.md
         requirements/
           R<NNN>-<name>/
-            crs/
-              CR<NNN>-<name>/
-                README.md
-              CR<NNN>-<name>.md
-            pdrs/
-              PDR<NNN>-<name>/
-                README.md
-              PDR<NNN>-<name>.md
             README.md
           R<NNN>-<name>.md
         README.md
-    pdrs/
+    drs/
       PDR<NNN>-<name>/
         README.md
       PDR<NNN>-<name>.md
     README.md
   engineering/
-    adrs/
+    drs/
       ADR<NNN>-<name>/
         README.md
       ADR<NNN>-<name>.md
     components/
-      C<NNN>-<name>/
-        adrs/
-          ADR<NNN>-<name>/
-            README.md
-          ADR<NNN>-<name>.md
-        crs/
-          CR<NNN>-<name>/
-            README.md
-          CR<NNN>-<name>.md
-        README.md
       C<NNN>-<name>.md
+      C<NNN>-<name>/
+        README.md
     crs/
       CR<NNN>-<name>/
         README.md
       CR<NNN>-<name>.md
     README.md
 ```
+
+## Templates
+
+Every element × tier has one canonical template. The parent templates ([product.md](../assets/templates/product.md), [architecture.md](../assets/templates/architecture.md), [outcome-document.md](../assets/templates/outcome-document.md), [outcome-directory.md](../assets/templates/outcome-directory.md)) are the source of truth for [child rendering](#child-rendering) — the per-element sections above link to specific rows here.
+
+| Element | Tier | Template |
+|---|---|---|
+| Product | 1 | [product.md](../assets/templates/product.md) |
+| Outcome | 1 | [outcome-document.md](../assets/templates/outcome-document.md) |
+| Outcome | 2 | [outcome-directory.md](../assets/templates/outcome-directory.md) |
+| Requirement | 1 | [requirement-document.md](../assets/templates/requirement-document.md) |
+| Requirement | 2 | [requirement-directory.md](../assets/templates/requirement-directory.md) |
+| Architecture | 1 | [architecture.md](../assets/templates/architecture.md) |
+| Component | 1 | [component-document.md](../assets/templates/component-document.md) |
+| Component | 2 | [component-directory.md](../assets/templates/component-directory.md) |
+| CR | 1 | [cr-document.md](../assets/templates/cr-document.md) |
+| CR | 2 | [cr-directory.md](../assets/templates/cr-directory.md) |
+| PDR | 1 | [pdr-document.md](../assets/templates/pdr-document.md) |
+| PDR | 2 | [pdr-directory.md](../assets/templates/pdr-directory.md) |
+| ADR | 1 | [adr-document.md](../assets/templates/adr-document.md) |
+| ADR | 2 | [adr-directory.md](../assets/templates/adr-directory.md) |

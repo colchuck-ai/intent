@@ -1,6 +1,6 @@
 # O<NNN> - <Outcome Name>
 
-[Verb] [Unit of Measure] [Object]
+[Direction] [Metric] [Object] [Context]
 
 ## Risks
 
@@ -17,10 +17,14 @@
 - **O<NNN>-RSK<NNN> - <Risk Name>**: O<NNN>-R<NNN> - <Requirement Name>, O<NNN>-R<NNN> - <Requirement Name>
 - **O<NNN>-RSK<NNN> - <Risk Name>**: O<NNN>-R<NNN> - <Requirement Name>
 
-## Appendix: Decision Records
+## See Also
 
-<!-- Omit when empty. Each entry follows the pdr-inline.md template. -->
+<!-- Omit any subsection with no entries; omit this entire `## See Also` if every subsection would be empty. Records about this outcome live in the central directories under docs/product/; paths below are relative to this file at docs/product/outcomes/O<NNN>-<name>.md. -->
 
-## Appendix: Change Records
+### Product Decision Records
 
-<!-- Omit when empty. Each entry follows the cr-inline.md template. -->
+- [PDR<NNN> - <PDR Name>](../drs/PDR<NNN>-<name>.md)
+
+### Change Records
+
+- [CR<NNN> - <CR Name>](../crs/CR<NNN>-<name>.md)

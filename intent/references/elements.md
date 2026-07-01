@@ -6,7 +6,7 @@ For naming, paths, and tiers, see [structure.md](structure.md). For how to read,
 
 ## Alignment check
 
-Run these yes/no checks against any element. Any "no" is a fail. Read "parent" and "descendants" along the spine: product, job, outcome, risk, requirement, architecture, component.
+Run these yes/no checks against any element. Any "no" is a fail. Read "parent" and "descendants" along the spine: product, job, outcome, risk, requirement, architecture, component. Every element below runs this check without restatement; per-element sections note only element-specific deviations.
 
 Vertical alignment:
 
@@ -17,7 +17,7 @@ Sibling scoping (run across the siblings under one parent):
 
 - Minimal overlap: is overlap between siblings minimal? "No" means two siblings cover the same ground.
 - Agree on contact: where siblings touch the same situation, do they agree? "No" means siblings conflict on a shared point.
-- Cover the parent: do the siblings together cover the parent's scope without gaps? "No" means part of that scope is unserved.
+- Cover the parent: do the siblings together *completely enumerate* what better looks like for the parent — every customer-defined way of judging success? "No" means part of the parent's scope has no measurable expression.
 
 Coherence:
 
@@ -38,55 +38,56 @@ The product has no ancestors above it in this framework. Its descendants—jobs,
 
 ### Job
 
-A job is a goal someone is trying to achieve in a specific situation — the progress they want to make, not the product they use. It is functional, situational, and stable across changes to tools and features.
+A job is what the **job executor** — the person using the solution to make the progress — is trying to achieve in a specific situation. It is functional, situational, and stable across changes to tools and features.
 
-Run the [Alignment check](#alignment-check): a job's parent is the product and its descendants are outcomes; sibling jobs together cover the product's scope.
+Scope: this framework captures **core functional jobs** only. It does not model job steps, related jobs, emotional/social jobs, consumption-chain jobs, or purchase-decision jobs. Buyer and lifecycle-support roles have distinct jobs that are out of scope unless separately captured.
 
 Minimal Pattern:
 
-> When [Situation], I want to [Goal], so I can [Outcome].
+> When [Situation], I want to [Goal], so I can [Benefit].
 
 - Situation: when, where, or why the job arises — the context or trigger that creates the need.
-- Goal: what the person is trying to accomplish — the progress they want to make.
-- Outcome: why it matters — the benefit or result they expect from achieving the goal.
+- Goal: what the executor is trying to accomplish — the progress they want to make.
+- Benefit: why it matters — the result they expect from achieving the goal.
 
 Examples:
 
 **Good**
 
-> When I'm comparing options before a big purchase, I want to feel confident I'm not missing a better alternative, so I can buy without second-guessing.
+> When I'm about to make a significant purchase, I want to choose the option that best fits my needs, so I don't regret the decision later.
 
-Why it's good: it's functional (comparing options), situational (before a big purchase), and solution-free (no product named). The situation provides the trigger, the goal states the progress, and the outcome explains why it matters.
+Why it's good: it names the core functional job (choosing the option that best fits) — not an emotional job and not a single step in the shopping process. It's situational (before a significant purchase), solution-free (no product named), and stays stable across changes to tools and features.
 
 **Bad**
 
 > I want a product comparison app with filters and ratings.
 
-Why it's bad: it's a solution, not a job. Name is a product. Skips the situation and outcome entirely.
+Why it's bad: it's a solution, not a job. Names a product. Skips the situation and benefit entirely.
 
 ### Outcome
 
-An outcome is a measurable way the customer judges success while (or after) getting a job done. It answers: "What would 'better' look like?" in terms they care about — not in terms of your product. It is stated from the customer's perspective, measurable in principle, and free of solution naming.
+An outcome is a measurable way the customer judges success while (or after) getting a job done. It answers: "What would 'better' look like?" in terms they care about — not in terms of your product. It is stated from the customer's perspective, measurable in principle, and free of solution naming. Like the job it serves, an outcome is stable across changes in the solutions used to get the job done. Prioritization by importance/satisfaction (ODI's opportunity score) is out of scope for this framework; capture outcomes as targets, not ranked opportunities.
 
-Run the [Alignment check](#alignment-check): an outcome's parent is its owning job and its descendants are risks; sibling outcomes together cover the jobs they serve. Apply the sibling-scoping checks to cousin outcomes too, so peers and cousins together stay complete without contradiction.
+Apply the sibling-scoping checks to cousin outcomes as well as siblings, so peers and cousins together stay complete without contradiction.
 
 Minimal Pattern:
 
-> [Verb] [Unit of Measure] [Object]
+> [Direction] [Metric] [Object] [Context]
 
-- Verb: minimize or maximize
-- Unit of Measure: time, number, or likelihood — likelihood covers probability and confidence
-- Object: the specific thing being measured
+- Direction: minimize or maximize.
+- Metric: a performance measure — time, count, likelihood, rate, cost, effort, or similar.
+- Object: the specific thing being measured.
+- Context: the situation in which the outcome applies.
 
 Examples:
 
 **Good**
 
-- Minimize the time to identify the most relevant alternatives.
-- Minimize the likelihood of overlooking a meaningful difference between options.
-- Maximize the confidence that the chosen option meets the most important criteria.
+- Minimize the time to identify the most relevant alternatives when comparing options before a purchase.
+- Minimize the likelihood of overlooking a meaningful difference between options during a comparison session.
+- Maximize the confidence that the chosen option meets the most important criteria at time of decision.
 
-Why they're good: each is customer-centric (stated from their perspective), measurable in principle (time, likelihood, confidence), and solution-free (no feature or technology named). They follow the minimal pattern with a clear verb, unit of measure, and object.
+Why they're good: each is customer-centric (stated from their perspective), measurable in principle (time, likelihood, confidence), and solution-free (no feature or technology named). They follow the minimal pattern with a clear direction, metric, object, and the context in which the outcome applies.
 
 **Bad**
 
@@ -97,9 +98,9 @@ Why they're bad: they're feature requests, not measurable success metrics. They 
 
 ### Risk
 
-A risk is a condition or event that negatively impacts a desired outcome. It is tied to that outcome, measurable by likelihood and impact on the outcome, stated from the customer's perspective, and free of product or feature naming.
+Risks are this framework's deliberate departure from ODI. Where ODI expresses unmet needs as underserved outcomes (importance − satisfaction), this framework expresses them as risks (likelihood × impact) to make the outcome→requirement mitigation trace legible to engineering.
 
-Run the [Alignment check](#alignment-check): a risk's parent is its outcome and its descendants are the requirements that mitigate it. For sibling scoping, minimal overlap means no two risks duplicate the same failure mode, and where two risks bear on the same requirement they agree.
+A risk is a condition or event that negatively impacts a desired outcome. It is tied to that outcome, measurable by likelihood and impact on the outcome, stated from the customer's perspective, and free of product or feature naming.
 
 Minimal Pattern:
 
@@ -127,9 +128,9 @@ Why they're bad: the first only states a negative result — it restates an outc
 
 ### Requirement
 
-A requirement is what the product must do or respect to mitigate one or more risks. It is tied to specific risks, states what the product must do (not how it is built), is verifiable, and exists only to mitigate those risks.
+A requirement is what the product must do or respect to mitigate one or more risks. It is the engineering-facing bridge from outcomes to architecture, so unlike outcomes it may name product capabilities — but it must name the risk(s) and, through them, the outcome(s) it serves. A requirement that cannot be traced to a named risk is a feature request, not a requirement. It states what the product must do (not how it is built), and is verifiable.
 
-Run the [Alignment check](#alignment-check): a requirement's parents are its outcome and the risks it mitigates, and its descendants are architecture and components; sibling requirements together cover the mitigations the outcomes need. Apply the sibling-scoping checks to cousin requirements traced through shared architecture, so their demands stay compatible.
+Apply the sibling-scoping checks to cousin requirements traced through shared architecture, so their demands stay compatible.
 
 Minimal Pattern:
 
@@ -159,15 +160,13 @@ Why they're bad: they're implementation details, not requirements. They specify 
 
 Engineering is how the product is built. It is defined by the architecture that shapes it and the components that compose it.
 
-Run the [Alignment check](#alignment-check): engineering's parents are the product's requirements and outcomes, and its descendants are the architecture and components that realize them.
-
 Per the coherence check, product-facing and engineering-facing descriptions of the same requirement, component, or boundary must agree.
 
 ### Architecture
 
 An architecture is the set of decisions that define how components are organized, communicate, and constrain each other. It describes structure and relationships, not individual features in isolation, and is driven by product requirements.
 
-Run the [Alignment check](#alignment-check): the architecture's parents are the product, outcomes, and the requirements it must carry, and its descendants are the components that realize it. Beyond the check, structure, principles, and technology choices within the architecture must not contradict each other.
+Structure, principles, and technology choices within the architecture must not contradict each other.
 
 Examples:
 
@@ -186,8 +185,6 @@ Why it's bad: names technologies, not structure. Doesn't describe how parts rela
 ### Component
 
 A component is a distinct, implementable part of the system that fulfills one or more requirements. It has a clear scope, maps to those requirements, and is concrete enough to build, test, and deploy.
-
-Run the [Alignment check](#alignment-check): a component's parents are the architecture and the requirements it fulfills; sibling components together cover the architecture's obligations.
 
 Minimal Pattern:
 
@@ -222,11 +219,9 @@ Per the coherence check, records at related scope must not contradict each other
 
 ### Change Record (CR)
 
-A change record documents a modification to a product or engineering element — what changed, why, and what it affects. It is scoped to a specific element, explains what changed and why, and reads as a point-in-time modification. Trivial edits need no record. See [structure.md](structure.md#choosing-a-tier) for when to capture a change inline, as a file, or as a folder.
+A change record documents a modification to a product or engineering element — what changed, why, and what it affects. It is scoped to specific element(s), explains what changed and why, and reads as a point-in-time modification. Trivial edits need no record. See [structure.md](structure.md#change-records) for where CRs live and the outcome/component backlink rules.
 
 Run the [Alignment check](#alignment-check): a change record's parent is the element it names, and it must stay coherent with that element's ancestors and descendants on the trace.
-
-Per the coherence check, other change records that bear on the same fact or touch the same interface must not tell conflicting stories, and where they affect shared boundaries they agree on facts.
 
 Examples:
 
@@ -244,11 +239,9 @@ Why it's bad: it reads as a real change and even names a behavior, but it gives 
 
 ### Product Decision Record (PDR)
 
-A product decision record documents a product decision — the context, the options considered, and the choice made. It states the situation, alternatives, rationale, and consequences (including costs and follow-ups).
+A product decision record documents a product decision — the context, the options considered, and the choice made. It states the situation, alternatives, rationale, and consequences (including costs and follow-ups). Every captured PDR lives in `docs/product/drs/`, and the affected element(s) backlink to it.
 
 Run the [Alignment check](#alignment-check): a product decision record's parents are the product outcomes and requirements it affects, and its consequences must read through to downstream elements.
-
-Per the coherence check, product decision records at overlapping or related scope must not contradict without an explicit superseding record, and where decisions overlap they agree on facts and intent.
 
 Examples:
 
@@ -266,11 +259,9 @@ Why it's bad: no context, no alternatives considered, no justification, no conse
 
 ### Architectural Decision Record (ADR)
 
-An architectural decision record documents an engineering decision — the context, the options considered, and the choice made. It states the situation, alternatives, rationale, and consequences (including costs and follow-ups).
+An architectural decision record documents an engineering decision — the context, the options considered, and the choice made. It states the situation, alternatives, rationale, and consequences (including costs and follow-ups). Every captured ADR lives in `docs/engineering/drs/`, and the affected element(s) backlink to it.
 
 Run the [Alignment check](#alignment-check): an architectural decision record's parents are the architecture and components it constrains, and its tradeoffs must trace to the requirements and product intent above.
-
-Per the coherence check, architectural decision records at overlapping or related scope must not contradict without an explicit superseding record, and where decisions overlap they agree on facts and intent.
 
 Examples:
 

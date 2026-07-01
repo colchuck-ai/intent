@@ -2,6 +2,8 @@
 
 <Responsibility>
 
+<Optional paragraph: scope, boundaries, or context when the one-liner is not enough.>
+
 ## Data model
 
 <Owned or exposed entities, schemas, invariants. Omit section if trivial.>
@@ -33,10 +35,14 @@
 
 <Optional. Constraints, runbooks, or links not covered above.>
 
-## Appendix: Decision Records
+## See Also
 
-<!-- Omit when empty. Each entry follows the adr-inline.md template. -->
+<!-- Omit any subsection with no entries; omit this entire `## See Also` if every subsection would be empty. Records about this component live in the central directories under docs/engineering/; paths below are relative to this file at docs/engineering/components/C<NNN>-<name>.md. -->
 
-## Appendix: Change Records
+### Architectural Decision Records
 
-<!-- Omit when empty. Each entry follows the cr-inline.md template. -->
+- [ADR<NNN> - <ADR Name>](../drs/ADR<NNN>-<name>.md)
+
+### Change Records
+
+- [CR<NNN> - <CR Name>](../crs/CR<NNN>-<name>.md)
