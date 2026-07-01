@@ -1,18 +1,20 @@
 # Context Tracing
 
-Tracing rules for [workflows.md](workflows.md). Tiers, paths, and logical IDs are defined in [structure.md](structure.md).
+Tiers, paths, and logical IDs are defined in [structure.md](structure.md). Trace context by element before any read or modification. Do not load record types (CRs, PDRs, ADRs) until you need that history or those decisions for the task.
 
 ## Tracing across tiers
 
 Resolve where each element lives on disk from structure before tracing vertically or horizontally.
 
-- **Tier 0 (statement / inline)** — No dedicated path. Load the element from its parent document (see the Paths section in structure).
-- **Tier 1 (simple)** — Load the `<slug>.md` file at the path in structure.
-- **Tier 2 (nested)** — Load `<slug>/README.md` and child folders as needed.
+- **Tier 0 (statement)** — No dedicated path. Load the element from its parent document (see the Paths section in structure).
+- **Tier 1 (own document)** — Load the `<slug>.md` file at the path in structure.
+- **Tier 2 (own directory)** — Load `<slug>/README.md` and child folders as needed.
+
+Records (CRs, PDRs, ADRs) live in the four central directories — `docs/product/crs/`, `docs/product/drs/`, `docs/engineering/crs/`, `docs/engineering/drs/` — regardless of the element they scope. When a workflow calls for record history, follow the links in the scoped element's `## See Also` (Tier 1+) or its inline `**Product/Architectural Decision Records**` and `**Change Records**` lists (Tier 0).
 
 When referencing a Tier 0 element from another document, use its logical ID (structure Naming) and quote the minimal pattern from the parent — do not invent a path.
 
-When promoting during an update: Tier 0 to Tier 1 moves the inline content from the parent into the new simple file and replaces it on the parent with a reference link (see [Child rendering](structure.md#child-rendering)); Tier 1 to Tier 2 moves the file to `/<slug>/README.md` before adding child folders.
+When promoting during an update: Tier 0 to Tier 1 moves the inline content from the parent into the element's own document and collapses the parent's block down to the element's one-line summary plus a See link (see [Child rendering](structure.md#child-rendering)); Tier 1 to Tier 2 moves the file to `/<slug>/README.md` before adding child folders.
 
 Use **vertical** tracing along the spine: product, job, outcome, risk, requirement, architecture, component. Use **horizontal** tracing for lateral context. For **outcome** and **requirement**, **Horizontal** uses **self** (lateral links recorded on that element), **siblings** (peers under the same parent), and **cousins** (same depth, different branch — e.g. elements under a sibling of your parent). For **component**, **Horizontal** uses only **self** and **siblings** — components have no cousins. Risks and risk–requirement links live on the **outcome** element. Jobs live on the **product** element. Requirement–component mapping and system structure live on the **architecture** element.
 

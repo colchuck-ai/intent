@@ -1,8 +1,8 @@
-# <PDR ID> - <Decision Name>
+# <ADR ID> - <Decision Name>
 
-<What this decision is about — a concise summary.>
+<What this engineering decision is about — a concise summary.>
 
-<Optional paragraph: supporting detail, stakeholder input, or links to files in this folder (research, mockups, data).>
+<Optional paragraph: supporting detail, benchmarks, or spikes.>
 
 ## Context
 
@@ -24,13 +24,15 @@
 
 ## See Also
 
+<!-- Omit any subsection with no entries; omit this entire `## See Also` if every subsection would be empty. -->
+
 ### Change Records
 
 - [<CR Name>](<path>)
 
-### Related product elements
+### Related engineering elements
 
-- [<Outcome, job, requirement, or other parent doc>](<path>)
+- [<Architecture, component, or other doc>](<path>)
 
 ### Other Materials
 

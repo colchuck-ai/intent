@@ -2,7 +2,7 @@
 
 <What changed — name the scoped element(s) (e.g. outcome, requirement, architecture, component) and summarize the modification.>
 
-<Optional paragraph: diffs, migration notes, or links to files in this folder.>
+<Optional paragraph: diffs, migration notes, or fuller context.>
 
 ## Change
 
@@ -17,6 +17,8 @@
 <What else this modification impacts — elements, requirements, or follow-up work.>
 
 ## See Also
+
+<!-- Omit any subsection with no entries; omit this entire `## See Also` if every subsection would be empty. -->
 
 ### Decision Records
 

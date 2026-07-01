@@ -2,6 +2,8 @@
 
 <What this decision is about — a concise summary.>
 
+<Optional paragraph: supporting detail or stakeholder input.>
+
 ## Context
 
 <The situation, constraints, or triggers that prompted the decision.>

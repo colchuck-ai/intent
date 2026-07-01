@@ -1,44 +1,30 @@
 ---
 name: intent
-description: Build and maintain a traceable docs/product and docs/engineering documentation tree that links jobs-to-be-done and outcomes through risks, requirements, architecture, and components, with change records (CR), product decision records (PDR), and architectural decision records (ADR). Use when creating, editing, tracing, or placing these documents and their IDs/paths/tiers.
+description: Use when creating, editing, tracing, placing, or reviewing product or engineering intent documents under `docs/product/` or `docs/engineering/` — jobs-to-be-done, outcomes, risks, requirements, architecture, components, and their Change Records (CR), Product Decision Records (PDR), and Architectural Decision Records (ADR). Fire even when the user doesn't name the framework: "write a product spec", "capture why we chose X", "log this change", "record this decision", "draft an ADR/PDR/CR", "define the customer's job", "trace a requirement to a component", "check these docs for coherence", "where does this doc go / what should I name it". Also use for the draft/judge/review workflow and alignment checks. Skip for code changes, READMEs, marketing copy, or ad-hoc notes that don't link into the intent tree.
 ---
 
 # Intent
 
-A framework for structuring product and engineering intent as a traceable hierarchy — from jobs and outcomes through risks and requirements down to architecture and components — with decision and change records that keep the whole narrative coherent over time.
+## Principles
 
-## Global Guidance
-
-- Don't drift into implementation: jobs, outcomes, and risks must name no product, feature, or technology.
-- Keep outcomes measurable and from the customer's perspective (what "better" looks like), not feature requests.
-- State requirements as what the product must do, not how it's built; tie each to the risk(s) it mitigates.
-- Keep the trace coherent: nothing downstream may contradict what an ancestor claims.
 - Be candid about unknowns: "I don't know" / "we need more information" are valid, and mark assumptions as assumptions.
 - Write plainly so a junior PM or engineer gets it on the first pass.
+- Product-side vocabulary follows Ulwick/ODI (jobs, outcomes, needs-first sequencing); job syntax follows the Christensen job-story form. Deviations from ODI — Risk as a first-class element, no job map, no importance/satisfaction scoring, no job-type taxonomy, executor-only scope — are deliberate and documented in `references/elements.md`.
 
 ## Gotchas
 
 Non-obvious traps in this framework. Read before diving into a reference file.
 
-- Tier prerequisites cascade: a Tier-1 requirement file needs a Tier-2 *nested* outcome folder first, and Tier-1 outcome/requirement/component record files (CRs, PDRs, ADRs) need a Tier-2 nested parent (product- and engineering-scoped records do not). Promote the parent before creating the deeper path — or record the entry inline in the element's (or parent's) appendix to avoid promotion. See [references/structure.md](references/structure.md).
-- Creating a brand-new element produces no Change Record — there is no prior state. CRs are only for updates and deletes. See [references/workflows.md](references/workflows.md).
-- A Change Record is not a decision record: a CR logs *what changed and why*; PDRs/ADRs capture *a decision and its alternatives*. Don't conflate them. See [references/elements.md](references/elements.md).
-- Slug vs logical ID: filenames/folders (slugs) use only the local ID segment (e.g. `O001-<name>`); cross-tree references in document bodies use fully-qualified logical IDs (e.g. `O001-R001`). Don't repeat ancestor IDs in slugs. See [references/structure.md](references/structure.md).
+- Records (CR, PDR, ADR) live in the four central record directories, never inline or in per-element folders. See [references/structure.md](references/structure.md#record-elements).
+- Create produces no Change Record — CRs cover only updates and deletes. See [references/workflows.md](references/workflows.md).
+- A CR logs what changed and why; PDRs/ADRs capture the decision and its alternatives — don't merge them into one record.
+- Slugs use only the local ID segment; document bodies use fully-qualified logical IDs. See [references/structure.md](references/structure.md#naming).
 
-## Elements
+## References
 
-Load when you need to define, judge, or explain what something *is* — jobs, outcomes, risks, requirements, architecture, components, or records (CR, PDR, ADR). Use the minimal patterns and good/bad examples as the rubric for drafting and review.
-
-See [references/elements.md](references/elements.md).
-
-## Structure
-
-Load when you need to place content on disk — choosing a complexity tier, naming a file or folder, resolving a logical ID, or finding the path and template for an element or record.
-
-See [references/structure.md](references/structure.md).
-
-## Workflows
-
-Load when you are reading, creating, updating, or deleting intent documents. Covers context tracing (what to load before acting), the read workflow, and the three-session modification process (draft, judge, review).
-
-See [references/workflows.md](references/workflows.md).
+| File | Load when |
+|---|---|
+| [references/elements.md](references/elements.md) | Defining, judging, or explaining what something *is* — jobs, outcomes, risks, requirements, architecture, components, or records (CR, PDR, ADR). Use the minimal patterns and good/bad examples as the rubric for drafting and review. |
+| [references/structure.md](references/structure.md) | Placing content on disk — choosing a complexity tier, naming a file or folder, resolving a logical ID, or finding the path and template for an element or record. |
+| [references/workflows.md](references/workflows.md) | Reading, creating, updating, or deleting intent documents. Covers the read workflow and the draft/judge/review modification process. |
+| [references/context-tracing.md](references/context-tracing.md) | Tracing what to load along the spine and laterally before read or any modification — vertical and horizontal traversal rules, and when to load records. |

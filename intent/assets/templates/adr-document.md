@@ -2,7 +2,7 @@
 
 <What this engineering decision is about — a concise summary.>
 
-<Optional paragraph: supporting detail, benchmarks, spikes, or links to files in this folder.>
+<Optional paragraph: supporting detail, benchmarks, or spikes.>
 
 ## Context
 
@@ -21,17 +21,3 @@
 
 - <Positive or enabling consequence>
 - <Negative, cost, or follow-up consequence>
-
-## See Also
-
-### Change Records
-
-- [<CR Name>](<path>)
-
-### Related engineering elements
-
-- [<Architecture, component, or other doc>](<path>)
-
-### Other Materials
-
-- [<Material Name>](<path>)

@@ -1,6 +1,6 @@
 # O<NNN> - <Outcome Name>
 
-[Verb] [Unit of Measure] [Object]
+[Direction] [Metric] [Object] [Context]
 
 ## Risks
 
@@ -11,13 +11,13 @@
 
 <!-- Render each requirement by its tier (see references/structure.md#child-rendering): -->
 <!--   - Tier 0 requirement — inline form: bullet with the minimal pattern. -->
-<!--   - Tier 1+ requirement — reference form: a single link bullet. -->
+<!--   - Tier 1+ requirement — reference form: same bullet shape, but the name links to the child doc. -->
 
 <!-- Inline form (Tier 0 requirement) -->
 - **O<NNN>-R<NNN>** - <Requirement Name>: [Product/Solution] must [Capability/Constraint]
 
 <!-- Reference form (Tier 1+ requirement) -->
-- [O<NNN>-R<NNN> - <Requirement Name>](requirements/R<NNN>-<name>.md)
+- **O<NNN>-R<NNN>** - [<Requirement Name>](requirements/R<NNN>-<name>.md): [Product/Solution] must [Capability/Constraint]
 
 ## Risk-Requirement Map
 
@@ -26,17 +26,15 @@
 
 ## See Also
 
-### Requirements
-
-- [<Requirement Name>](requirements/<R filename>)
+<!-- Omit any subsection with no entries; omit this entire `## See Also` if every subsection would be empty. Records about this outcome live in the central directories under docs/product/; paths below are relative to this file at docs/product/outcomes/O<NNN>-<name>/README.md. -->
 
 ### Product Decision Records
 
-- [<PDR Name>](pdrs/<PDR filename>)
+- [PDR<NNN> - <PDR Name>](../../drs/PDR<NNN>-<name>.md)
 
 ### Change Records
 
-- [<CR Name>](crs/<CR filename>)
+- [CR<NNN> - <CR Name>](../../crs/CR<NNN>-<name>.md)
 
 ### Other Materials
 
