@@ -1,3 +1,13 @@
+<!--
+  Tier 2 template. Sibling: requirement-document.md (Tier 1).
+
+  Delta from sibling:
+  - `## See Also` comment: paths relative to .../requirements/R<NNN>-<name>/README.md (not .md).
+  - PDR/CR backlinks use one extra `../` (../../../../ vs ../../../) for the directory depth.
+  - Adds `### Other Materials` under `## See Also`.
+
+  Sync: Title through `## Dependencies` must match requirement-document.md; update both siblings in the same commit.
+-->
 # O<NNN>-R<NNN> - <Requirement Name>
 
 [Product/Solution] must [Capability/Constraint]

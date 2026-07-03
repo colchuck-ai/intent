@@ -1,3 +1,15 @@
+<!--
+  Tier 2 template. Sibling: component-document.md (Tier 1).
+
+  Delta from sibling:
+  - `## Data model` / `## Interfaces`: optional link to supplementary files in this folder.
+  - `## Notes`: "operational detail" (vs "links") when the section is used.
+  - `## See Also` comment: paths relative to .../components/C<NNN>-<name>/README.md (not .md).
+  - ADR/CR backlinks use one extra `../` (../../ vs ../) for the directory depth.
+  - Adds `### Other Materials` under `## See Also`.
+
+  Sync: Title, responsibility paragraphs, `## Behavior`, `## Edge cases`, `## Relationships`, and `## Success criteria` must match component-document.md; update both siblings in the same commit.
+-->
 # C<NNN> - <Component Name>
 
 <Responsibility>

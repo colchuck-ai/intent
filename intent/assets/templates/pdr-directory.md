@@ -1,3 +1,11 @@
+<!--
+  Tier 2 template. Sibling: pdr-document.md (Tier 1).
+
+  Delta from sibling:
+  - Adds entire `## See Also` (`### Change Records`, `### Related product elements`, `### Other Materials`).
+
+  Sync: Title through `## Consequences` must match pdr-document.md; update both siblings in the same commit.
+-->
 # <PDR ID> - <Decision Name>
 
 <What this decision is about — a concise summary.>

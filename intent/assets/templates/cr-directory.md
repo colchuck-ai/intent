@@ -1,3 +1,11 @@
+<!--
+  Tier 2 template. Sibling: cr-document.md (Tier 1).
+
+  Delta from sibling:
+  - Adds entire `## See Also` (`### Decision Records`, `### Related elements`, `### Other Materials`).
+
+  Sync: Title through `## Affects` must match cr-document.md; update both siblings in the same commit.
+-->
 # <CR ID> - <CR Name>
 
 <What changed — name the scoped element(s) (e.g. outcome, requirement, architecture, component) and summarize the modification.>

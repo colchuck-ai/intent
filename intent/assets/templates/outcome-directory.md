@@ -1,3 +1,14 @@
+<!--
+  Tier 2 template. Sibling: outcome-document.md (Tier 1).
+
+  Delta from sibling:
+  - `## Requirements`: tier rendering comments (Tier 0 inline vs Tier 1+ reference link).
+  - `## See Also` comment: paths relative to .../outcomes/O<NNN>-<name>/README.md (not .md).
+  - PDR/CR backlinks use one extra `../` (../../ vs ../) for the directory depth.
+  - Adds `### Other Materials` under `## See Also`.
+
+  Sync: Title, [Direction] line, `## Risks`, and `## Risk-Requirement Map` must match outcome-document.md; update both siblings in the same commit.
+-->
 # O<NNN> - <Outcome Name>
 
 [Direction] [Metric] [Object] [Context]

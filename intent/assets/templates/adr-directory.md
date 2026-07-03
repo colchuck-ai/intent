@@ -1,3 +1,11 @@
+<!--
+  Tier 2 template. Sibling: adr-document.md (Tier 1).
+
+  Delta from sibling:
+  - Adds entire `## See Also` (`### Change Records`, `### Related engineering elements`, `### Other Materials`).
+
+  Sync: Title through `## Consequences` must match adr-document.md; update both siblings in the same commit.
+-->
 # <ADR ID> - <Decision Name>
 
 <What this engineering decision is about — a concise summary.>
