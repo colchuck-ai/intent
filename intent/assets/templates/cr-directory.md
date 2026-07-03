@@ -1,4 +1,4 @@
-# <CR ID> - <Change Name>
+# <CR ID> - <CR Name>
 
 <What changed — name the scoped element(s) (e.g. outcome, requirement, architecture, component) and summarize the modification.>
 
