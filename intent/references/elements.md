@@ -102,6 +102,8 @@ Risks are this framework's deliberate departure from ODI. Where ODI expresses un
 
 A risk is a condition or event that negatively impacts a desired outcome. It is tied to that outcome, measurable by likelihood and impact on the outcome, stated from the customer's perspective, and free of product or feature naming.
 
+Each risk has a **logical ID** of `O<NNN>-RSK<NNN>` — the owning outcome's ID plus a risk sequence number (for example, `O001-RSK001`). Risks are always recorded inline with their outcome; there is no separate risk file or slug. Use `RSK` in the ID, not `R`: requirements use `O<NNN>-R<NNN>` (the `R` segment names a requirement, not a risk). For slug, numbering, and cross-reference conventions, see [structure.md#naming](structure.md#naming).
+
 Minimal Pattern:
 
 > [Condition/Event] [Negative Impact on Outcome]
