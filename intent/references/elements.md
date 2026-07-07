@@ -134,6 +134,8 @@ A requirement is what the product must do or respect to mitigate one or more ris
 
 Apply the sibling-scoping checks to cousin requirements traced through shared architecture, so their demands stay compatible.
 
+`## Dependencies` lists **prerequisite** requirements — other requirement elements this one cannot be satisfied without (blocking product coupling). It is not implementation order, sprint sequencing, or a record of shared risks (those live in `## Mitigates` and the outcome's risk–requirement mapping). When this requirement assumes a component contract defined by another requirement, list that owner here.
+
 Minimal Pattern:
 
 > [Product/Solution] must [Capability/Constraint]

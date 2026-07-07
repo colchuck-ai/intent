@@ -73,7 +73,7 @@ Use **vertical** tracing along the spine: product, job, outcome, risk, requireme
 ### Horizontal
 
 - **self**
-  1. Dependencies and cross-references recorded on this requirement.
+  1. `## Dependencies` — prerequisite requirements this one cannot be satisfied without (blocking product coupling, not implementation order); plus any other cross-references recorded on this requirement.
 - **siblings**
   1. Other requirement elements under the same outcome (depends, conflicts, shared risk or component — use the parent outcome as needed).
 - **cousins**

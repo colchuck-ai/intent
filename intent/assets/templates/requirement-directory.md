@@ -43,6 +43,8 @@
 
 ## Dependencies
 
+<!-- Prerequisite requirements only: other requirement elements this one cannot be satisfied without (blocking product coupling — not implementation order, sprint sequencing, or shared-risk links). When this requirement assumes a component contract defined elsewhere, list the requirement that owns that contract. Omit this section when there are no prerequisites. -->
+
 - **O<NNN>-R<NNN>** - <Requirement Name>
 - **O<NNN>-R<NNN>** - <Requirement Name>
 
