@@ -17,7 +17,12 @@ Sibling scoping (run across the siblings under one parent):
 
 - Minimal overlap: is overlap between siblings minimal? "No" means two siblings cover the same ground.
 - Agree on contact: where siblings touch the same situation, do they agree? "No" means siblings conflict on a shared point.
-- Cover the parent: do the siblings together *completely enumerate* what better looks like for the parent — every customer-defined way of judging success? "No" means part of the parent's scope has no measurable expression.
+- Cover the parent (gap check — no ranking or scoring):
+  1. Enumerate every customer-defined dimension of "better" for the parent: each distinct way the customer would judge the parent succeeds. Draw the list from the parent's own text; do not rank or score dimensions (outcomes are targets, not ODI opportunities).
+  2. Map each dimension to one or more siblings that express it.
+  3. Treat any unmapped dimension as a gap.
+
+  Pass only if there are zero gaps. "No" means part of the parent's scope has no measurable expression in any sibling.
 
 Coherence:
 
