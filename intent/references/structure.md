@@ -65,8 +65,10 @@ Conventions for the `<name>` and `<NNN>` segments:
 
 - **Name segment** (the `<name>` in slugs like `O<NNN>-<name>`): lowercase kebab-case — words separated by single hyphens, with no spaces, underscores, or capitals. Keep it short and descriptive.
 - **Number** (`<NNN>`): zero-padded to three digits (e.g. `001`, `042`); once past `999`, keep the natural width (`1000`+).
-- **Assignment**: use the lowest unused number within that element's scope (outcomes are numbered within the product, requirements within their owning outcome, components within the architecture, and so on).
+- **Assignment**: use the lowest unused number within that element's scope (jobs and outcomes are numbered within the product, requirements within their owning outcome, components within the architecture, and so on).
 - **No reuse**: never reuse a number after an element is deleted — retired numbers stay retired so historical references and records remain unambiguous.
+
+Jobs are always Tier 0 and have no dedicated template — they render inline on the product document via [product.md](../assets/templates/product.md). That absence from the [Templates](#templates) index is deliberate, not an omission.
 
 Cross-tree references in document bodies and record titles use **logical IDs** that qualify from the product or engineering root so they are unambiguous outside their folder:
 
