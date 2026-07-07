@@ -22,8 +22,9 @@
 <!-- Render each component by its tier (see references/structure.md#child-rendering): -->
 <!--   - Tier 0 component — inline block: H3 heading + responsibility line + bold-labeled flat list. -->
 <!--   - Tier 1+ component — reference block: H3 heading + responsibility one-liner + "See [link]" line. -->
+<!-- Pick exactly one form per component — never emit both blocks below for the same child. -->
 
-<!-- Inline form (Tier 0 component) -->
+<!-- Inline form (Tier 0 component) — use this block OR the reference block, not both -->
 ### C<NNN> - <Component Name>
 
 <Responsibility>
@@ -43,7 +44,7 @@
 
 - [CR<NNN> - <CR Name>](crs/CR<NNN>-<name>.md)
 
-<!-- Reference form (Tier 1+ component) -->
+<!-- Reference form (Tier 1+ component) — use this block OR the inline block above, not both -->
 ### C<NNN> - <Component Name>
 
 <Responsibility>

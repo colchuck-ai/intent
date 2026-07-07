@@ -23,11 +23,12 @@
 <!-- Render each requirement by its tier (see references/structure.md#child-rendering): -->
 <!--   - Tier 0 requirement — inline form: bullet with the minimal pattern. -->
 <!--   - Tier 1+ requirement — reference form: same bullet shape, but the name links to the child doc. -->
+<!-- Pick exactly one form per requirement — never emit both bullets below for the same child. -->
 
-<!-- Inline form (Tier 0 requirement) -->
+<!-- Inline form (Tier 0 requirement) — use this bullet OR the reference bullet, not both -->
 - **O<NNN>-R<NNN>** - <Requirement Name>: [Product/Solution] must [Capability/Constraint]
 
-<!-- Reference form (Tier 1+ requirement) -->
+<!-- Reference form (Tier 1+ requirement) — use this bullet OR the inline bullet above, not both -->
 - **O<NNN>-R<NNN>** - [<Requirement Name>](requirements/R<NNN>-<name>.md): [Product/Solution] must [Capability/Constraint]
 
 ## Risk-Requirement Map

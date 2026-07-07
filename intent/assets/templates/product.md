@@ -11,8 +11,9 @@
 <!-- Render each outcome under this job by its tier (see references/structure.md#child-rendering): -->
 <!--   - Tier 0 outcome — inline block: H4 heading + minimal pattern + bold-labeled flat lists. -->
 <!--   - Tier 1+ outcome — reference block: H4 heading + minimal-pattern one-liner + "See [link]" line. -->
+<!-- Pick exactly one form per outcome — never emit both blocks below for the same child. -->
 
-<!-- Inline form (Tier 0 outcome) -->
+<!-- Inline form (Tier 0 outcome) — use this block OR the reference block, not both -->
 #### O<NNN> - <Outcome Name>
 
 [Direction] [Metric] [Object] [Context]
@@ -42,7 +43,7 @@
 
 - [CR<NNN> - <CR Name>](crs/CR<NNN>-<name>.md)
 
-<!-- Reference form (Tier 1+ outcome) -->
+<!-- Reference form (Tier 1+ outcome) — use this block OR the inline block above, not both -->
 #### O<NNN> - <Outcome Name>
 
 [Direction] [Metric] [Object] [Context]
