@@ -20,6 +20,21 @@ Non-obvious traps in this framework. Read before diving into a reference file.
 - A CR logs what changed and why; PDRs/ADRs capture the decision and its alternatives — don't merge them into one record.
 - Slugs use only the local ID segment; document bodies use fully-qualified logical IDs. See [references/structure.md](references/structure.md#naming).
 
+## Available scripts
+
+Run from the skill root (`intent/`). JSON on stdout; diagnostics on stderr.
+
+| Script | Purpose |
+|---|---|
+| [scripts/lint_intent_tree.py](scripts/lint_intent_tree.py) | Mechanical first pass for the Judge loop — logical-ID format/uniqueness/no-reuse, backlink bidirectionality, empty headings, requirements without linked risks, CR tree-side placement. |
+
+```bash
+python3 scripts/lint_intent_tree.py [DOCS_ROOT]   # default: docs/
+python3 scripts/lint_intent_tree.py --help
+```
+
+Exit codes: `0` clean, `1` violations, `2` usage error.
+
 ## References
 
 | File | Load when |
