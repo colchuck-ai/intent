@@ -89,7 +89,7 @@ Depends on Phases 1–2 (the script encodes finalized content + template-structu
 
 Depends on all prior tasks. This is the skill's own validate-and-fix loop applied to itself.
 
-- [ ] **T11 · Re-run the full review suite** — (1) `validate_skill.py` clean; (2) cold-maintainer test against a **fresh** subagent — target Q1–Q4 correct **and Q5 empty**; (3) activation eval for the T9 description (~20 labeled queries, near-miss-weighted). *Accept:* Q5 shrinks to empty (or only self-discounted observations remain); activation precision holds on near-misses. Feed any residual failures back as new tasks.
+- [x] **T11 · Re-run the full review suite** — (1) `validate_skill.py` clean; (2) cold-maintainer test against a **fresh** subagent — target Q1–Q4 correct **and Q5 empty**; (3) activation eval for the T9 description (~20 labeled queries, near-miss-weighted). *Accept:* Q5 shrinks to empty (or only self-discounted observations remain); activation precision holds on near-misses. Feed any residual failures back as new tasks. → See `intent/evals/T11-verification-report.md` (PASS; 3 optional Minor follow-ups documented).
 
 ---
 
