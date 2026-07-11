@@ -52,7 +52,49 @@ You don't scaffold a directory tree up front. Every element starts as a one-line
 | **1 — simple** | its own `<slug>.md` file | it needs detail, edge cases, or its own records |
 | **2 — nested** | a `<slug>/` folder | it needs child files or folders |
 
-A minimal product is just two files (`docs/product/README.md`, `docs/engineering/README.md`); a complex one nests as far as it needs to. Records follow the same ladder (none, inline, simple, nested).
+A minimal product is just two files:
+
+```txt
+docs/
+  product/
+    README.md
+  engineering/
+    README.md
+```
+
+Records follow the same ladder (none, inline, simple, nested). A complex product nests as far as it needs to — this is the ceiling, not a starting scaffold:
+
+```txt
+docs/
+  crs/
+    CR<NNN>-<name>/
+      README.md
+    CR<NNN>-<name>.md
+  product/
+    outcomes/
+      O<NNN>-<name>.md
+      O<NNN>-<name>/
+        requirements/
+          R<NNN>-<name>/
+            README.md
+          R<NNN>-<name>.md
+        README.md
+    drs/
+      PDR<NNN>-<name>/
+        README.md
+      PDR<NNN>-<name>.md
+    README.md
+  engineering/
+    drs/
+      ADR<NNN>-<name>/
+        README.md
+      ADR<NNN>-<name>.md
+    components/
+      C<NNN>-<name>.md
+      C<NNN>-<name>/
+        README.md
+    README.md
+```
 
 ## How to use it
 
