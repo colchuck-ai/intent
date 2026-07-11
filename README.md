@@ -34,15 +34,13 @@ flowchart TD
 
     Requirement == fulfilled by ==> Component
 
-    PDR["Product Decision Record (PDR)"] -. decision on .-> Outcome
-    PDR -. decision on .-> Requirement
-    ADR["Architectural Decision Record (ADR)"] -. decision on .-> Architecture
-    ADR -. decision on .-> Component
-    CR["Change Record (CR)"] -. change to .-> Requirement
-    CR -. change to .-> Component
+    PDR["Product Decision Record (PDR)"] -. decision on .-> PRODUCT
+    ADR["Architectural Decision Record (ADR)"] -. decision on .-> ENGINEERING
+    CR["Change Record (CR)"] -. change to .-> PRODUCT
+    CR -. change to .-> ENGINEERING
 ```
 
-Solid arrows are the current-state spine; the bold arrow is the one link that crosses from product to engineering; dashed arrows are records — point-in-time history and decisions, not structure.
+Solid arrows are the current-state spine; the bold arrow is the one link that crosses from product to engineering; dashed arrows are records — point-in-time history and decisions, not structure. A PDR can decide on anything in the product spine, an ADR on anything in the engineering spine, and a CR can change anything on either — so each record points at the whole spine it scopes to, not one element.
 
 ## Starts small, grows only when needed
 
