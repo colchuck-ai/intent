@@ -22,7 +22,7 @@ Per-element promotion rules for outcomes, requirements, and components appear in
 
 ### Record elements
 
-Every CR, PDR, and ADR lives in one of four central directories — `docs/product/crs/`, `docs/product/drs/`, `docs/engineering/crs/`, `docs/engineering/drs/` — never inline, never in per-element folders, never in appendices. The scoped element backlinks via `## See Also` (Tier 1+) or a bold-label list in its inline block (Tier 0). **Capturing a record never promotes the element it concerns.**
+Every CR, PDR, and ADR lives in a central directory, never inline, never in per-element folders, never in appendices. PDRs and ADRs are side-scoped — `docs/product/drs/`, `docs/engineering/drs/` — because a PDR's parents are always product elements and an ADR's parents are always engineering elements. CRs are not side-scoped: a single root `docs/crs/` holds every CR, since one change record may name product elements, engineering elements, or both. The scoped element backlinks via `## See Also` (Tier 1+) or a bold-label list in its inline block (Tier 0). **Capturing a record never promotes the element it concerns.**
 
 | Tier | Name | On disk | Promote when |
 |---|---|---|---|
@@ -83,7 +83,7 @@ Cross-tree references in document bodies and record titles use **logical IDs** t
 | ADR | `ADR<NNN>-<name>` | `ADR<NNN>` |
 | CR | `CR<NNN>-<name>` | `CR<NNN>` |
 
-Records carry no element prefix in their logical ID — the record document itself names the element(s) it scopes. PDRs and ADRs live in a single directory each (`docs/product/drs/` and `docs/engineering/drs/`), giving each one a globally unique number. CRs share a single logical-ID namespace (`CR<NNN>`); each file lives in `docs/product/crs/` or `docs/engineering/crs/` depending on which side of the tree the change touches. To resolve a bare `CR<NNN>` reference, follow the link from the element's `## See Also` (or inline `**Change Records**` list), or search both `crs/` directories.
+Records carry no element prefix in their logical ID — the record document itself names the element(s) it scopes. PDRs and ADRs each live in a single side-scoped directory (`docs/product/drs/` and `docs/engineering/drs/`), giving each one a globally unique number. CRs live in a single root `docs/crs/` directory regardless of which side they touch, giving `CR<NNN>` a globally unique number in one place. To resolve a bare `CR<NNN>` reference, follow the link from the element's `## See Also` (or inline `**Change Records**` list), or look it up directly in `docs/crs/`.
 
 ## Paths
 
@@ -189,25 +189,20 @@ Templates: [adr-document.md](../assets/templates/adr-document.md) (Tier 1), [adr
 
 ### Change records
 
-CRs live in one of two central directories, chosen by which side of the tree the change touches:
+CRs live in a single root-level central directory, regardless of which side of the tree the change touches — a change record may name product elements, engineering elements, or both without any tie-break needed.
 
-- `docs/product/crs/` — changes to product, outcomes, risks, requirements, or jobs.
-- `docs/engineering/crs/` — changes to architecture or components.
-
-The record document names the affected element(s); each scoped element backlinks to it. A CR that legitimately touches both sides is recorded once on the side most central to the change, and the other side's affected element(s) still backlink to it from their `## See Also`.
+The record document names the affected element(s); each scoped element backlinks to it, whichever side of the tree it's on.
 
 Paths:
 
-- `docs/product/crs/CR<NNN>-<name>.md` (Tier 1 — own document)
-- `docs/engineering/crs/CR<NNN>-<name>.md` (Tier 1 — own document)
-- `docs/product/crs/CR<NNN>-<name>/README.md` (Tier 2 — own directory)
-- `docs/engineering/crs/CR<NNN>-<name>/README.md` (Tier 2 — own directory)
+- `docs/crs/CR<NNN>-<name>.md` (Tier 1 — own document)
+- `docs/crs/CR<NNN>-<name>/README.md` (Tier 2 — own directory)
 
 Templates: [cr-document.md](../assets/templates/cr-document.md) (Tier 1), [cr-directory.md](../assets/templates/cr-directory.md) (Tier 2). See [Record elements](#record-elements) for tier selection.
 
 ### Minimal directory tree
 
-The layout below is the floor for a [minimal product](#product-scale-profiles) — two Tier 1 documents with all other elements at Tier 0 inline on them. No records are present. Capturing the first record adds the relevant central directory (`docs/product/crs/`, `docs/product/drs/`, `docs/engineering/crs/`, or `docs/engineering/drs/`) without touching any element.
+The layout below is the floor for a [minimal product](#product-scale-profiles) — two Tier 1 documents with all other elements at Tier 0 inline on them. No records are present. Capturing the first record adds the relevant central directory (`docs/crs/`, `docs/product/drs/`, or `docs/engineering/drs/`) without touching any element.
 
 ```txt
 docs/
@@ -223,11 +218,11 @@ The layout below is the ceiling — create each path only when its tier requires
 
 ```txt
 docs/
+  crs/
+    CR<NNN>-<name>/
+      README.md
+    CR<NNN>-<name>.md
   product/
-    crs/
-      CR<NNN>-<name>/
-        README.md
-      CR<NNN>-<name>.md
     outcomes/
       O<NNN>-<name>.md
       O<NNN>-<name>/
@@ -250,10 +245,6 @@ docs/
       C<NNN>-<name>.md
       C<NNN>-<name>/
         README.md
-    crs/
-      CR<NNN>-<name>/
-        README.md
-      CR<NNN>-<name>.md
     README.md
 ```
 
