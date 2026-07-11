@@ -1,8 +1,8 @@
-# T11 Verification Report — intent skill review suite
+# Verification Report — intent skill review suite
 
 Date: 2026-07-07  
 Skill path: `intent/`  
-Description length: 872 chars (post-T9)
+Description length: 872 chars (SKILL.md frontmatter)
 
 ## 1. validate_skill.py
 
@@ -39,7 +39,7 @@ Subagent read: `SKILL.md`, `references/elements.md`, `references/structure.md`, 
 
 **Cold-maintainer verdict: PASS** (Q1–Q4 correct; Q5 contains only self-discounted observations plus three minor legibility gaps suitable for follow-up beads).
 
-## 3. Activation eval (T9 description, 20 labeled queries)
+## 3. Activation eval (SKILL.md description, 20 labeled queries)
 
 Method: labeled queries (~50% should-trigger, near-miss-heavy). Judged whether the current `description` frontmatter would cause correct skill selection.
 
@@ -58,7 +58,7 @@ Recall on should-trigger set: **10/10**
 | 8 | Run the draft/judge/review workflow on this requirement | trigger | ✓ |
 | 9 | What template for a Tier 2 outcome directory? | trigger | ✓ |
 | 10 | Review alignment between parent outcome and child requirements | trigger | ✓ |
-| 11 | Write a product spec (no docs/tree context) | no-trigger | ✓ T9 anchor requires tree context |
+| 11 | Write a product spec (no docs/tree context) | no-trigger | ✓ description's tree-context anchor requires it |
 | 12 | Define the customer's job for a sales pitch deck | no-trigger | ✓ not intent-tree work |
 | 13 | Update the README install section | no-trigger | ✓ explicit skip |
 | 14 | Fix the auth login bug in src/ | no-trigger | ✓ code change skip |
@@ -69,7 +69,7 @@ Recall on should-trigger set: **10/10**
 | 19 | Capture why we chose X in Slack, not in docs/ | no-trigger | ✓ no intent-tree placement |
 | 20 | Draft an ADR for our office lunch policy | no-trigger | ✓ ADR named but not engineering/product intent |
 
-**Activation verdict: PASS** — near-miss precision holds; generic triggers remain anchored to intent-tree context per T9.
+**Activation verdict: PASS** — near-miss precision holds; generic triggers remain anchored to intent-tree context.
 
 ## Summary
 
