@@ -15,7 +15,7 @@ description: Use when creating, editing, tracing, placing, or reviewing product 
 
 Non-obvious traps in this framework. Read before diving into a reference file.
 
-- Records (CR, PDR, ADR) live in the four central record directories, never inline or in per-element folders. See [references/structure.md](references/structure.md#record-elements).
+- Records (CR, PDR, ADR) live in central record directories, never inline or in per-element folders. PDRs and ADRs are side-scoped (`docs/product/drs/`, `docs/engineering/drs/`); CRs live in a single root `docs/crs/` regardless of which side they touch. See [references/structure.md](references/structure.md#record-elements).
 - Create produces no Change Record — CRs cover only updates and deletes. See [references/workflows.md](references/workflows.md).
 - A CR logs what changed and why; PDRs/ADRs capture the decision and its alternatives — don't merge them into one record.
 - Slugs use only the local ID segment; document bodies use fully-qualified logical IDs. See [references/structure.md](references/structure.md#naming).
@@ -26,7 +26,7 @@ Run from the skill root (`intent/`). JSON on stdout; diagnostics on stderr.
 
 | Script | Purpose |
 |---|---|
-| [scripts/lint_intent_tree.py](scripts/lint_intent_tree.py) | Mechanical first pass for the Judge loop — logical-ID format/uniqueness/no-reuse, backlink bidirectionality, empty headings, requirements without linked risks, CR tree-side placement. |
+| [scripts/lint_intent_tree.py](scripts/lint_intent_tree.py) | Mechanical first pass for the Judge loop — logical-ID format/uniqueness/no-reuse, backlink bidirectionality, empty headings, requirements without linked risks, CR root-directory placement. |
 
 ```bash
 python3 scripts/lint_intent_tree.py [DOCS_ROOT]   # default: docs/

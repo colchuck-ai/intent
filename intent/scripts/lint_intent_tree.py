@@ -10,7 +10,7 @@ Scans markdown under a docs/ root (default: docs/) and reports violations for:
   - backlink bidirectionality between linked intent documents
   - empty headings (structure.md "Never emit an empty heading")
   - requirements with no linked risk (feature-request smell)
-  - change records stored on the wrong product/engineering tree side
+  - change records stored outside the root docs/crs/ directory
 
 JSON report on stdout; human-readable diagnostics on stderr.
 
@@ -74,9 +74,6 @@ H1_ID_RE = re.compile(
     r")\s*-\s*.+$"
 )
 
-PRODUCT_ID = re.compile(r"\b(?:J|O\d{3,}|O\d{3,}-RSK\d{3,}|O\d{3,}-R\d{3,}|PDR\d{3,})\b")
-ENGINEERING_ID = re.compile(r"\b(?:C\d{3,}|ADR\d{3,})\b")
-
 FILENAME_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("outcome", re.compile(r"^product/outcomes/(O\d{3,})-[^/]+(?:/README\.md|\.md)$")),
     (
@@ -88,8 +85,7 @@ FILENAME_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("component", re.compile(r"^engineering/components/(C\d{3,})-[^/]+(?:/README\.md|\.md)$")),
     ("pdr", re.compile(r"^product/drs/(PDR\d{3,})-[^/]+(?:/README\.md|\.md)$")),
     ("adr", re.compile(r"^engineering/drs/(ADR\d{3,})-[^/]+(?:/README\.md|\.md)$")),
-    ("cr", re.compile(r"^product/crs/(CR\d{3,})-[^/]+(?:/README\.md|\.md)$")),
-    ("cr", re.compile(r"^engineering/crs/(CR\d{3,})-[^/]+(?:/README\.md|\.md)$")),
+    ("cr", re.compile(r"^crs/(CR\d{3,})-[^/]+(?:/README\.md|\.md)$")),
 ]
 
 
@@ -356,33 +352,26 @@ def check_requirement_risks(docs: list[Doc]) -> list[Violation]:
     return violations
 
 
-def check_cr_tree_side(docs: list[Doc]) -> list[Violation]:
+def check_cr_location(docs: list[Doc]) -> list[Violation]:
     violations: list[Violation] = []
     for doc in docs:
         rel = doc.rel.replace("\\", "/")
-        if "/crs/" not in rel:
-            continue
-        body = doc.text
-        has_product = bool(PRODUCT_ID.search(body))
-        has_engineering = bool(ENGINEERING_ID.search(body))
-        in_product = rel.startswith("product/")
-        in_engineering = rel.startswith("engineering/")
-        if in_product and has_engineering and not has_product:
+        if rel.startswith("product/crs/") or rel.startswith("engineering/crs/"):
             violations.append(
                 Violation(
-                    check="cr_tree_side",
+                    check="cr_root_location",
                     severity="error",
                     file=doc.rel,
-                    message="CR under docs/product/crs/ references engineering elements only; move to docs/engineering/crs/",
+                    message="CR filed under product/ or engineering/; CRs live in the single root docs/crs/ directory",
                 )
             )
-        if in_engineering and has_product and not has_engineering:
+        elif doc.h1_kind == "cr" and not rel.startswith("crs/"):
             violations.append(
                 Violation(
-                    check="cr_tree_side",
+                    check="cr_root_location",
                     severity="error",
                     file=doc.rel,
-                    message="CR under docs/engineering/crs/ references product elements only; move to docs/product/crs/",
+                    message="CR document is not located under the root docs/crs/ directory",
                 )
             )
     return violations
@@ -442,7 +431,7 @@ def run_lint(docs_root: Path) -> dict:
     violations.extend(check_logical_ids(docs, docs_root))
     violations.extend(check_empty_headings(docs))
     violations.extend(check_requirement_risks(docs))
-    violations.extend(check_cr_tree_side(docs))
+    violations.extend(check_cr_location(docs))
     violations.extend(check_backlinks(docs, docs_root))
 
     errors = [v for v in violations if v.severity == "error"]
@@ -463,7 +452,7 @@ def run_lint(docs_root: Path) -> dict:
             "backlink_bidirectionality": True,
             "empty_heading": True,
             "requirement_without_risk": True,
-            "cr_tree_side": True,
+            "cr_root_location": True,
         },
     }
     for v in violations:
@@ -479,7 +468,7 @@ def main(argv: list[str] | None = None) -> int:
         "docs_root",
         nargs="?",
         default="docs",
-        help="Root directory containing product/ and engineering/ trees (default: docs)",
+        help="Root directory containing product/, engineering/, and crs/ trees (default: docs)",
     )
     args = parser.parse_args(argv)
 
