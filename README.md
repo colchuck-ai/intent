@@ -17,6 +17,33 @@ Plus **records** that keep the story coherent over time:
 
 Everything carries a stable ID (e.g. `O001-R002`) so links survive even when there's no file yet.
 
+The trace, at a glance:
+
+```mermaid
+flowchart TD
+    subgraph PRODUCT["Product spine"]
+        Product --> Job --> Outcome
+        Outcome --> Risk
+        Outcome --> Requirement
+        Requirement -. mitigates .-> Risk
+    end
+
+    subgraph ENGINEERING["Engineering spine"]
+        Architecture --> Component
+    end
+
+    Requirement == fulfilled by ==> Component
+
+    PDR["Product Decision Record (PDR)"] -. decision on .-> Outcome
+    PDR -. decision on .-> Requirement
+    ADR["Architectural Decision Record (ADR)"] -. decision on .-> Architecture
+    ADR -. decision on .-> Component
+    CR["Change Record (CR)"] -. change to .-> Requirement
+    CR -. change to .-> Component
+```
+
+Solid arrows are the current-state spine; the bold arrow is the one link that crosses from product to engineering; dashed arrows are records — point-in-time history and decisions, not structure.
+
 ## Starts small, grows only when needed
 
 You don't scaffold a directory tree up front. Every element starts as a one-line statement on its parent doc and is promoted only when a concrete need appears:
