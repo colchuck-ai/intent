@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/colchuck-ai/intent/intent.schema.json",
+  "title": "Intent tree",
+  "description": "Structural contract for intent.yaml. Checks shape only; reference resolution, domain-scope, and duplicate-edge rules live in the linter.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["product", "engineering"],
+  "properties": {
+    "product": { "$ref": "#/$defs/product" },
+    "engineering": { "$ref": "#/$defs/engineering" },
+    "change_records": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/key" },
+      "additionalProperties": { "$ref": "#/$defs/changeRecord" }
+    }
+  },
+  "$defs": {
+    "key": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "address": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
+    },
+    "addressList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/address" }
+    },
+    "nonEmptyAddressList": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/address" }
+    },
+    "stringList": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "statementMap": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/key" },
+      "additionalProperties": { "type": "string" }
+    },
+    "noteMap": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/address" },
+      "additionalProperties": { "type": "string" }
+    },
+    "type": {
+      "type": "string",
+      "enum": ["inline", "document"]
+    },
+
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "summary"],
+      "properties": {
+        "name": { "type": "string" },
+        "summary": { "type": "string" },
+        "detail": { "type": "string" },
+        "jobs": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/key" },
+          "additionalProperties": { "$ref": "#/$defs/job" }
+        },
+        "decision_records": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/key" },
+          "additionalProperties": { "$ref": "#/$defs/decisionRecord" }
+        }
+      }
+    },
+
+    "engineering": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "summary"],
+      "properties": {
+        "name": { "type": "string" },
+        "summary": { "type": "string" },
+        "detail": { "type": "string" },
+        "principles": { "$ref": "#/$defs/statementMap" },
+        "constraints": { "$ref": "#/$defs/statementMap" },
+        "components": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/key" },
+          "additionalProperties": { "$ref": "#/$defs/component" }
+        },
+        "decision_records": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/key" },
+          "additionalProperties": { "$ref": "#/$defs/decisionRecord" }
+        }
+      }
+    },
+
+    "job": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "story"],
+      "properties": {
+        "name": { "type": "string" },
+        "story": { "type": "string" },
+        "detail": { "type": "string" },
+        "outcomes": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/key" },
+          "additionalProperties": { "$ref": "#/$defs/outcome" }
+        }
+      }
+    },
+
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "statement"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "$ref": "#/$defs/type" },
+        "statement": { "type": "string" },
+        "detail": { "type": "string" },
+        "risks": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/key" },
+          "additionalProperties": { "$ref": "#/$defs/risk" }
+        },
+        "requirements": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/key" },
+          "additionalProperties": { "$ref": "#/$defs/requirement" }
+        }
+      }
+    },
+
+    "risk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "statement"],
+      "properties": {
+        "name": { "type": "string" },
+        "statement": { "type": "string" },
+        "detail": { "type": "string" }
+      }
+    },
+
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "statement", "mitigates"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "$ref": "#/$defs/type" },
+        "statement": { "type": "string" },
+        "mitigates": { "$ref": "#/$defs/nonEmptyAddressList" },
+        "dependsOn": { "$ref": "#/$defs/addressList" },
+        "acceptance_criteria": { "$ref": "#/$defs/stringList" },
+        "detail": { "type": "string" }
+      }
+    },
+
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "responsibility", "fulfills"],
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "$ref": "#/$defs/type" },
+        "responsibility": { "type": "string" },
+        "fulfills": { "$ref": "#/$defs/nonEmptyAddressList" },
+        "relationships": { "$ref": "#/$defs/noteMap" },
+        "data_model": { "type": "string" },
+        "interfaces": { "type": "string" },
+        "behavior": { "type": "string" },
+        "edge_cases": { "$ref": "#/$defs/stringList" },
+        "success_criteria": { "$ref": "#/$defs/stringList" },
+        "detail": { "type": "string" }
+      }
+    },
+
+    "decisionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "affects", "summary"],
+      "properties": {
+        "name": { "type": "string" },
+        "affects": { "$ref": "#/$defs/nonEmptyAddressList" },
+        "summary": { "type": "string" },
+        "context": { "type": "string" },
+        "options": { "$ref": "#/$defs/stringList" },
+        "decision": { "type": "string" },
+        "consequences": { "$ref": "#/$defs/stringList" }
+      }
+    },
+
+    "changeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "affects", "change", "rationale"],
+      "properties": {
+        "name": { "type": "string" },
+        "affects": { "$ref": "#/$defs/nonEmptyAddressList" },
+        "change": { "type": "string" },
+        "rationale": { "type": "string" }
+      }
+    }
+  }
+}

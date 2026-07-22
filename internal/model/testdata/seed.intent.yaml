@@ -1,0 +1,91 @@
+product:
+  name: Intent
+  summary: A structured-source tool for product and engineering intent.
+  jobs:
+    understand_the_rationale_behind_an_element:
+      name: Understand The Rationale Behind An Element
+      story: When I read an element, I want to see why it exists so I can trust it.
+      outcomes:
+        fast_rationale_lookup:
+          name: Fast Rationale Lookup
+          type: document
+          statement: Minimize the time to trace an element back to its reason.
+          risks:
+            ambiguous_reference:
+              name: Ambiguous Reference
+              statement: A reference points at something that does not resolve.
+          requirements:
+            stable_logical_ids:
+              name: Stable Logical IDs
+              statement: Every element must have a stable logical ID.
+              mitigates:
+                - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.risks.ambiguous_reference
+            resolvable_references:
+              name: Resolvable References
+              statement: Every declared reference must resolve to a real element.
+              mitigates:
+                - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.risks.ambiguous_reference
+              dependsOn:
+                - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.requirements.stable_logical_ids
+              acceptance_criteria:
+                - A dangling reference fails validation.
+  decision_records:
+    prefer_explicit_declaration:
+      name: Prefer Explicit Declaration
+      affects:
+        - product
+      summary: Declare intent explicitly rather than inferring it from prose.
+      context: Inference is convenient but silently wrong when authors change prose.
+      options:
+        - Infer intent from document shape.
+        - Declare intent in explicit fields.
+      decision: Declare intent in explicit fields.
+      consequences:
+        - Authors must state intent; nothing is guessed.
+engineering:
+  name: Intent
+  summary: The engine, generator, and validator behind the intent tree.
+  principles:
+    derive_only_mechanical_duals: Derive only the mechanical duals of what is declared.
+  constraints:
+    single_go_binary: The CLI ships as one Go binary with no runtime prerequisite.
+  components:
+    validator:
+      name: Validator
+      type: document
+      responsibility: Reject any intent.yaml that would produce an invalid tree.
+      fulfills:
+        - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.requirements.resolvable_references
+      relationships:
+        engineering.components.generator: Shares the address resolver with the generator.
+      behavior: |
+        Resolves every reference, then reports the first failure. See
+        {{engineering.components.generator.link}} for the shared resolver.
+      success_criteria:
+        - A valid tree passes; an invalid tree fails with a code.
+    generator:
+      name: Generator
+      responsibility: Render the intent tree into committed markdown docs.
+      fulfills:
+        - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.requirements.stable_logical_ids
+  decision_records:
+    single_go_binary_over_python:
+      name: Single Go Binary Over Python
+      affects:
+        - engineering
+      summary: Deliver the CLI as one Go binary instead of a Python script.
+      context: The CLI runs many times per turn and must start fast everywhere.
+      options:
+        - Ship a Python script with a runtime prerequisite.
+        - Ship a single static Go binary.
+      decision: Ship a single static Go binary.
+      consequences:
+        - No runtime prerequisite; more verbose source than Python.
+change_records:
+  add_resolvable_references_requirement:
+    name: Add Resolvable References Requirement
+    affects:
+      - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.requirements.resolvable_references
+      - engineering.components.validator
+    change: Added the resolvable-references requirement and wired the validator to it.
+    rationale: Dangling references were the most common source of broken traces.
