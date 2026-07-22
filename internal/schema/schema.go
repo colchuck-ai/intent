@@ -7,8 +7,8 @@
 package schema
 
 import (
-	_ "embed"
 	"bytes"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 
