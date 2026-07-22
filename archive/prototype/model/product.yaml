@@ -1,0 +1,73 @@
+product:
+  name: Intent
+  summary: "Intent is an Agent Skill that teaches an AI assistant to write product and engineering documentation as one traceable tree, so every component traces back to a requirement, every requirement to a risk, and every risk to a real customer outcome. It serves PMs and engineers who use an AI assistant to draft and maintain that documentation as their product evolves."
+
+jobs:
+  - name: Understand The Rationale Behind An Element
+    story: "When I need to understand why a requirement, component, or decision exists before I touch it, I want to trace it back through its parent, siblings, and the customer outcome it serves, so I can be confident I'm not about to contradict something upstream."
+    outcomes:
+      - id: O001
+        name: Fast Rationale Lookup
+        statement: "Minimize the time to trace a documented component or requirement back to the customer outcome it serves, when auditing or onboarding to the docs tree."
+        risks:
+          - id: RSK001
+            name: Tracing Slows As Tree Grows
+            statement: "A growing docs tree increases the time to trace a component back to the outcome it serves."
+          - id: RSK002
+            name: Ambiguous Or Premature Reference
+            statement: "An element referenced before its file exists, or an ambiguous ID, increases the time spent re-tracing when a first attempt resolves to the wrong element."
+        requirements:
+          - id: R001
+            name: Stable Logical IDs
+            statement: "Intent must assign every element a stable logical ID that resolves correctly whether or not a file yet exists for it."
+            mitigates: [RSK002]
+          - id: R002
+            name: One Tracing Path Per Element
+            statement: "Intent must define one fixed vertical-and-horizontal tracing path per element type, so there is exactly one correct route to follow."
+            mitigates: [RSK001]
+
+  - name: Change Documentation Without Drift
+    story: "When I'm creating, updating, or deleting product or engineering documentation — often with an AI assistant doing much of the drafting — I want the change validated against every element it touches before it's finalized, so the docs stay one coherent, traceable story instead of drifting piecemeal."
+    outcomes:
+      - id: O002
+        name: Coherent Change
+        statement: "Minimize the likelihood that a change to one element leaves a linked element — its parent, siblings, or a record about it — contradicting it."
+        risks:
+          - id: RSK001
+            name: Linked Elements Fall Out Of Sync
+            statement: "Frequent AI-assisted edits increase the likelihood that a change to one element isn't reflected in the elements linked to it, leaving them in contradiction."
+          - id: RSK002
+            name: Undocumented Change Reads As Drift
+            statement: "An edit made without recording what changed and why increases the likelihood that a resulting contradiction goes undetected, since there's nothing distinguishing a deliberate change from unintentional drift."
+        requirements:
+          - id: R001
+            name: Alignment Check Before Finalizing
+            statement: "Intent must validate every change against its parent, descendants, siblings, and lateral links with a pass/fail alignment check before the change is finalized."
+            mitigates: [RSK001]
+          - id: R002
+            name: Capture Change Records
+            statement: "Intent must capture a Change Record for any update or delete that is material to an outcome's success, stating what changed and why."
+            mitigates: [RSK002]
+          - id: R003
+            name: Mechanical Linter First Pass
+            statement: "Intent must provide a mechanical linter that checks logical-ID and backlink violations as a first pass before human judgment is applied."
+            mitigates: [RSK001]
+      - id: O003
+        name: Right-Sized Placement
+        statement: "Minimize the effort to determine where a new or changed piece of content belongs in the docs tree and at what level of detail."
+        risks:
+          - id: RSK001
+            name: Wrong Tier For The Content
+            statement: "Uncertainty about complexity tiers increases the effort to place new content, since without a default an author must weigh every promotion trigger from scratch for each element."
+          - id: RSK002
+            name: No Canonical Path
+            statement: "An undefined path or naming convention increases the effort to find or place a file correctly, since the author must invent a convention rather than look one up."
+        requirements:
+          - id: R001
+            name: Minimal-First Tier Ladder
+            statement: "Intent must define a minimal-first tier ladder per element type with explicit promotion triggers, defaulting to inline until a concrete need forces promotion."
+            mitigates: [RSK001]
+          - id: R002
+            name: Canonical Path/Slug Convention
+            statement: "Intent must define one canonical path and slug convention per element and tier so placement is deterministic."
+            mitigates: [RSK002]
