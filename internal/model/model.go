@@ -34,7 +34,7 @@ type Engineering struct {
 	Detail          string                     `yaml:"detail,omitempty"`
 	Principles      OrderedMap[string]         `yaml:"principles,omitempty"`
 	Constraints     OrderedMap[string]         `yaml:"constraints,omitempty"`
-	Components      OrderedMap[Component]       `yaml:"components,omitempty"`
+	Components      OrderedMap[Component]      `yaml:"components,omitempty"`
 	DecisionRecords OrderedMap[DecisionRecord] `yaml:"decision_records,omitempty"`
 }
 

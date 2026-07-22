@@ -1,0 +1,21 @@
+product:
+  name: P
+  summary: s
+  jobs:
+    job_a:
+      name: A
+      story: story a
+      outcomes:
+        shared:
+          name: Shared A
+          statement: stmt
+    job_b:
+      name: B
+      story: story b
+      outcomes:
+        shared:
+          name: Shared B
+          statement: stmt
+engineering:
+  name: E
+  summary: s
