@@ -1,0 +1,89 @@
+package model
+
+import (
+	"fmt"
+
+	"gopkg.in/yaml.v3"
+)
+
+// OrderedMap is a string-keyed map that remembers the order keys were inserted.
+//
+// The intent model is full of dicts whose order is meaningful: presentation
+// order equals insertion order (DESIGN §3). A plain Go map loses that order and
+// yaml.v3 would re-emit its keys sorted, so we use this type wherever the file
+// holds a dict of elements (jobs, outcomes, components, records, ...).
+type OrderedMap[V any] struct {
+	keys []string
+	m    map[string]V
+}
+
+// Len reports how many entries the map holds.
+func (o *OrderedMap[V]) Len() int { return len(o.keys) }
+
+// Keys returns the keys in insertion order. The slice is a copy; callers may
+// modify it freely.
+func (o *OrderedMap[V]) Keys() []string {
+	out := make([]string, len(o.keys))
+	copy(out, o.keys)
+	return out
+}
+
+// Get looks up a value by key.
+func (o *OrderedMap[V]) Get(k string) (V, bool) {
+	v, ok := o.m[k]
+	return v, ok
+}
+
+// Set inserts or updates a key. New keys are appended to the end; existing keys
+// keep their position.
+func (o *OrderedMap[V]) Set(k string, v V) {
+	if o.m == nil {
+		o.m = map[string]V{}
+	}
+	if _, ok := o.m[k]; !ok {
+		o.keys = append(o.keys, k)
+	}
+	o.m[k] = v
+}
+
+// IsZero lets yaml.v3's `omitempty` drop an empty map. Without this, a struct
+// with only unexported fields always looks "zero" to yaml.v3, which would omit
+// even a populated map — so we spell the rule out explicitly.
+func (o OrderedMap[V]) IsZero() bool { return len(o.keys) == 0 }
+
+// MarshalYAML emits a mapping node with entries in insertion order.
+func (o OrderedMap[V]) MarshalYAML() (interface{}, error) {
+	n := &yaml.Node{Kind: yaml.MappingNode, Tag: "!!map"}
+	for _, k := range o.keys {
+		var kn yaml.Node
+		if err := kn.Encode(k); err != nil {
+			return nil, err
+		}
+		var vn yaml.Node
+		if err := vn.Encode(o.m[k]); err != nil {
+			return nil, err
+		}
+		n.Content = append(n.Content, &kn, &vn)
+	}
+	return n, nil
+}
+
+// UnmarshalYAML reads a mapping node, preserving the order keys appear in the
+// file.
+func (o *OrderedMap[V]) UnmarshalYAML(node *yaml.Node) error {
+	if node.Kind != yaml.MappingNode {
+		return fmt.Errorf("expected a mapping, got yaml kind %d", node.Kind)
+	}
+	o.m = map[string]V{}
+	o.keys = o.keys[:0]
+	for i := 0; i+1 < len(node.Content); i += 2 {
+		k := node.Content[i].Value
+		var v V
+		if err := node.Content[i+1].Decode(&v); err != nil {
+			return fmt.Errorf("decoding %q: %w", k, err)
+		}
+		o.keys = append(o.keys, k)
+		o.m[k] = v
+	}
+	return nil
+}
