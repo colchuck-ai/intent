@@ -77,3 +77,41 @@ func TestBareAccessorSkipped(t *testing.T) {
 		t.Fatalf("expected no address for a bare accessor, got %v", addrsOf(got))
 	}
 }
+
+func TestParseExprAccessorAndAddress(t *testing.T) {
+	e := ParseExpr("engineering.components.generator.link", "engineering.components.validator")
+	if e.Addr != "engineering.components.generator" || e.Accessor != "link" {
+		t.Fatalf("got addr=%q acc=%q", e.Addr, e.Accessor)
+	}
+	if e.IsPath {
+		t.Fatalf("element address parsed as path")
+	}
+}
+
+func TestParseExprPathVar(t *testing.T) {
+	e := ParseExpr("paths.assets", "engineering")
+	if !e.IsPath || e.PathVar != "assets" {
+		t.Fatalf("got IsPath=%v PathVar=%q", e.IsPath, e.PathVar)
+	}
+}
+
+func TestParseExprBareAddressNoAccessor(t *testing.T) {
+	e := ParseExpr("product", "engineering")
+	if e.Addr != "product" || e.Accessor != "" {
+		t.Fatalf("got addr=%q acc=%q", e.Addr, e.Accessor)
+	}
+}
+
+func TestInterpolateRewritesEachExpression(t *testing.T) {
+	prose := "see {{engineering.components.generator.link}} and {{paths.assets}}/x.png"
+	got := Interpolate(prose, "engineering.components.validator", func(e Expr) string {
+		if e.IsPath {
+			return "ASSET"
+		}
+		return "<" + e.Addr + ":" + e.Accessor + ">"
+	})
+	want := "see <engineering.components.generator:link> and ASSET/x.png"
+	if got != want {
+		t.Fatalf("got %q, want %q", got, want)
+	}
+}
