@@ -86,3 +86,16 @@ func LastSegment(addr string) string {
 	}
 	return addr
 }
+
+// ParentAddr returns the address of the element that contains addr, or "" when
+// addr is top-level. It drops the trailing map-key layer and the element key
+// (e.g. product.jobs.j.outcomes.o -> product.jobs.j), because a nested element's
+// address interleaves a collection key (jobs, outcomes, ...) with each element
+// key.
+func ParentAddr(addr string) string {
+	segs := strings.Split(addr, ".")
+	if len(segs) <= 2 {
+		return ""
+	}
+	return strings.Join(segs[:len(segs)-2], ".")
+}
