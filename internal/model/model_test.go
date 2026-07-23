@@ -95,6 +95,28 @@ func TestOrderPreserved(t *testing.T) {
 	}
 }
 
+// TestOrderedMapDelete checks that Delete removes a key, keeps the survivors in
+// order, and reports absence — the property rm leans on.
+func TestOrderedMapDelete(t *testing.T) {
+	var m model.OrderedMap[string]
+	m.Set("a", "1")
+	m.Set("b", "2")
+	m.Set("c", "3")
+
+	if !m.Delete("b") {
+		t.Fatal("Delete of an existing key should report true")
+	}
+	if got, want := m.Keys(), []string{"a", "c"}; len(got) != len(want) || got[0] != want[0] || got[1] != want[1] {
+		t.Errorf("after delete, keys = %v, want %v", got, want)
+	}
+	if _, ok := m.Get("b"); ok {
+		t.Error("deleted key should be absent")
+	}
+	if m.Delete("b") {
+		t.Error("Delete of a missing key should report false")
+	}
+}
+
 // TestSeedFixtureExists is a guard so the fixture path stays valid.
 func TestSeedFixtureExists(t *testing.T) {
 	if _, err := os.Stat(filepath.FromSlash(seedPath)); err != nil {
