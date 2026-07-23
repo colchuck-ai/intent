@@ -35,6 +35,18 @@ func newMvCmd() *cobra.Command {
 					return err
 				}
 			}
+			// --before/--after take a sibling; resolve it as a suffix like every
+			// other address argument (Mv reduces it to the sibling's key).
+			if opts.Before != "" {
+				if opts.Before, err = resolveAddr(ix, opts.Before); err != nil {
+					return err
+				}
+			}
+			if opts.After != "" {
+				if opts.After, err = resolveAddr(ix, opts.After); err != nil {
+					return err
+				}
+			}
 
 			newAddr, refs, promoted, err := mutate.Mv(r, ix, addr, opts)
 			if err != nil {

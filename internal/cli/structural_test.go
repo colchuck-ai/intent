@@ -112,6 +112,39 @@ func TestMvReparentValidates(t *testing.T) {
 	}
 }
 
+// TestMvReorderResolvesSiblingSuffix: --before/--after accept the shortest
+// unambiguous suffix, like every other address argument (DESIGN §11).
+func TestMvReorderResolvesSiblingSuffix(t *testing.T) {
+	path := tmpSeed(t)
+	// Position resolvable_references before its sibling, named by a dotted suffix.
+	out, err := run(t, "mv", "resolvable_references",
+		"--before", "fast_rationale_lookup.requirements.stable_logical_ids", "-f", path)
+	if err != nil {
+		t.Fatalf("mv reorder by suffix: %v\n%s", err, out)
+	}
+	if !strings.Contains(out, "reordered") {
+		t.Errorf("expected a reordered confirmation:\n%s", out)
+	}
+	// The order actually changed: resolvable_references now leads.
+	tree, _ := run(t, "tree", "-f", path)
+	iRes := strings.Index(tree, "resolvable_references")
+	iStable := strings.Index(tree, "stable_logical_ids")
+	if iRes < 0 || iStable < 0 || iRes > iStable {
+		t.Errorf("resolvable_references should now precede stable_logical_ids:\n%s", tree)
+	}
+}
+
+func TestMvReorderUnknownSiblingErrors(t *testing.T) {
+	path := tmpSeed(t)
+	out, err := run(t, "mv", "resolvable_references", "--before", "no_such_sibling", "-f", path)
+	if err == nil {
+		t.Fatalf("expected an error for an unknown sibling:\n%s", out)
+	}
+	if !strings.Contains(out, "no element matches") {
+		t.Errorf("expected a not-found resolution error:\n%s", out)
+	}
+}
+
 func TestRecordCreatesValidRecords(t *testing.T) {
 	path := tmpSeed(t)
 	out, err := run(t, "record", "adr", "use_cobra",
