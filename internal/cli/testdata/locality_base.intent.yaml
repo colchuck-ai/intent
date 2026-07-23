@@ -1,0 +1,37 @@
+product:
+  name: P
+  summary: s
+  jobs:
+    j:
+      name: J
+      story: s
+      outcomes:
+        o:
+          name: O
+          statement: s
+          risks:
+            r:
+              name: R
+              statement: s
+          requirements:
+            req:
+              name: Req
+              statement: s
+              mitigates:
+                - product.jobs.j.outcomes.o.risks.r
+engineering:
+  name: E
+  summary: s
+  components:
+    comp_a:
+      name: Comp A
+      type: document
+      responsibility: r
+      fulfills:
+        - product.jobs.j.outcomes.o.requirements.req
+    comp_b:
+      name: Comp B
+      type: document
+      responsibility: r
+      fulfills:
+        - product.jobs.j.outcomes.o.requirements.req

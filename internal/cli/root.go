@@ -5,10 +5,15 @@
 package cli
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/spf13/cobra"
 
 	"github.com/colchuck-ai/intent/internal/model"
+	"github.com/colchuck-ai/intent/internal/schema"
 	"github.com/colchuck-ai/intent/internal/tree"
+	"github.com/colchuck-ai/intent/internal/validate"
 )
 
 // version is stamped at build time via -ldflags; the default marks a local dev
@@ -35,12 +40,15 @@ func newRootCmd() *cobra.Command {
 		newTraceCmd(),
 		newAffectsCmd(),
 		newValidateCmd(),
+		newBuildCmd(),
+		newCheckCmd(),
 	)
 	return root
 }
 
 // loadIndex loads the tree from --file and builds the in-memory index. Every
-// read command starts here.
+// read command starts here; it trusts the file's shape (no validation), because
+// reads only surface what's there.
 func loadIndex(cmd *cobra.Command) (*tree.Index, error) {
 	path, _ := cmd.Flags().GetString("file")
 	r, err := model.Load(path)
@@ -48,6 +56,28 @@ func loadIndex(cmd *cobra.Command) (*tree.Index, error) {
 		return nil, err
 	}
 	return tree.Build(r), nil
+}
+
+// checkedIndex reads the tree at path, runs the structural schema check then the
+// semantic linter, and returns the built index with any findings. It errors only
+// for IO/shape failures that stop analysis; a well-formed tree with rule
+// violations returns its findings and a nil error, leaving the caller (validate
+// reports them; build refuses to render) to decide how to react. This is the one
+// place the read → schema → parse → check pipeline lives.
+func checkedIndex(path string) (*tree.Index, []validate.Finding, error) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, nil, err
+	}
+	if err := schema.Validate(b); err != nil {
+		return nil, nil, fmt.Errorf("schema: %w", err)
+	}
+	r, err := model.Parse(b)
+	if err != nil {
+		return nil, nil, fmt.Errorf("parsing %s: %w", path, err)
+	}
+	ix := tree.Build(r)
+	return ix, validate.Check(ix), nil
 }
 
 // Execute runs the CLI and returns a process exit code.
