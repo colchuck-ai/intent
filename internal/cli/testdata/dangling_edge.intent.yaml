@@ -1,0 +1,26 @@
+product:
+  name: T
+  summary: t
+  jobs:
+    j:
+      name: J
+      story: s
+      outcomes:
+        o:
+          name: O
+          statement: s
+          risks:
+            r:
+              name: R
+              statement: s
+          requirements:
+            q:
+              name: Q
+              statement: s
+              mitigates:
+                - product.jobs.j.outcomes.o.risks.r
+              dependsOn:
+                - product.jobs.j.outcomes.o.requirements.ghost
+engineering:
+  name: T
+  summary: t

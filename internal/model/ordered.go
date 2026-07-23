@@ -46,6 +46,22 @@ func (o *OrderedMap[V]) Set(k string, v V) {
 	o.m[k] = v
 }
 
+// Delete removes a key, preserving the order of the remaining keys. It reports
+// whether the key was present. The write path (rm) is the caller (DESIGN §11).
+func (o *OrderedMap[V]) Delete(k string) bool {
+	if _, ok := o.m[k]; !ok {
+		return false
+	}
+	delete(o.m, k)
+	for i, kk := range o.keys {
+		if kk == k {
+			o.keys = append(o.keys[:i], o.keys[i+1:]...)
+			break
+		}
+	}
+	return true
+}
+
 // IsZero lets yaml.v3's `omitempty` drop an empty map. Without this, a struct
 // with only unexported fields always looks "zero" to yaml.v3, which would omit
 // even a populated map — so we spell the rule out explicitly.
