@@ -54,10 +54,7 @@ func setField(el any, addr, field, value string) error {
 		case "detail":
 			v.Detail = value
 		case "type":
-			if err := checkType(value); err != nil {
-				return err
-			}
-			v.Type = value
+			return errTypeField(addr)
 		default:
 			return unsettable(addr, field, "name, statement, detail, type")
 		}
@@ -81,10 +78,7 @@ func setField(el any, addr, field, value string) error {
 		case "detail":
 			v.Detail = value
 		case "type":
-			if err := checkType(value); err != nil {
-				return err
-			}
-			v.Type = value
+			return errTypeField(addr)
 		case "mitigates", "dependsOn":
 			return errEdgeField(addr, field)
 		case "acceptance_criteria":
@@ -101,10 +95,7 @@ func setField(el any, addr, field, value string) error {
 		case "detail":
 			v.Detail = value
 		case "type":
-			if err := checkType(value); err != nil {
-				return err
-			}
-			v.Type = value
+			return errTypeField(addr)
 		case "data_model":
 			v.DataModel = value
 		case "interfaces":
@@ -174,6 +165,14 @@ func unsettable(addr, field, settable string) error {
 // errEdgeField explains that an edge field is managed with link/unlink, not set.
 func errEdgeField(addr, field string) error {
 	return fmt.Errorf("%s.%s is an edge; use `intent link` / `intent unlink` instead", addr, field)
+}
+
+// errTypeField steers a plain `set type` toward the cascade-aware path. Type
+// can't be written directly here — changing it must keep containment valid
+// (DESIGN §5), so it goes through promote/demote, which the CLI's `set <addr>
+// type` and `promote` both drive.
+func errTypeField(addr string) error {
+	return fmt.Errorf("%s.type maintains containment; change it with `intent promote %s` or `intent set %s type <inline|document>`", addr, addr, addr)
 }
 
 // errListField explains that a list field isn't editable via set in this phase.

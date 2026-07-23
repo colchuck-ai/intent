@@ -62,6 +62,62 @@ func (o *OrderedMap[V]) Delete(k string) bool {
 	return true
 }
 
+// Rename changes key `old` to `new`, keeping the entry's value and its position
+// in the order. It reports false if `old` is absent or `new` already exists (a
+// rename must never collide with or reorder around a sibling). The write path
+// (mv --rename) is the caller.
+func (o *OrderedMap[V]) Rename(old, new string) bool {
+	if _, ok := o.m[old]; !ok {
+		return false
+	}
+	if _, exists := o.m[new]; exists {
+		return false
+	}
+	o.m[new] = o.m[old]
+	delete(o.m, old)
+	for i, k := range o.keys {
+		if k == old {
+			o.keys[i] = new
+			break
+		}
+	}
+	return true
+}
+
+// Reorder moves an existing key to sit immediately before or after ref (also
+// existing). It errors if either key is absent; moving a key relative to itself
+// is a no-op. The write path (mv --before/--after) is the caller.
+func (o *OrderedMap[V]) Reorder(key, ref string, after bool) error {
+	if _, ok := o.m[key]; !ok {
+		return fmt.Errorf("no such key %q", key)
+	}
+	if _, ok := o.m[ref]; !ok {
+		return fmt.Errorf("no such key %q", ref)
+	}
+	if key == ref {
+		return nil
+	}
+	ks := make([]string, 0, len(o.keys))
+	for _, k := range o.keys {
+		if k != key {
+			ks = append(ks, k)
+		}
+	}
+	pos := 0
+	for i, k := range ks {
+		if k == ref {
+			pos = i
+			if after {
+				pos = i + 1
+			}
+			break
+		}
+	}
+	ks = append(ks[:pos:pos], append([]string{key}, ks[pos:]...)...)
+	o.keys = ks
+	return nil
+}
+
 // IsZero lets yaml.v3's `omitempty` drop an empty map. Without this, a struct
 // with only unexported fields always looks "zero" to yaml.v3, which would omit
 // even a populated map — so we spell the rule out explicitly.

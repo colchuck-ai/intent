@@ -103,6 +103,38 @@ func Interpolate(prose, ownerAddr string, repl func(Expr) string) string {
 	})
 }
 
+// Rewrite re-expresses every {{ }} element reference in prose so it still points
+// at the same element after that element's address changes (the mv reference
+// cascade, DESIGN §11). remap maps an old resolved address to its new one;
+// oldOwner resolves the prose's relative addresses as they stand now, newOwner
+// as they will stand once the owning element itself moves (equal when the owner
+// doesn't move). An expression whose target is unaffected — and still resolves
+// correctly under newOwner — is left byte-for-byte unchanged; one that would
+// otherwise point at the wrong element (or dangle) is re-emitted in absolute
+// form, preserving its accessor. paths.* variables and lone accessors pass
+// through untouched.
+func Rewrite(prose, oldOwner, newOwner string, remap func(string) string) string {
+	return exprPattern.ReplaceAllStringFunc(prose, func(m string) string {
+		inner := exprPattern.FindStringSubmatch(m)[1]
+		e := ParseExpr(inner, oldOwner)
+		if e.Addr == "" {
+			return m // paths.* or a lone accessor — no address to remap
+		}
+		want := remap(e.Addr)
+		// If the original expression, read against the new owner, already lands on
+		// the intended element, leave it exactly as written (no churn). This keeps
+		// relative refs within a moved subtree intact — owner and target shift by
+		// the same prefix, so the relative offset still holds.
+		if ParseExpr(inner, newOwner).Addr == want {
+			return m
+		}
+		if e.Accessor != "" {
+			return "{{" + want + "." + e.Accessor + "}}"
+		}
+		return "{{" + want + "}}"
+	})
+}
+
 // splitAccessor separates a trailing .name/.path/.link accessor from a dotted
 // address. It returns the address and the accessor ("" if none). A string that
 // is only an accessor returns an empty address.
