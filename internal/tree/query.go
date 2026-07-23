@@ -31,6 +31,32 @@ func (e *Element) searchText() string {
 	return strings.Join([]string{e.Addr, e.Name, e.Prose, e.Detail}, "\n")
 }
 
+// ProseValues returns every free-text field on the element that may carry {{ }}
+// interpolation (DESIGN §6): the primary prose, detail, type-specific fields
+// (text and list items), and relationship notes. Returned separately (not
+// joined) so callers can attribute a match to the field it came from.
+func (e *Element) ProseValues() []string {
+	var out []string
+	if e.Prose != "" {
+		out = append(out, e.Prose)
+	}
+	if e.Detail != "" {
+		out = append(out, e.Detail)
+	}
+	for _, f := range e.Fields {
+		if f.Text != "" {
+			out = append(out, f.Text)
+		}
+		out = append(out, f.List...)
+	}
+	for _, edge := range e.Edges {
+		if edge.Note != "" {
+			out = append(out, edge.Note)
+		}
+	}
+	return out
+}
+
 // TraceNode is one node reached while tracing a neighborhood. Depth 0 is the
 // start element; deeper nodes carry the edge and direction that reached them.
 type TraceNode struct {

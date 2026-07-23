@@ -34,6 +34,7 @@ func newRootCmd() *cobra.Command {
 		newFindCmd(),
 		newTraceCmd(),
 		newAffectsCmd(),
+		newValidateCmd(),
 	)
 	return root
 }

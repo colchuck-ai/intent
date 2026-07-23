@@ -95,6 +95,23 @@ type Element struct {
 	Edges      []Edge // outgoing declared references
 }
 
+// RendersAsDocument reports whether the element hosts its own file/directory
+// rather than being embedded inline in its parent's page. Roots, jobs, and
+// records always do; the promotable types (outcome/requirement/component) do
+// when their authored type is document; risks, principles, and constraints never
+// do. This is the taxonomy the containment invariant (DESIGN §5) is checked
+// against, kept next to the Kind constants and IsDocument that feed it.
+func (e *Element) RendersAsDocument() bool {
+	switch e.Kind {
+	case KindProduct, KindEngineering, KindJob, KindPDR, KindADR, KindCR:
+		return true
+	case KindOutcome, KindRequirement, KindComponent:
+		return e.IsDocument
+	default:
+		return false
+	}
+}
+
 // Index is the flat, addressable view of one intent tree.
 type Index struct {
 	Root     *model.Root

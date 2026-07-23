@@ -1,0 +1,25 @@
+product:
+  name: Intent
+  summary: A structured-source tool for product and engineering intent.
+  jobs:
+    understand_the_rationale_behind_an_element:
+      name: Understand The Rationale Behind An Element
+      story: When I read an element, I want to see why it exists so I can trust it.
+      outcomes:
+        fast_rationale_lookup:
+          name: Fast Rationale Lookup
+          statement: Minimize the time to trace an element back to its reason.
+          risks:
+            ambiguous_reference:
+              name: Ambiguous Reference
+              statement: A reference points at something that does not resolve.
+          requirements:
+            resolvable_references:
+              name: Resolvable References
+              type: document
+              statement: Every declared reference must resolve to a real element.
+              mitigates:
+                - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.risks.ambiguous_reference
+engineering:
+  name: Intent
+  summary: The engine, generator, and validator behind the intent tree.
