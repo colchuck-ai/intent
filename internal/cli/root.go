@@ -51,6 +51,10 @@ func newRootCmd() *cobra.Command {
 		newMvCmd(),
 		newRecordCmd(),
 	)
+	// `intent help` is our embedded topic system (DESIGN §12), not cobra's
+	// subcommand-usage dumper. SetHelpCommand replaces the auto-generated one;
+	// per-command usage is still reachable via `intent <cmd> --help`.
+	root.SetHelpCommand(newHelpCmd())
 	return root
 }
 

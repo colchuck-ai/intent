@@ -8,10 +8,10 @@ import (
 	"github.com/colchuck-ai/intent/internal/tree"
 )
 
-// footer is the scaffolded command-output footer (DESIGN §12): a suggested next
-// command and the judgment topic to consult before trusting the edit. The
-// judgment slugs are placeholders — Phase 6 authors the real topics and wires
-// them; keeping them in this one file means that phase edits only here.
+// footer is the command-output footer (DESIGN §12): a suggested next command
+// and the judgment topic to consult before trusting the edit. Every slug here
+// resolves to a real embedded topic (see internal/help); footer_test.go guards
+// that they stay wired.
 type footer struct {
 	next     string // a full command line, e.g. "intent show product.jobs.x"
 	judgment string // a help slug, e.g. "judgment:requirement-vs-task"
@@ -28,7 +28,7 @@ func printFooter(w io.Writer, f footer) {
 
 // kindJudgment maps a newly-added element's kind to the judgment test worth
 // meeting at the moment of creation (DESIGN §12 — mutating verbs proactively
-// nudge). Provisional slugs pending Phase 6.
+// nudge).
 var kindJudgment = map[tree.Kind]string{
 	tree.KindJob:         "judgment:job-vs-activity",
 	tree.KindOutcome:     "judgment:outcome-vs-solution",
