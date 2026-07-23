@@ -49,9 +49,16 @@ func addFooter(kind tree.Kind, addr string) footer {
 	return footer{next: "intent show " + addr, judgment: j}
 }
 
-// editFooter is the footer for an edit to an existing element (set/link/unlink).
+// editFooter is the footer for an edit to an existing element
+// (set/link/unlink/promote/mv).
 func editFooter(addr string) footer {
 	return footer{next: "intent show " + addr, judgment: "judgment:coherence"}
+}
+
+// recordFooter is the footer for a freshly-created record: show it, and read the
+// test for whether the decision/change was worth recording.
+func recordFooter(addr string) footer {
+	return footer{next: "intent show " + addr, judgment: "judgment:worth-recording"}
 }
 
 // nudgeDetail warns when the just-written element's detail interpolates a

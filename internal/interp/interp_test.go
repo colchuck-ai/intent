@@ -115,3 +115,75 @@ func TestInterpolateRewritesEachExpression(t *testing.T) {
 		t.Fatalf("got %q, want %q", got, want)
 	}
 }
+
+func TestRewriteRemapsAbsoluteAddress(t *testing.T) {
+	remap := func(a string) string {
+		if a == "engineering.components.generator" {
+			return "engineering.components.doc_generator"
+		}
+		return a
+	}
+	prose := "see {{engineering.components.generator.link}} and {{paths.assets}}/x.png"
+	// Owner doesn't move here (same old/new owner).
+	got := Rewrite(prose, "engineering.components.validator", "engineering.components.validator", remap)
+	want := "see {{engineering.components.doc_generator.link}} and {{paths.assets}}/x.png"
+	if got != want {
+		t.Fatalf("got %q, want %q", got, want)
+	}
+}
+
+// TestRewriteLeavesUnaffectedProseByteIdentical: an expression whose target
+// doesn't move is returned untouched, preserving its original spacing (no churn).
+func TestRewriteLeavesUnaffectedProseByteIdentical(t *testing.T) {
+	remap := func(a string) string { return a } // nothing moves
+	prose := "see {{ engineering.components.generator.link }} untouched"
+	if got := Rewrite(prose, "engineering.components.validator", "engineering.components.validator", remap); got != prose {
+		t.Fatalf("unaffected prose should be byte-identical:\ngot  %q\nwant %q", got, prose)
+	}
+}
+
+// TestRewriteRelativeWithinMovedSubtreeStaysRelative: when both the owner and the
+// target move by the same prefix (they live in the same moved subtree), a
+// relative reference between them still resolves correctly and is left as-is.
+func TestRewriteRelativeWithinMovedSubtreeStaysRelative(t *testing.T) {
+	// A component's prose points at a sibling component relatively. Both move from
+	// engineering.components.* to engineering.legacy.* (hypothetical prefix move).
+	remap := func(a string) string {
+		const old = "engineering.components"
+		if a == old || len(a) > len(old) && a[:len(old)+1] == old+"." {
+			return "engineering.legacy" + a[len(old):]
+		}
+		return a
+	}
+	prose := "resolver in {{.generator.link}}"
+	oldOwner := "engineering.components.validator"
+	newOwner := "engineering.legacy.validator"
+	got := Rewrite(prose, oldOwner, newOwner, remap)
+	if got != prose {
+		t.Fatalf("relative ref within a moved subtree should be unchanged:\ngot  %q\nwant %q", got, prose)
+	}
+}
+
+// TestRewriteRelativeToUnmovedTargetGoesAbsolute: an owner that moves out from
+// under a target it referenced relatively must have that ref rewritten to
+// absolute, or it would resolve against the wrong (new) container.
+func TestRewriteRelativeToUnmovedTargetGoesAbsolute(t *testing.T) {
+	// Only the owner moves; the relatively-referenced sibling stays put, so after
+	// the move the relative form would dangle. Expect an absolute rewrite.
+	remap := func(a string) string {
+		if a == "product.jobs.j.outcomes.a" {
+			return "product.jobs.k.outcomes.a"
+		}
+		return a
+	}
+	// owner outcome `a` moves from job j to job k; it referenced sibling `b`
+	// relatively, but b stays under job j.
+	prose := "depends on {{.b.link}}"
+	oldOwner := "product.jobs.j.outcomes.a"
+	newOwner := "product.jobs.k.outcomes.a"
+	got := Rewrite(prose, oldOwner, newOwner, remap)
+	want := "depends on {{product.jobs.j.outcomes.b.link}}"
+	if got != want {
+		t.Fatalf("got %q, want %q", got, want)
+	}
+}
