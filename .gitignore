@@ -12,3 +12,4 @@
 # Local agent tooling — not part of the project.
 .beads/
 .claude/
+.cursor/
