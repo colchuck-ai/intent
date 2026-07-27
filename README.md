@@ -119,3 +119,24 @@ curl -fsSL https://raw.githubusercontent.com/colchuck-ai/intent/main/install.sh 
 Or copy the [`intent/`](intent/) directory into your agent's skills directory manually.
 
 The full rules, element definitions, paths, and templates live in [`intent/SKILL.md`](intent/SKILL.md).
+
+## Development
+
+Go 1.25, pinned via [`mise`](https://mise.jdx.dev): `mise install` sets up the
+toolchain. `mise.toml` has notes on pinning a released `intent` binary too,
+once one exists.
+
+```bash
+go test ./...
+go build -o bin/intent ./cmd/intent
+```
+
+To catch doc drift before it's pushed, enable the pre-commit hook once per
+clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+It runs `intent check` whenever `intent.yaml` or `docs/` change and blocks the
+commit on drift.

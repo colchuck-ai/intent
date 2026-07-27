@@ -14,6 +14,9 @@ updated_at: 2026-07-27T00:00:00Z
 Pin and ship the binary; CI enforces `validate` + `check`. One working session,
 one PR. Depends on Phase 7 merged.
 
+**Status: complete.** All four tasks are built, tested locally, and reviewed
+(Standards + Spec). Awaiting a pushed PR for a green CI run before merge.
+
 ## Current System
 
 | Area | Location | Notes |
@@ -85,13 +88,19 @@ Config files are disjoint, so tasks 1–4 can be built in any order; verify
 together at the end.
 
 1. **`dist-goreleaser`** — `.goreleaser.yaml` + a local `--snapshot` dry run.
-   - Verify: `goreleaser build --snapshot --clean` succeeds.
+   - ✅ done — `goreleaser build --snapshot --clean` succeeds on all six
+     darwin/linux/windows × amd64/arm64 targets; version ldflag verified.
 2. **`dist-mise`** — `mise.toml` + README snippet documenting the pin.
-   - Verify: `mise install` resolves; note the post-release `ubi` pin.
+   - ✅ done — `mise install` resolves go 1.25.12; README's Development
+     section points at the post-release `ubi` pin in `mise.toml`.
 3. **`dist-ci`** — `.github/workflows/ci.yaml` running test + build + validate.
-   - Verify: workflow is valid YAML; green on the phase PR.
+   - ✅ done — valid YAML; the exact steps (`go test ./...`, `go build`,
+     `intent validate -f internal/model/testdata/seed.intent.yaml`) pass
+     locally. Green-on-PR still pending an actual push.
 4. **`dist-precommit`** — local drift hook + a line in the README on enabling it.
-   - Verify: hook fires on a staged `docs/` change and blocks on drift.
+   - ✅ done — `.githooks/pre-commit`; verified it no-ops on unrelated
+     changes, warns-and-allows when `intent` isn't installed, and blocks
+     the commit when `intent check` fails on a staged `docs/` change.
 
 ## Testing
 

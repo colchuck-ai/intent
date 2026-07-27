@@ -1,0 +1,22 @@
+#!/bin/sh
+# Drift gate: if intent.yaml or docs/ are staged, run `intent check` and block
+# the commit on drift. Enable once per clone with:
+#   git config core.hooksPath .githooks
+
+set -e
+
+changed=$(git diff --cached --name-only --diff-filter=ACMR)
+if ! printf '%s\n' "$changed" | grep -qE '^(intent\.yaml$|docs/)'; then
+  exit 0
+fi
+
+if command -v mise >/dev/null 2>&1; then
+  exec mise exec -- intent check
+fi
+
+if command -v intent >/dev/null 2>&1; then
+  exec intent check
+fi
+
+echo "pre-commit: intent.yaml or docs/ changed but no 'intent' binary found (checked mise, then PATH) — skipping drift check" >&2
+exit 0
