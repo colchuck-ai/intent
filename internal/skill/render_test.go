@@ -123,3 +123,37 @@ func TestContentMarkdownExcludesDescription(t *testing.T) {
 		t.Error("Markdown() must not embed Description; adapters place it themselves")
 	}
 }
+
+// TestRenderedSkillFilesCarryEveryJudgmentSummary is the integration guard
+// (task 5): every judgment topic's one-liner must actually reach the
+// installed, per-agent file — not just Content.Markdown() in isolation — for
+// every registered Adapter, so a real agent reading its skill file never
+// diverges from `intent help judgment:*`.
+func TestRenderedSkillFilesCarryEveryJudgmentSummary(t *testing.T) {
+	topics := help.InPlane("judgment")
+	if len(topics) == 0 {
+		t.Fatal("no judgment topics loaded from help; test fixture assumption broken")
+	}
+
+	c := Render()
+	for _, a := range []Adapter{ClaudeAdapter{}, AGENTSAdapter{}} {
+		files, err := a.Files(t.TempDir(), c)
+		if err != nil {
+			t.Fatalf("%s: Files() error = %v", a.Name(), err)
+		}
+		var all strings.Builder
+		for _, f := range files {
+			all.Write(f.Content)
+		}
+		rendered := all.String()
+
+		for _, topic := range topics {
+			if !strings.Contains(rendered, topic.Summary) {
+				t.Errorf("%s: rendered files missing judgment summary for %s", a.Name(), topic.Slug)
+			}
+			if !strings.Contains(rendered, "`intent help "+topic.Slug+"`") {
+				t.Errorf("%s: rendered files missing pointer to %s", a.Name(), topic.Slug)
+			}
+		}
+	}
+}
