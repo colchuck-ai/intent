@@ -85,9 +85,9 @@ func newAddCmd() *cobra.Command {
 	cmd.Flags().StringVar(&f.Responsibility, "responsibility", "", "component responsibility (one-line charter)")
 	cmd.Flags().StringVar(&f.Detail, "detail", "", "freeform detail markdown")
 	cmd.Flags().StringVar(&f.Type, "type", "", "inline | document (outcome/requirement/component only)")
-	cmd.Flags().StringSliceVar(&mitigates, "mitigates", nil, "risk address a requirement mitigates (repeatable, required for a requirement)")
-	cmd.Flags().StringSliceVar(&dependsOn, "depends-on", nil, "requirement address a requirement depends on (repeatable)")
-	cmd.Flags().StringSliceVar(&fulfills, "fulfills", nil, "requirement address a component fulfills (repeatable, required for a component)")
-	cmd.Flags().StringSliceVar(&acceptance, "acceptance", nil, "an acceptance criterion (repeatable)")
+	cmd.Flags().StringArrayVar(&mitigates, "mitigates", nil, "risk address a requirement mitigates (repeatable, required for a requirement)")
+	cmd.Flags().StringArrayVar(&dependsOn, "depends-on", nil, "requirement address a requirement depends on (repeatable)")
+	cmd.Flags().StringArrayVar(&fulfills, "fulfills", nil, "requirement address a component fulfills (repeatable, required for a component)")
+	cmd.Flags().StringArrayVar(&acceptance, "acceptance", nil, "an acceptance criterion (repeatable)")
 	return cmd
 }

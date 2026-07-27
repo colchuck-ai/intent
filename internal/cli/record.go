@@ -54,12 +54,12 @@ func newRecordCmd() *cobra.Command {
 	}
 
 	cmd.Flags().StringVar(&f.Name, "name", "", "display name (heading text)")
-	cmd.Flags().StringSliceVar(&affects, "affects", nil, "an address (or root literal) the record affects (repeatable, required)")
+	cmd.Flags().StringArrayVar(&affects, "affects", nil, "an address (or root literal) the record affects (repeatable, required)")
 	cmd.Flags().StringVar(&f.Summary, "summary", "", "decision-record core statement (pdr/adr)")
 	cmd.Flags().StringVar(&f.Context, "context", "", "decision-record context (pdr/adr)")
-	cmd.Flags().StringSliceVar(&f.Options, "option", nil, "a decision-record option (repeatable, pdr/adr)")
+	cmd.Flags().StringArrayVar(&f.Options, "option", nil, "a decision-record option (repeatable, pdr/adr)")
 	cmd.Flags().StringVar(&f.Decision, "decision", "", "the decision reached (pdr/adr)")
-	cmd.Flags().StringSliceVar(&f.Consequences, "consequence", nil, "a decision-record consequence (repeatable, pdr/adr)")
+	cmd.Flags().StringArrayVar(&f.Consequences, "consequence", nil, "a decision-record consequence (repeatable, pdr/adr)")
 	cmd.Flags().StringVar(&f.Change, "change", "", "what changed (cr)")
 	cmd.Flags().StringVar(&f.Rationale, "rationale", "", "why it changed (cr)")
 	return cmd

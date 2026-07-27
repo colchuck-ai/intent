@@ -56,6 +56,30 @@ func TestAddWritesCanonicalValidElement(t *testing.T) {
 	}
 }
 
+// TestRepeatableFlagsDontSplitOnComma guards against a pflag footgun:
+// StringSliceVar treats a comma inside a single value as another list item, so
+// a natural-English sentence passed to a repeatable flag like --acceptance
+// would silently shatter into fragments. These flags must use StringArrayVar
+// instead, which only splits on repeated flag occurrences.
+func TestRepeatableFlagsDontSplitOnComma(t *testing.T) {
+	path := tmpSeed(t)
+	out, err := run(t, "add", "requirement", "fast_rationale_lookup", "speedy",
+		"--name", "Speedy", "--statement", "Must be fast.",
+		"--mitigates", "ambiguous_reference",
+		"--acceptance", "Covers add, set, and link in one pass.",
+		"-f", path)
+	if err != nil {
+		t.Fatalf("add: %v\n%s", err, out)
+	}
+	show, err := run(t, "show", "speedy", "-f", path)
+	if err != nil {
+		t.Fatalf("show after add: %v\n%s", err, show)
+	}
+	if !strings.Contains(show, "Covers add, set, and link in one pass.") {
+		t.Errorf("acceptance criterion was split on commas instead of kept whole:\n%s", show)
+	}
+}
+
 // TestWritesAreCanonical adds then removes an element, expecting the file to
 // return byte-identical to the seed — proof every write re-serializes canonically.
 func TestWritesAreCanonical(t *testing.T) {

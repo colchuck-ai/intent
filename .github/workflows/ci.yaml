@@ -22,4 +22,7 @@ jobs:
         run: go build -o bin/intent ./cmd/intent
 
       - name: intent validate
-        run: ./bin/intent validate -f internal/model/testdata/seed.intent.yaml
+        run: ./bin/intent validate
+
+      - name: intent check
+        run: ./bin/intent check
