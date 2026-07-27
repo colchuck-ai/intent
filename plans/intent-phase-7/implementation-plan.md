@@ -16,9 +16,9 @@ skill files from `internal/help`. One working session, one PR. Phase 6
 (`internal/help/`, `intent help`, footers) is merged and is the sole source for
 skill rendering.
 
-**Status: partially complete.** Tasks 1 and 2 are built, committed, and
-verified. Tasks 3–5 remain. See `plans/intent-phase-7/tasks.md` for the
-per-task checklist and the commits that landed.
+**Status: complete.** All five tasks are built, committed, and verified. See
+`plans/intent-phase-7/tasks.md` for the per-task checklist and the commits
+that landed.
 
 ## Current System
 
