@@ -1,18 +1,15 @@
 ---
 plan_slug: intent-phase-9
 phase: requirements
-rig: intent
-rig_root: /Users/max.dunn/dev/personal/colchuck-ai/intent
-artifact_root: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans
 status: approved
 created_at: 2026-07-23T21:06:00Z
-updated_at: 2026-07-24T16:59:00Z
+updated_at: 2026-07-27T00:00:00Z
 ---
 
 # Requirements: Intent Phase 9 — Dogfood tree & finalize
 
-> Part of the Intent Phases 7–9 build (BUILD_PLAN). Split from the former
-> `intent-build` plan into one plan per phase. Runs last, after Phase 8 merges.
+> Part of the Intent Phases 7–9 build (BUILD_PLAN). One plan per phase, one
+> working session per phase, one PR per phase. Runs last, after Phase 8 merges.
 
 ## Problem Statement
 
@@ -22,10 +19,10 @@ tool it ships.
 
 ## Solution
 
-Complete BUILD_PLAN Phase 9 as one merge-sized PR via the Gas City
-`build-from-convoy` workflow: author the dogfood `intent.yaml` via the write CLI,
-commit generated docs, delete `archive/`, and rewrite `README.md`. Depends on
-Phases 7 and 8 being merged.
+Complete BUILD_PLAN Phase 9 as one merge-sized PR, built directly in a single
+working session: author the dogfood `intent.yaml` via the write CLI, commit
+generated docs, delete `archive/`, and rewrite `README.md`. Depends on Phases 7
+and 8 being merged.
 
 ## User Stories
 
@@ -63,6 +60,4 @@ Acceptance criteria:
   can follow; re-derive rather than paste old archive wording.
 - **Salvage rule:** bucket 1 (element intent) → dogfood tree, reference only;
   bucket 2 (judgment) already landed in Phase 6; bucket 3 (mechanical) discarded.
-- **GC cadence:** one formula run → one PR → human review + merge.
-  See `plans/intent-phase-9/implementation-plan.md` for convoy boundaries and
-  drain policy.
+- **Cadence:** one session → one PR → human review + merge.

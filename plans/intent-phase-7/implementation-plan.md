@@ -1,13 +1,10 @@
 ---
 plan_slug: intent-phase-7
 phase: implementation-plan
-rig: intent
-rig_root: /Users/max.dunn/dev/personal/colchuck-ai/intent
-artifact_root: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans
-requirements_file: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans/intent-phase-7/requirements.md
+requirements_file: plans/intent-phase-7/requirements.md
 status: approved
 created_at: 2026-07-23T21:06:00Z
-updated_at: 2026-07-24T16:59:00Z
+updated_at: 2026-07-27T00:00:00Z
 ---
 
 # Implementation Plan: Intent Phase 7 — Skill renderer & install-skill
@@ -15,129 +12,121 @@ updated_at: 2026-07-24T16:59:00Z
 ## Summary
 
 Add `intent install-skill --agent <target>` plus skill adapters that render
-skill files from `internal/help`. One Gas City convoy (`build-from-convoy`), one
-PR. Phase 6 (`internal/help/`, `intent help`, footers) is merged and is the sole
-source for skill rendering.
+skill files from `internal/help`. One working session, one PR. Phase 6
+(`internal/help/`, `intent help`, footers) is merged and is the sole source for
+skill rendering.
+
+**Status: partially complete.** Tasks 1 and 2 are built, committed, and
+verified. Tasks 3–5 remain. See `plans/intent-phase-7/tasks.md` for the
+per-task checklist and the commits that landed.
 
 ## Current System
 
 | Area | Location | Notes |
 |------|----------|-------|
-| CLI root | `internal/cli/root.go` | Cobra tree; `help` via `SetHelpCommand` |
-| Embedded help | `internal/help/` | `go:embed content/`; 40 topics; `All()`, `Resolve()`, `InPlane()` |
+| CLI root | `internal/cli/root.go` | Cobra tree; commands registered in `AddCommand` |
+| Embedded help | `internal/help/` | `go:embed content/`; `All()`, `Resolve()`, `InPlane()` |
+| Judgment topics | `internal/help/content/judgment/` | 10 topics; source of the skill one-liners |
+| Skill package | `internal/skill/` | Adapter contract, shared render, Claude adapter (built) |
 | Footers | `internal/cli/footer.go` | Judgment slugs resolve to embedded topics |
 | Gitignore | `.gitignore` | Already ignores `.claude/skills/intent/` |
 
 Module: `github.com/colchuck-ai/intent`, Go 1.25, cobra + yaml.v3.
 
-## Proposed Implementation
+## Shipped contract — build against this, not the original sketch
 
-### Convoy boundary: Phase 7 — Skill renderer
-
-**Goal:** `intent install-skill --agent <target>` renders skill files from embedded help.
-
-**New packages / files:**
-
-```
-internal/skill/
-  adapter.go          # Adapter interface: Render(outDir string) ([]string, error)
-  render.go           # Shared SKILL.md assembly from help.All() / judgment summaries
-  claude.go           # Claude Code adapter → .claude/skills/intent/SKILL.md
-  agentsmd.go         # AGENTS.md fallback adapter
-  render_test.go      # Byte-identity / content-source tests
-internal/cli/
-  install_skill.go    # install-skill command, --agent flag, --dir override
-  install_skill_test.go
-```
-
-**Adapter contract:**
+`internal/skill/adapter.go` and `render.go` are merged. The interface differs
+from this plan's first draft (`Content` is passed in explicitly, and the file
+type is `File`, not `OutputFile`). The remaining tasks must implement against
+the real shape:
 
 ```go
-type Adapter interface {
-    Name() string
-    Files(root string) ([]OutputFile, error) // relative path + content
+// internal/skill/adapter.go
+type File struct {
+    Path    string // relative to install root
+    Content []byte
 }
+
+type Adapter interface {
+    Name() string                                 // --agent flag value
+    Files(root string, c Content) ([]File, error) // must NOT write to disk
+}
+
+// internal/skill/render.go
+type Content struct {
+    Description string            // trigger; frontmatter only
+    Intent      string            // one paragraph
+    EntryPoint  string
+    Gotchas     []string
+    Judgments   []JudgmentPointer // {Slug, Summary}
+}
+
+func Render() Content               // assembles Content from embedded help
+func (c Content) Markdown() string  // shared body; EXCLUDES Description
 ```
 
-- `Render` reads only from `help.All()`, `help.InPlane("judgment")`, and fixed
-  template strings for gotchas / entry-point (no duplicated topic bodies in code).
-- Claude adapter: write `.claude/skills/intent/SKILL.md` under `--dir` (default `.`).
-- `agents-md` adapter: append or write `AGENTS.md` section with same core content.
+Key invariants:
 
-**SKILL.md structure** (DESIGN §12):
+- `Render()` reads only `help.InPlane("judgment")` and fixed template strings.
+  No topic bodies are duplicated in code.
+- `help.InPlane` returns slug-sorted topics, so output order is deterministic.
+- Adapters return files; the caller writes them. An adapter that merges into an
+  existing file may *read* from `root`, but must return the merged result.
 
-1. YAML frontmatter with trigger `description` (when to load the skill).
-2. One paragraph: what Intent is.
-3. Entry-point: drive CLI; `intent help`; `intent.yaml` canonical; never hand-edit generated docs.
-4. 2–3 gotchas (suffix addressing, validate-before-write, check drift gate).
-5. Judgment one-liners: one line per `judgment:*` topic summary from embedded frontmatter.
+`internal/skill/claude.go` is the reference implementation to mirror.
 
-Deep topic bodies are **not** copied into SKILL.md — point to `intent help <slug>`.
+## Remaining work
 
-**CLI:**
+### Task 3 — `AGENTS.md` fallback adapter
+
+`internal/skill/agentsmd.go`. `AGENTSAdapter` implementing `Adapter`, with
+`Name() == "agents-md"`. Emits `AGENTS.md` using `c.Markdown()` — the same
+shared body, without Claude's YAML frontmatter. If `AGENTS.md` already exists at
+`root`, read it and return the merged result with the Intent section replaced
+between stable markers; never write from inside the adapter.
+
+### Task 4 — `install-skill` CLI command
+
+`internal/cli/install_skill.go`, registered in `root.go`'s `AddCommand(...)`.
 
 ```
 intent install-skill --agent claude-code [--dir .]
-intent install-skill --agent agents-md [--dir .]
+intent install-skill --agent agents-md   [--dir .]
 ```
 
-Register in `root.go` alongside other commands.
+Selects the adapter by `Name()`, calls `skill.Render()`, writes each returned
+`File` under `--dir` (creating parent directories), and prints the installed
+paths. An unknown `--agent` returns an actionable error listing supported
+agents.
 
-**Tests:**
+### Task 5 — Render and CLI integration tests
 
-- Golden or snapshot test: rendered SKILL.md contains every judgment summary slug.
-- Test that rendering does not read filesystem help files (only `internal/help` package).
-- Integration test: run CLI, verify files land under temp dir, gitignore paths match.
+`internal/skill/render_test.go` (extend) and `internal/cli/install_skill_test.go`.
 
-**Drain policy for GC:** `same-session` (sequential build-on-prior).
-
-**Convoy beads (see `plans/intent-phase-7/tasks.md`):**
-
-1. `skill-adapter-contract` — interface + shared render helpers
-2. `skill-claude-adapter` — Claude Code file tree
-3. `skill-agentsmd-adapter` — AGENTS.md fallback
-4. `skill-install-cmd` — cobra command + wiring
-5. `skill-tests` — render tests + CLI integration tests
-
-### Gas City execution
-
-Artifact root: `plans/intent-phase-7/` (canonical per-plan-slug layout; build
-outputs under `plans/intent-phase-7/build/`).
-
-1. Mayor writes `plans/intent-phase-7/tasks.md` + bead payload.
-2. Dry-run + create beads via `create_beads_from_tasks.py`.
-3. Sling:
-
-```bash
-gc sling gc.run-operator <phase-7-convoy-id> --on build-from-convoy \
-  --var artifact_root=plans/intent-phase-7/build \
-  --var requirements_path=plans/intent-phase-7/requirements.md \
-  --var plan_path=plans/intent-phase-7/implementation-plan.md \
-  --var plan_review_path=plans/intent-phase-7/plan-review.md \
-  --var decomposition_path=plans/intent-phase-7/tasks.md \
-  --var interaction_mode=interactive \
-  --var review_mode=agent \
-  --var drain_policy=same-session \
-  --var max_iterations=4 \
-  --var open_pr=true
-```
-
-4. Human review PR + CI → merge → proceed to Phase 8.
+- Assert every judgment slug summary appears in the rendered `SKILL.md`.
+- Assert rendered content is help-derived — no hand-maintained duplicate prose.
+- Run the CLI end-to-end in a temp dir; verify file placement matches the
+  gitignored path.
 
 ## Testing
 
-| Phase | Verification |
+| Scope | Verification |
 |-------|----------------|
-| 7 | `go test ./internal/skill/... ./internal/cli/...`; manual `intent install-skill --agent claude-code` |
+| Package | `go test ./internal/skill/... ./internal/cli/...` |
+| Repo | `go test ./...` |
+| Manual | `intent install-skill --agent claude-code` in a scratch dir |
 
 ## Rollout
 
-1. Approve requirements + implementation plan + plan review (done).
-2. Decompose Phase 7 → beads → sling → merge (calibration slice).
+Build tasks 3 → 4 → 5 in order (each depends on the prior), then open one PR for
+the phase. Human review + CI → merge → proceed to Phase 8.
 
 No feature flags. The phase is independently revertable via git revert of its PR.
 
 ## Open Questions
 
-1. **Rig-scoped gascity roles** — verify worker routing before first sling (`gc rig status intent`).
-2. **install-skill test flakiness** — if path layout is flaky, pin golden files under `internal/skill/testdata/`.
+1. **`description` wording** — confirm whether `render.go`'s shortened
+   `description` constant is intentional relative to the retired
+   `archive/intent/SKILL.md` wording, before the phase merges. Non-blocking.
+2. **`AGENTS.md` merge markers** — decide the exact marker syntax for replacing
+   an existing Intent section on reinstall.

@@ -1,14 +1,11 @@
 ---
 plan_slug: intent-phase-8
 phase: plan-review
-rig: intent
-rig_root: /Users/max.dunn/dev/personal/colchuck-ai/intent
-artifact_root: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans
-requirements_file: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans/intent-phase-8/requirements.md
-implementation_plan_file: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans/intent-phase-8/implementation-plan.md
+requirements_file: plans/intent-phase-8/requirements.md
+implementation_plan_file: plans/intent-phase-8/implementation-plan.md
 status: approved
 created_at: 2026-07-23T21:06:00Z
-updated_at: 2026-07-24T16:59:00Z
+updated_at: 2026-07-27T00:00:00Z
 review_verdict: approved
 ---
 
@@ -27,16 +24,18 @@ review_verdict: approved
 1. **CI sequencing is realistic** — running `intent check` against the seed
    fixture until the Phase 9 dogfood exists avoids a chicken-and-egg failure.
 
-2. **Convoy sizing matches BUILD_PLAN** — one phase, one PR, human merge gate.
+2. **Phase sizing matches BUILD_PLAN** — one phase, one session, one PR, human
+   merge gate.
 
-3. **Drain policy** — `separate` for the disjoint config files is correct.
+3. **Task independence** — the four config files are disjoint, so they can be
+   built in any order within the session.
 
 ### Risks (accepted with mitigations)
 
 | Risk | Mitigation |
 |------|------------|
-| goreleaser needs GitHub token / first tag | Bead includes snapshot dry-run; tag after merge |
-| GC workers may not route without rig roles | Verify `gc rig status intent` before first sling |
+| goreleaser needs a GitHub token / first tag | Snapshot dry-run in-session; tag after merge |
+| CI green locally but not on GitHub | Phase PR must show a green run before merge |
 
 ### Minor adjustments recommended during execution
 
@@ -44,13 +43,9 @@ review_verdict: approved
 
 ## Verdict
 
-**Approved.** No blocking issues. Plan is concrete enough for Phase 8 bead
-decomposition once Phase 7 has merged.
+**Approved.** No blocking issues. Ready to build once Phase 7 has merged.
 
 ## Next checkpoint
 
-After Phase 7 merges:
-
-1. Mayor drafts `plans/intent-phase-8/tasks.md`
-2. Create beads (dry-run → real)
-3. Sling `build-from-convoy` with `drain_policy=separate`
+Build tasks 1–4 per `plans/intent-phase-8/implementation-plan.md`, then open the
+phase PR for human review.

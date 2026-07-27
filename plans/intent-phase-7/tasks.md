@@ -1,149 +1,101 @@
 ---
 plan_slug: intent-phase-7
 phase: tasks
-rig: intent
-rig_root: /Users/max.dunn/dev/personal/colchuck-ai/intent
-artifact_root: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans
-requirements_file: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans/intent-phase-7/requirements.md
-implementation_plan_file: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans/intent-phase-7/implementation-plan.md
-status: created
-created_at: '2026-07-23T21:11:00Z'
-updated_at: '2026-07-24T16:59:00Z'
-created_beads_at: '2026-07-23T21:17:14Z'
+requirements_file: plans/intent-phase-7/requirements.md
+implementation_plan_file: plans/intent-phase-7/implementation-plan.md
+status: in-progress
+created_at: 2026-07-23T21:11:00Z
+updated_at: 2026-07-27T00:00:00Z
 ---
 
 # Task Plan: Phase 7 — Skill renderer & install-skill
 
-Calibration convoy for Gas City `build-from-convoy`. One PR; drain policy
-`same-session`.
+Five tasks, built in dependency order in one working session. Tasks 1–2 are
+done; 3–5 remain.
 
-## Work beads
+## Status
 
-1. **skill-adapter-contract** — shared adapter interface + SKILL.md render helpers
-2. **skill-claude-adapter** — Claude Code file tree (`.claude/skills/intent/SKILL.md`)
-3. **skill-agentsmd-adapter** — generic `AGENTS.md` fallback adapter
-4. **skill-install-cmd** — `intent install-skill --agent …` cobra command
-5. **skill-tests** — render + CLI integration tests
+| # | Task | Status | Evidence |
+|---|------|--------|----------|
+| 1 | Adapter contract + shared render helpers | ✅ done | `f630a73` — `adapter.go`, `render.go`, `render_test.go` |
+| 2 | Claude Code adapter | ✅ done | `06760b6` — `claude.go`, `claude_test.go` |
+| 3 | `AGENTS.md` fallback adapter | ⬜ todo | `internal/skill/agentsmd.go` absent |
+| 4 | `install-skill` CLI command | ⬜ todo | `internal/cli/install_skill.go` absent |
+| 5 | Render + CLI integration tests | ⬜ todo | no `install_skill_test.go` |
 
-## Bead Creation Payload
+Tasks 1 and 2 were independently reviewed with no functional findings; `go
+build`, `go vet`, `gofmt`, and `go test ./...` are all clean at `06760b6`. Do
+not re-implement them.
 
-```yaml
-target_rig: intent
-labels:
-  - plan:intent-phase-7
-  - phase:7
-convoys:
-  - key: phase-7
-    title: "Phase 7: Skill renderer & install-skill"
-    description: |
-      Generate agent skill files from embedded help content. Implements
-      BUILD_PLAN Phase 7 and DESIGN §12 install-skill path.
-    metadata:
-      gc.plan.phase: "7"
-      gc.plan.slug: intent-phase-7
-    beads:
-      - key: skill-adapter-contract
-        title: Skill adapter contract and shared render helpers
-        type: feature
-        priority: 2
-        description: |
-          Add `internal/skill/` with an adapter interface that emits a per-agent
-          file tree from embedded help. Implement shared SKILL.md assembly:
-          trigger description, Intent paragraph, entry-point instruction, 2–3
-          gotchas, judgment one-liners from help.InPlane("judgment") summaries.
-          Do not duplicate full topic bodies — point to intent help slug.
-        acceptance_criteria:
-          - internal/skill/adapter.go and render.go exist with documented contract.
-          - Render logic reads only from internal/help package APIs.
-          - Unit tests cover judgment one-liner extraction and stable output order.
-        files:
-          - internal/skill/adapter.go
-          - internal/skill/render.go
-          - internal/skill/render_test.go
-        verification:
-          - go test ./internal/skill/...
+Tasks 3–5 were never started. An earlier attempt to drive this phase through an
+external build orchestrator stalled on tooling problems unrelated to the code,
+and that orchestration has since been removed from the repo. The remaining work
+is unaffected — build it directly.
 
-      - key: skill-claude-adapter
-        title: Claude Code skill adapter
-        type: feature
-        priority: 2
-        description: |
-          Implement Claude Code adapter writing .claude/skills/intent/SKILL.md
-          under a configurable root (default .). Match .gitignore expectation
-          that installed skills are never committed.
-        acceptance_criteria:
-          - internal/skill/claude.go renders SKILL.md via shared render helpers.
-          - Output path is .claude/skills/intent/SKILL.md relative to install root.
-        files:
-          - internal/skill/claude.go
-        dependencies:
-          - skill-adapter-contract
-        verification:
-          - go test ./internal/skill/...
+## Tasks
 
-      - key: skill-agentsmd-adapter
-        title: AGENTS.md fallback adapter
-        type: feature
-        priority: 2
-        description: |
-          Implement generic adapter that writes or updates AGENTS.md with the
-          same core skill content for non-Claude targets.
-        acceptance_criteria:
-          - internal/skill/agentsmd.go renders AGENTS.md section via shared helpers.
-          - Adapter name is agents-md for the --agent flag.
-        files:
-          - internal/skill/agentsmd.go
-        dependencies:
-          - skill-adapter-contract
-        verification:
-          - go test ./internal/skill/...
+### 1. Skill adapter contract and shared render helpers ✅
 
-      - key: skill-install-cmd
-        title: install-skill CLI command
-        type: feature
-        priority: 2
-        description: |
-          Add intent install-skill --agent target [--dir .] command. Register
-          in internal/cli/root.go. Support agents claude-code and agents-md.
-        acceptance_criteria:
-          - Command writes files to disk and prints paths installed.
-          - Unknown agent returns actionable error listing supported agents.
-        files:
-          - internal/cli/install_skill.go
-          - internal/cli/root.go
-        dependencies:
-          - skill-claude-adapter
-          - skill-agentsmd-adapter
-        verification:
-          - go test ./internal/cli/...
+Add `internal/skill/` with an adapter interface that emits a per-agent file tree
+from embedded help. Shared `SKILL.md` assembly: trigger description, Intent
+paragraph, entry-point instruction, 2–3 gotchas, judgment one-liners from
+`help.InPlane("judgment")` summaries. No full topic bodies — point to
+`intent help <slug>`.
 
-      - key: skill-tests
-        title: Skill render integration tests
-        type: chore
-        priority: 2
-        description: |
-          Add integration tests proving rendered skill content is derived from
-          embedded help (no hand-maintained duplicate prose). Test CLI end-to-end
-          in temp directory.
-        acceptance_criteria:
-          - Tests assert every judgment slug summary appears in rendered SKILL.md.
-          - go test ./... passes.
-        files:
-          - internal/skill/render_test.go
-          - internal/cli/install_skill_test.go
-        dependencies:
-          - skill-install-cmd
-        verification:
-          - go test ./...
-```
+- Files: `internal/skill/adapter.go`, `render.go`, `render_test.go`
+- Verify: `go test ./internal/skill/...`
 
-## Created Beads
+### 2. Claude Code skill adapter ✅
 
-| Key | Kind | Bead ID | Title |
-|---|---|---|---|
-| phase-7 | convoy | int-zui | Phase 7: Skill renderer & install-skill |
-| skill-adapter-contract | bead | int-sv6 | Skill adapter contract and shared render helpers |
-| skill-claude-adapter | bead | int-5a3 | Claude Code skill adapter |
-| skill-agentsmd-adapter | bead | int-e3d | AGENTS.md fallback adapter |
-| skill-install-cmd | bead | int-wmv | install-skill CLI command |
-| skill-tests | bead | int-k7o | Skill render integration tests |
+Claude Code adapter writing `.claude/skills/intent/SKILL.md` under a
+configurable root (default `.`), matching the `.gitignore` expectation that
+installed skills are never committed.
+
+- Files: `internal/skill/claude.go`, `claude_test.go`
+- Verify: `go test ./internal/skill/...`
+
+### 3. AGENTS.md fallback adapter ⬜
+
+Generic adapter that writes or updates `AGENTS.md` with the same core skill
+content for non-Claude targets. Adapter name is `agents-md`.
+
+- Acceptance:
+  - `internal/skill/agentsmd.go` renders the `AGENTS.md` section via the shared
+    helpers (`c.Markdown()`), with no Claude-style frontmatter.
+  - `Name()` returns `agents-md`.
+  - An existing `AGENTS.md` is merged, not clobbered; the adapter returns the
+    merged bytes rather than writing them.
+- Files: `internal/skill/agentsmd.go`
+- Depends on: task 1
+- Verify: `go test ./internal/skill/...`
+
+### 4. install-skill CLI command ⬜
+
+Add `intent install-skill --agent <target> [--dir .]`. Register in
+`internal/cli/root.go`. Support `claude-code` and `agents-md`.
+
+- Acceptance:
+  - Command writes files to disk (creating parent dirs) and prints the paths
+    installed.
+  - Unknown agent returns an actionable error listing supported agents.
+- Files: `internal/cli/install_skill.go`, `internal/cli/root.go`
+- Depends on: tasks 2, 3
+- Verify: `go test ./internal/cli/...`
+
+### 5. Skill render integration tests ⬜
+
+Integration tests proving rendered skill content is derived from embedded help
+(no hand-maintained duplicate prose), plus an end-to-end CLI run in a temp dir.
+
+- Acceptance:
+  - Tests assert every judgment slug summary appears in the rendered `SKILL.md`.
+  - `go test ./...` passes.
+- Files: `internal/skill/render_test.go`, `internal/cli/install_skill_test.go`
+- Depends on: task 4
+- Verify: `go test ./...`
+
+## Done when
+
+`intent install-skill --agent claude-code` renders; the skill content is the
+same bytes as the embedded help content; installed files are gitignored and
+never committed; `go test ./...` is green.

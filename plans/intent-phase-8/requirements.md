@@ -1,18 +1,15 @@
 ---
 plan_slug: intent-phase-8
 phase: requirements
-rig: intent
-rig_root: /Users/max.dunn/dev/personal/colchuck-ai/intent
-artifact_root: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans
 status: approved
 created_at: 2026-07-23T21:06:00Z
-updated_at: 2026-07-24T16:59:00Z
+updated_at: 2026-07-27T00:00:00Z
 ---
 
 # Requirements: Intent Phase 8 — Distribution & CI
 
-> Part of the Intent Phases 7–9 build (BUILD_PLAN). Split from the former
-> `intent-build` plan into one plan per phase. Runs after Phase 7 merges.
+> Part of the Intent Phases 7–9 build (BUILD_PLAN). One plan per phase, one
+> working session per phase, one PR per phase. Runs after Phase 7 merges.
 
 ## Problem Statement
 
@@ -22,9 +19,9 @@ version, and doc drift is not rejected automatically.
 
 ## Solution
 
-Complete BUILD_PLAN Phase 8 as one merge-sized PR via the Gas City
-`build-from-convoy` workflow: pinned releases plus automated `validate` + `check`
-drift gates. Depends on Phase 7 being merged.
+Complete BUILD_PLAN Phase 8 as one merge-sized PR, built directly in a single
+working session: pinned releases plus automated `validate` + `check` drift
+gates. Depends on Phase 7 being merged.
 
 ## User Stories
 
@@ -48,14 +45,11 @@ Acceptance criteria:
 - Skill renderer / `install-skill` — Phase 7.
 - Dogfood `intent.yaml` and `archive/` retirement — Phase 9.
 - npm/uv/Nix distribution adapters (DESIGN §15 open question).
-- Auto-merging PRs from Gas City workflows.
 
 ## Other Notes
 
 - **Global writing rule** (BUILD_PLAN): concise, plain language a junior engineer
   can follow; re-derive rather than paste old archive wording.
-- **GC cadence:** one formula run → one PR → human review + merge → next phase.
-  See `plans/intent-phase-8/implementation-plan.md` for convoy boundaries and
-  drain policy.
-- Phase 8 could have run before Phase 7 per BUILD_PLAN; we keep 7 → 8 → 9 so
-  Phase 7 stays the calibration slice with crisp test gates.
+- **Cadence:** one session → one PR → human review + merge → next phase.
+- Phase 8 could have run before Phase 7 per BUILD_PLAN; we keep 7 → 8 → 9 so the
+  skill renderer lands against stable help content first.

@@ -1,13 +1,10 @@
 ---
 plan_slug: intent-phase-9
 phase: implementation-plan
-rig: intent
-rig_root: /Users/max.dunn/dev/personal/colchuck-ai/intent
-artifact_root: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans
-requirements_file: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans/intent-phase-9/requirements.md
+requirements_file: plans/intent-phase-9/requirements.md
 status: approved
 created_at: 2026-07-23T21:06:00Z
-updated_at: 2026-07-24T16:59:00Z
+updated_at: 2026-07-27T00:00:00Z
 ---
 
 # Implementation Plan: Intent Phase 9 — Dogfood tree & finalize
@@ -15,15 +12,16 @@ updated_at: 2026-07-24T16:59:00Z
 ## Summary
 
 Author the dogfood tree via the write CLI, commit generated docs, delete
-`archive/`, and rewrite `README.md`. One Gas City convoy (`build-from-convoy`),
-one PR. Depends on Phases 7 and 8 merged.
+`archive/`, and rewrite `README.md`. One working session, one PR. Depends on
+Phases 7 and 8 merged.
 
 ## Current System
 
 | Area | Location | Notes |
 |------|----------|-------|
 | Generator | `internal/gen/` | `build` / `check` drift gate (Phase 3) |
-| Mutations | `internal/mutate/`, `internal/cli/write.go` | Full write path (Phases 4–5) |
+| Mutations | `internal/mutate/`, `internal/cli/` | Full write path (Phases 4–5) |
+| Help | `internal/help/` | Embedded topics + error catalog (Phase 6) |
 | Seed fixture | `internal/model/testdata/seed.intent.yaml` | Test-only; not repo dogfood |
 | Archive | `archive/` | Pre-rewrite Python skill, prototype, old docs |
 | README | `README.md` | Still describes retired Agent Skill / markdown workflow |
@@ -32,17 +30,18 @@ Module: `github.com/colchuck-ai/intent`, Go 1.25, cobra + yaml.v3.
 
 ## Proposed Implementation
 
-### Convoy boundary: Phase 9 — Dogfood tree & finalize
-
 **Goal:** Self-describing repo; archive gone; README accurate.
 
-**Authoring rules for workers:**
+### Authoring rules
 
-- Use write CLI only (`intent add`, `set`, `link`, `record`, `promote`, `mv`).
-- Reference `DESIGN.md`, `BUILD_PLAN.md`, and `archive/` for salvage — re-derive prose.
+- Use the write CLI only (`intent add`, `set`, `link`, `record`, `promote`, `mv`).
+  The dogfood tree is the proof that the write path works — hand-editing
+  `intent.yaml` defeats the point of the phase.
+- Reference `DESIGN.md`, `BUILD_PLAN.md`, and `archive/` for salvage, but
+  re-derive the prose.
 - Run `intent validate` after each major subtree; `intent build` before commit.
 
-**Target tree shape (high level):**
+### Target tree shape
 
 ```
 intent.yaml                 # product + engineering roots
@@ -52,66 +51,55 @@ docs/engineering/...        # generated
 docs/change-records/...     # generated (per gen/path.go conventions)
 ```
 
-Content should cover: jobs/outcomes/risks/requirements for Intent the product,
-components for CLI subsystems (help, gen, validate, mutate), PDRs/ADRs/CRs for
-major design choices (Go rewrite, embedded help, committed docs + check gate).
+Content should cover: jobs/outcomes/risks/requirements for Intent the product;
+components for the CLI subsystems (help, gen, validate, mutate, skill);
+PDRs/ADRs/CRs for the major design choices (Go rewrite, embedded help, committed
+docs + check gate).
 
-**Cleanup:**
+### Cleanup
 
-- Delete entire `archive/` directory.
-- Rewrite `README.md`: Go binary, mise install, install-skill, validate/build/check workflow.
-- Final pass on `internal/help/content/errors/E00N.md` if dogfood exposes new edge cases.
+- Delete the entire `archive/` directory.
+- Rewrite `README.md`: Go binary, mise install, `install-skill`,
+  validate/build/check workflow.
+- Final pass on `internal/help/content/errors/E00N.md` if dogfood exposes new
+  edge cases.
 
-**Drain policy for GC:** `same-session` for tree-authoring beads; final cleanup
-bead depends on docs bead.
+## Tasks
 
-**Convoy beads (see `plans/intent-phase-9/tasks.md`):**
+Build in order — each step depends on the tree the prior one authored.
 
-1. `dogfood-scaffold` — `intent init` or manual scaffold + product spine (jobs, outcomes, risks, requirements)
-2. `dogfood-engineering` — architecture + components for CLI subsystems
-3. `dogfood-records` — PDRs/ADRs/CRs for major decisions
-4. `dogfood-build-commit` — `intent build`, commit docs, `intent check` green
-5. `dogfood-finalize` — delete `archive/`, update README, stabilize error catalog, update CI to root `intent.yaml`
-
-### Gas City execution
-
-Artifact root: `plans/intent-phase-9/` (canonical per-plan-slug layout; build
-outputs under `plans/intent-phase-9/build/`).
-
-1. Mayor writes `plans/intent-phase-9/tasks.md` + bead payload.
-2. Dry-run + create beads via `create_beads_from_tasks.py`.
-3. Sling:
-
-```bash
-gc sling gc.run-operator <phase-9-convoy-id> --on build-from-convoy \
-  --var artifact_root=plans/intent-phase-9/build \
-  --var requirements_path=plans/intent-phase-9/requirements.md \
-  --var plan_path=plans/intent-phase-9/implementation-plan.md \
-  --var plan_review_path=plans/intent-phase-9/plan-review.md \
-  --var decomposition_path=plans/intent-phase-9/tasks.md \
-  --var interaction_mode=interactive \
-  --var review_mode=agent \
-  --var drain_policy=same-session \
-  --var open_pr=true
-```
-
-4. Human review PR + CI → merge.
+1. **`dogfood-scaffold`** — scaffold + product spine (jobs, outcomes, risks,
+   requirements).
+   - Verify: `intent validate` passes.
+2. **`dogfood-engineering`** — architecture + components for the CLI subsystems.
+   - Verify: `intent validate` passes; `intent trace` resolves across domains.
+3. **`dogfood-records`** — PDRs/ADRs/CRs for the major decisions.
+   - Verify: `intent validate` passes (E004 cross-domain rules hold).
+4. **`dogfood-build-commit`** — `intent build`, commit docs, `intent check` green.
+   - Verify: `intent check` exits zero; re-running `build` is byte-identical.
+5. **`dogfood-finalize`** — delete `archive/`, rewrite README, stabilize the
+   error catalog, and repoint CI's `check` from the seed fixture to the root
+   `intent.yaml`.
+   - Verify: `go test ./...`; CI green on the phase PR.
 
 ## Testing
 
-| Phase | Verification |
+| Scope | Verification |
 |-------|----------------|
-| 9 | `intent validate`; `intent check`; `go test ./...`; README accuracy review |
+| Tree | `intent validate`, `intent check` |
+| Repo | `go test ./...` |
+| Docs | README accuracy read-through before merge |
 
 ## Rollout
 
-1. Approve requirements + implementation plan + plan review.
-2. Decompose Phase 9 → beads → sling → merge.
+1. Build tasks 1–5 in order in one session; open one PR for the phase.
+2. Human review + CI → merge.
 
 No feature flags. The phase is independently revertable via git revert of its PR.
 
 ## Open Questions
 
-1. **Phase 9 bead 5 CI update** — must explicitly move CI `check` from the seed
-   fixture to the root `intent.yaml`.
-2. **Rig-scoped gascity roles** — verify worker routing before the sling (`gc rig status intent`).
+1. **CI switch** — task 5 must explicitly move CI's `check` from the seed
+   fixture to the root `intent.yaml`; it is easy to miss.
+2. **Tree scope** — decide how deep the dogfood goes. Enough to exercise every
+   element type and both domains, without turning into a full product spec.

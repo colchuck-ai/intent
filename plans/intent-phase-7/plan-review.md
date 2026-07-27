@@ -1,14 +1,11 @@
 ---
 plan_slug: intent-phase-7
 phase: plan-review
-rig: intent
-rig_root: /Users/max.dunn/dev/personal/colchuck-ai/intent
-artifact_root: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans
-requirements_file: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans/intent-phase-7/requirements.md
-implementation_plan_file: /Users/max.dunn/dev/personal/colchuck-ai/intent/plans/intent-phase-7/implementation-plan.md
+requirements_file: plans/intent-phase-7/requirements.md
+implementation_plan_file: plans/intent-phase-7/implementation-plan.md
 status: approved
 created_at: 2026-07-23T21:06:00Z
-updated_at: 2026-07-24T16:59:00Z
+updated_at: 2026-07-27T00:00:00Z
 review_verdict: approved
 ---
 
@@ -24,36 +21,36 @@ review_verdict: approved
 
 ### Approved aspects
 
-1. **Convoy sizing matches BUILD_PLAN** — one phase, one PR, human merge gate.
-   Aligns with Gas City worktree isolation (one run cannot see unmerged prior work).
+1. **Phase sizing matches BUILD_PLAN** — one phase, one session, one PR, human
+   merge gate.
 
-2. **Grounded in existing API** — `internal/help.All()`, `InPlane()`, topic
-   frontmatter summaries are sufficient for thin SKILL.md assembly without
+2. **Grounded in existing API** — `internal/help.All()`, `InPlane()`, and topic
+   frontmatter summaries are sufficient for thin `SKILL.md` assembly without
    duplicating bodies.
 
-3. **Drain policy** — `same-session` for the coupled code chain is correct.
+3. **Sequential task order is correct** — the adapter contract, the two
+   adapters, the command, and the tests form a genuine dependency chain.
 
 ### Risks (accepted with mitigations)
 
 | Risk | Mitigation |
 |------|------------|
-| Agent review is not the backstop | Human merge gate + CI on every PR |
-| GC workers may not route without rig roles | Verify `gc rig status intent` before first sling |
+| Skill content drifts from embedded help | Task 5 asserts every judgment summary is present |
+| `install-skill` path assertions flaky | Pin golden files under `internal/skill/testdata/` if needed |
 
 ### Minor adjustments recommended during execution
 
-- If `install-skill` tests are flaky on path layout, pin golden files under
-  `internal/skill/testdata/`.
+- The shipped `Adapter.Files(root string, c Content) ([]File, error)` differs
+  from this plan's original sketch (`Files(root string) ([]OutputFile, error)`).
+  The shipped shape is the contract; the remaining tasks implement against it.
+  Rationale: adapters stay pure, stateless functions of `(root, Content)`.
+- Confirm the shortened `description` constant in `render.go` before merge.
 
 ## Verdict
 
-**Approved.** No blocking issues. Plan is concrete enough for Phase 7 bead
-decomposition and the calibration sling.
+**Approved.** No blocking issues.
 
 ## Next checkpoint
 
-After approval:
-
-1. Mayor drafts `plans/intent-phase-7/tasks.md`
-2. Create beads (dry-run → real)
-3. Sling `build-from-convoy` with `drain_policy=same-session`, `max_iterations=4`
+Build tasks 3 → 4 → 5 per `plans/intent-phase-7/tasks.md`, then open the phase
+PR for human review.
