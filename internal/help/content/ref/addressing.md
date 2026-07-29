@@ -5,8 +5,10 @@ summary: "The dotted-path address, suffix resolution, and how the CLI echoes add
 # ref: addressing
 
 **One address encoding — the dotted path — everywhere.** An element's key is its
-identity, its path segment, and its slug. Keys are snake_case and only locally
-unique; position qualifies them.
+identity, its path segment, and its slug. Keys are lowercase and only locally
+unique; position qualifies them. A project picks one convention — kebab-case
+(default) or snake_case — via `key_case` in `intent.config.yaml` (→ `intent
+help ref:config`), enforced by the linter (→ `intent help E005`).
 
 ```
 product.jobs.<job>.outcomes.<outcome>.risks.<risk>
@@ -18,7 +20,7 @@ change_records.<key>                        # CR
 ```
 
 **Suffix input.** Commands accept the **shortest unambiguous suffix**:
-`intent show stable_logical_ids` resolves the full path. If a suffix matches more
+`intent show stable-logical-ids` resolves the full path. If a suffix matches more
 than one element, the CLI lists the candidates so you can disambiguate.
 
 **Full addresses out.** The CLI always echoes the full dotted path back, and

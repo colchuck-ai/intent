@@ -1,11 +1,13 @@
 // Package validate is the intent linter: the meaning-level checks the schema
-// can't express (DESIGN §9). The schema owns shape (required fields, snake_case
-// keys, at-least-one edges); this package owns the four semantic rules:
+// can't express (DESIGN §9). The schema owns shape (required fields, lowercase
+// identifier keys, at-least-one edges); this package owns the five semantic
+// rules:
 //
 //	E001  a declared edge or prose {{ }} address that doesn't resolve
 //	E002  a document element under an inline parent (hand-edit backstop, §5)
 //	E003  the same target listed twice in one edge list
 //	E004  a decision record whose affects leaves its own domain (§4)
+//	E005  a key that doesn't match this project's configured casing (key_case)
 //
 // Every finding carries its code so the caller can end the message with the
 // `→ intent help E0NN` pointer that makes the fix one hop away.
@@ -13,9 +15,11 @@ package validate
 
 import (
 	"fmt"
+	"regexp"
 	"sort"
 	"strings"
 
+	"github.com/colchuck-ai/intent/internal/config"
 	"github.com/colchuck-ai/intent/internal/interp"
 	"github.com/colchuck-ai/intent/internal/tree"
 )
@@ -28,7 +32,14 @@ const (
 	E002 Code = "E002" // inline/document containment
 	E003 Code = "E003" // duplicate reference in a list
 	E004 Code = "E004" // record cross-domain affects
+	E005 Code = "E005" // key doesn't match the project's configured casing
 )
+
+// keyPattern is the per-casing shape a key must match, keyed by config.Casing.
+var keyPattern = map[config.Casing]*regexp.Regexp{
+	config.Kebab: regexp.MustCompile(`^[a-z][a-z0-9-]*$`),
+	config.Snake: regexp.MustCompile(`^[a-z][a-z0-9_]*$`),
+}
 
 // Finding is one rule violation, located at an element address.
 type Finding struct {
@@ -45,13 +56,14 @@ func (f Finding) String() string {
 
 // Check runs every rule over the index and returns the findings sorted for
 // stable output (by address, then code, then detail). An empty result means the
-// tree is valid.
-func Check(ix *tree.Index) []Finding {
+// tree is valid. casing is the project's configured key convention (E005).
+func Check(ix *tree.Index, casing config.Casing) []Finding {
 	var fs []Finding
 	for _, e := range ix.All() {
 		fs = append(fs, checkDangling(ix, e)...)
 		fs = append(fs, checkDuplicates(e)...)
 		fs = append(fs, checkDomainScope(e)...)
+		fs = append(fs, checkKeyCase(e, casing)...)
 	}
 	fs = append(fs, checkContainment(ix)...)
 
@@ -146,6 +158,24 @@ func checkDomainScope(e *tree.Element) []Finding {
 		}
 	}
 	return fs
+}
+
+// checkKeyCase flags a key that doesn't match this project's configured
+// casing (E005). Roots (product, engineering) have no chosen key and are
+// exempt.
+func checkKeyCase(e *tree.Element, casing config.Casing) []Finding {
+	if e.Kind == tree.KindProduct || e.Kind == tree.KindEngineering {
+		return nil
+	}
+	key := tree.LastSegment(e.Addr)
+	if keyPattern[casing].MatchString(key) {
+		return nil
+	}
+	return []Finding{{
+		Code:   E005,
+		Addr:   e.Addr,
+		Detail: fmt.Sprintf("key %q does not match this project's %s convention (key_case)", key, casing),
+	}}
 }
 
 // checkContainment flags a document element whose parent is inline (E002). A

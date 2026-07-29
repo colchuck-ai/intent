@@ -2,166 +2,166 @@ product:
   name: Intent
   summary: 'A structured-source tool for product and engineering intent: one schema''d intent.yaml, a read/write CLI, and generated docs that stay provably in sync.'
   jobs:
-    understand_the_rationale_behind_an_element:
+    understand-the-rationale-behind-an-element:
       name: Understand The Rationale Behind An Element
       story: When I read an element, I want to see why it exists -- its parent, its siblings, the outcome it serves -- so I can trust it before I touch it.
       outcomes:
-        fast_rationale_lookup:
+        fast-rationale-lookup:
           name: Fast Rationale Lookup
           type: document
           statement: Minimize the time to trace an element back to the outcome it serves.
           risks:
-            ambiguous_or_premature_reference:
+            ambiguous-or-premature-reference:
               name: Ambiguous Or Premature Reference
               statement: A reference points at something that doesn't resolve yet, or resolves to the wrong element, because addressing is ambiguous.
-            tracing_slows_as_tree_grows:
+            tracing-slows-as-tree-grows:
               name: Tracing Slows As Tree Grows
               statement: A growing tree increases the time it takes to trace an element back to the outcome it serves.
           requirements:
-            stable_logical_ids:
+            stable-logical-ids:
               name: Stable Logical IDs
               statement: Every element must have a stable address that resolves correctly whether or not a document exists for it yet.
               mitigates:
-                - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.risks.ambiguous_or_premature_reference
+                - product.jobs.understand-the-rationale-behind-an-element.outcomes.fast-rationale-lookup.risks.ambiguous-or-premature-reference
               acceptance_criteria:
                 - A dangling reference fails validate with E001.
-            one_tracing_path_per_element:
+            one-tracing-path-per-element:
               name: One Tracing Path Per Element
               statement: Each element must render at exactly one fixed, derived location -- outgoing edges, then a single Referenced-by footer -- so there's one correct route to follow.
               mitigates:
-                - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.risks.tracing_slows_as_tree_grows
+                - product.jobs.understand-the-rationale-behind-an-element.outcomes.fast-rationale-lookup.risks.tracing-slows-as-tree-grows
               dependsOn:
-                - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.requirements.stable_logical_ids
-    change_documentation_without_drift:
+                - product.jobs.understand-the-rationale-behind-an-element.outcomes.fast-rationale-lookup.requirements.stable-logical-ids
+    change-documentation-without-drift:
       name: Change Documentation Without Drift
       story: When I add or edit an element -- often with an AI assistant doing the drafting -- I want the change validated against everything it touches before it's written, so the tree stays one coherent story instead of drifting piecemeal.
       outcomes:
-        coherent_change:
+        coherent-change:
           name: Coherent Change
           statement: Minimize the likelihood that a change to one element leaves something that references it contradicting it.
           risks:
-            linked_elements_fall_out_of_sync:
+            linked-elements-fall-out-of-sync:
               name: Linked Elements Fall Out Of Sync
               statement: A change to one element isn't reflected in the elements that reference it, leaving them in contradiction.
-            undocumented_change_reads_as_drift:
+            undocumented-change-reads-as-drift:
               name: Undocumented Change Reads As Drift
               statement: A change lands with nothing recording what changed and why, so a later reader can't tell deliberate change from drift.
           requirements:
-            mechanical_linter_first_pass:
+            mechanical-linter-first-pass:
               name: Mechanical Linter First Pass
               statement: Every write must run reference-resolution, containment, duplicate-reference, and domain-scope checks before it is committed to disk.
               mitigates:
-                - product.jobs.change_documentation_without_drift.outcomes.coherent_change.risks.linked_elements_fall_out_of_sync
-            alignment_check_before_finalizing:
+                - product.jobs.change-documentation-without-drift.outcomes.coherent-change.risks.linked-elements-fall-out-of-sync
+            alignment-check-before-finalizing:
               name: Alignment Check Before Finalizing
               statement: A write that would leave any reference dangling or any containment invalid must be refused, not merely flagged.
               mitigates:
-                - product.jobs.change_documentation_without_drift.outcomes.coherent_change.risks.linked_elements_fall_out_of_sync
+                - product.jobs.change-documentation-without-drift.outcomes.coherent-change.risks.linked-elements-fall-out-of-sync
               dependsOn:
-                - product.jobs.change_documentation_without_drift.outcomes.coherent_change.requirements.mechanical_linter_first_pass
-            capture_change_records:
+                - product.jobs.change-documentation-without-drift.outcomes.coherent-change.requirements.mechanical-linter-first-pass
+            capture-change-records:
               name: Capture Change Records
               statement: A material update or delete must be capturable as a Change Record stating what changed and why.
               mitigates:
-                - product.jobs.change_documentation_without_drift.outcomes.coherent_change.risks.undocumented_change_reads_as_drift
-        right_sized_placement:
+                - product.jobs.change-documentation-without-drift.outcomes.coherent-change.risks.undocumented-change-reads-as-drift
+        right-sized-placement:
           name: Right-Sized Placement
           statement: Minimize the effort to determine where a new or changed element belongs, and at what tier.
           risks:
-            wrong_tier_for_the_content:
+            wrong-tier-for-the-content:
               name: Wrong Tier For The Content
               statement: Without a default tier, an author must weigh promotion from scratch for every element.
-            no_canonical_path:
+            no-canonical-path:
               name: No Canonical Path
               statement: An undefined path or naming convention forces an author to invent one instead of looking it up.
           requirements:
-            minimal_first_tier_ladder:
+            minimal-first-tier-ladder:
               name: Minimal-First Tier Ladder
               statement: Every promotable element must default to inline and promote to its own document only on an explicit promote/set-type-document call, cascading ancestors automatically.
               mitigates:
-                - product.jobs.change_documentation_without_drift.outcomes.right_sized_placement.risks.wrong_tier_for_the_content
-            canonical_path_slug_convention:
+                - product.jobs.change-documentation-without-drift.outcomes.right-sized-placement.risks.wrong-tier-for-the-content
+            canonical-path-slug-convention:
               name: Canonical Path/Slug Convention
               statement: Every element's file path and slug must be computed from its address and type, never chosen by hand.
               mitigates:
-                - product.jobs.change_documentation_without_drift.outcomes.right_sized_placement.risks.no_canonical_path
-    make_a_surgical_change_with_confidence:
+                - product.jobs.change-documentation-without-drift.outcomes.right-sized-placement.risks.no-canonical-path
+    make-a-surgical-change-with-confidence:
       name: Make A Surgical Change With Confidence
       story: When I need to add or edit an element, I want a CLI that refuses any write that would make the tree invalid, so I never have to hand-edit intent.yaml to get it right.
       outcomes:
-        safe_surgical_writes:
+        safe-surgical-writes:
           name: Safe Surgical Writes
           statement: Minimize the chance that a write leaves the tree in an invalid state.
           risks:
-            hand_edited_yaml_drifts_from_schema:
+            hand-edited-yaml-drifts-from-schema:
               name: Hand-Edited YAML Drifts From Schema
               statement: A hand-edited intent.yaml diverges from the schema or the containment rule because nothing checked it before it was saved.
           requirements:
-            writes_refused_when_invalid:
+            writes-refused-when-invalid:
               name: Writes Refused When Invalid
               statement: Every mutating command must re-validate the whole tree before writing, and write nothing at all if validation fails.
               mitigates:
-                - product.jobs.make_a_surgical_change_with_confidence.outcomes.safe_surgical_writes.risks.hand_edited_yaml_drifts_from_schema
+                - product.jobs.make-a-surgical-change-with-confidence.outcomes.safe-surgical-writes.risks.hand-edited-yaml-drifts-from-schema
               acceptance_criteria:
                 - add, set, link, mv, promote, and record all pass through the same validation gate before touching disk.
-    keep_committed_docs_trustworthy:
+    keep-committed-docs-trustworthy:
       name: Keep Committed Docs Trustworthy
       story: When I open the docs tree, I want it to exactly match intent.yaml, so I can trust the committed markdown as the real impact view instead of double-checking the source.
       outcomes:
-        docs_match_intent_exactly:
+        docs-match-intent-exactly:
           name: Docs Match Intent Exactly
           type: document
           statement: Minimize the chance that committed docs disagree with intent.yaml.
           risks:
-            docs_drift_from_intent_silently:
+            docs-drift-from-intent-silently:
               name: Docs Drift From Intent Silently
               statement: Generated docs are edited by hand, or intent.yaml changes without a rebuild, and the mismatch goes unnoticed until someone reads the wrong page.
           requirements:
-            deterministic_generation:
+            deterministic-generation:
               name: Deterministic Generation
               statement: Building the same intent.yaml twice must produce byte-identical docs, so a diff only ever reflects an actual intent change.
               mitigates:
-                - product.jobs.keep_committed_docs_trustworthy.outcomes.docs_match_intent_exactly.risks.docs_drift_from_intent_silently
-            ci_drift_gate:
+                - product.jobs.keep-committed-docs-trustworthy.outcomes.docs-match-intent-exactly.risks.docs-drift-from-intent-silently
+            ci-drift-gate:
               name: CI Drift Gate
               type: document
               statement: CI must fail whenever the committed docs and a fresh build of intent.yaml disagree.
               mitigates:
-                - product.jobs.keep_committed_docs_trustworthy.outcomes.docs_match_intent_exactly.risks.docs_drift_from_intent_silently
+                - product.jobs.keep-committed-docs-trustworthy.outcomes.docs-match-intent-exactly.risks.docs-drift-from-intent-silently
               dependsOn:
-                - product.jobs.keep_committed_docs_trustworthy.outcomes.docs_match_intent_exactly.requirements.deterministic_generation
-    trust_the_skill_without_maintaining_it_by_hand:
+                - product.jobs.keep-committed-docs-trustworthy.outcomes.docs-match-intent-exactly.requirements.deterministic-generation
+    trust-the-skill-without-maintaining-it-by-hand:
       name: Trust The Skill Without Maintaining It By Hand
       story: When an AI assistant needs judgment it can't get from validate alone, I want that guidance embedded once and surfaced identically through intent help and the generated skill, so the two can never disagree -- and I want the CLI to point the assistant at it at the moment it's needed.
       outcomes:
-        skill_and_help_share_one_source:
+        skill-and-help-share-one-source:
           name: Skill And Help Share One Source
           statement: Minimize the chance that the installed skill's guidance disagrees with intent help's guidance.
           risks:
-            skill_and_binary_help_diverge:
+            skill-and-binary-help-diverge:
               name: Skill And Binary Help Diverge
               statement: A hand-maintained skill file and the binary's embedded help are edited independently and drift apart.
           requirements:
-            skill_generated_from_embedded_content:
+            skill-generated-from-embedded-content:
               name: Skill Generated From Embedded Content
               statement: install-skill must render the installed skill from the same embedded content intent help serves, never from a separately maintained file.
               mitigates:
-                - product.jobs.trust_the_skill_without_maintaining_it_by_hand.outcomes.skill_and_help_share_one_source.risks.skill_and_binary_help_diverge
-        judgment_reachable_at_the_point_of_action:
+                - product.jobs.trust-the-skill-without-maintaining-it-by-hand.outcomes.skill-and-help-share-one-source.risks.skill-and-binary-help-diverge
+        judgment-reachable-at-the-point-of-action:
           name: Judgment Reachable At The Point Of Action
           statement: Minimize the chance an assistant completes a write without knowing a relevant judgment topic exists.
           risks:
-            agent_wont_fetch_what_it_doesnt_know_it_needs:
+            agent-wont-fetch-what-it-doesnt-know-it-needs:
               name: Agent Won't Fetch What It Doesn't Know It Needs
               statement: An assistant finishes a write without knowing there's guidance it should have checked, because nothing prompted it to look.
           requirements:
-            command_footers_nudge_judgment:
+            command-footers-nudge-judgment:
               name: Command Footers Nudge Judgment
               statement: Every write command must print a footer naming the next likely command and the relevant judgment topic.
               mitigates:
-                - product.jobs.trust_the_skill_without_maintaining_it_by_hand.outcomes.judgment_reachable_at_the_point_of_action.risks.agent_wont_fetch_what_it_doesnt_know_it_needs
+                - product.jobs.trust-the-skill-without-maintaining-it-by-hand.outcomes.judgment-reachable-at-the-point-of-action.risks.agent-wont-fetch-what-it-doesnt-know-it-needs
   decision_records:
-    risk_over_odi_scoring:
+    risk-over-odi-scoring:
       name: Risk Over ODI Opportunity Scoring
       affects:
         - product
@@ -174,7 +174,7 @@ product:
       consequences:
         - Every requirement must name at least one risk; the schema enforces minItems 1 on mitigates.
         - Intent does not produce a ranked backlog or opportunity score -- prioritizing across outcomes is out of scope.
-    distinct_prose_field_names_per_element_type:
+    distinct-prose-field-names-per-element-type:
       name: Distinct Prose-Field Names Per Element Type
       affects:
         - product
@@ -191,18 +191,18 @@ engineering:
   name: Intent
   summary: The CLI engine -- model, validator, generator, write path, and embedded help -- behind the intent tree.
   principles:
-    derive_only_mechanical_duals: Derive only the mechanical duals of what's declared -- backlinks, See-Also, maps, paths -- never infer intent itself.
-    clean_diffs_are_a_design_goal: Canonical re-serialization and deterministic generation exist to keep the intent.yaml diff and the docs diff small and reviewable, not as an afterthought.
+    derive-only-mechanical-duals: Derive only the mechanical duals of what's declared -- backlinks, See-Also, maps, paths -- never infer intent itself.
+    clean-diffs-are-a-design-goal: Canonical re-serialization and deterministic generation exist to keep the intent.yaml diff and the docs diff small and reviewable, not as an afterthought.
   constraints:
-    single_go_binary: The CLI ships as one static Go binary with no runtime prerequisite.
-    docs_committed_and_ci_enforced: Generated markdown docs are committed to the repo and drift-checked by intent check in CI.
+    single-go-binary: The CLI ships as one static Go binary with no runtime prerequisite.
+    docs-committed-and-ci-enforced: Generated markdown docs are committed to the repo and drift-checked by intent check in CI.
   components:
     validate:
       name: Validate
       responsibility: Reject any intent.yaml that would produce an invalid tree -- dangling references, bad containment, duplicate references, or an out-of-domain record.
       fulfills:
-        - product.jobs.change_documentation_without_drift.outcomes.coherent_change.requirements.mechanical_linter_first_pass
-        - product.jobs.change_documentation_without_drift.outcomes.coherent_change.requirements.alignment_check_before_finalizing
+        - product.jobs.change-documentation-without-drift.outcomes.coherent-change.requirements.mechanical-linter-first-pass
+        - product.jobs.change-documentation-without-drift.outcomes.coherent-change.requirements.alignment-check-before-finalizing
       relationships:
         engineering.components.mutate: runs after every mutation, before mutate is allowed to write the result to disk.
       behavior: Runs the structural schema check, then the semantic linter (E001-E004), and reports every failure it finds rather than stopping at the first one. See {{.mutate.link}} for the write path it gates.
@@ -210,10 +210,10 @@ engineering:
       name: Mutate
       responsibility: Apply one surgical, validated write per command -- add, set, link, mv, promote, record -- refusing to touch disk unless the result passes validate.
       fulfills:
-        - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.requirements.stable_logical_ids
-        - product.jobs.change_documentation_without_drift.outcomes.coherent_change.requirements.capture_change_records
-        - product.jobs.change_documentation_without_drift.outcomes.right_sized_placement.requirements.minimal_first_tier_ladder
-        - product.jobs.make_a_surgical_change_with_confidence.outcomes.safe_surgical_writes.requirements.writes_refused_when_invalid
+        - product.jobs.understand-the-rationale-behind-an-element.outcomes.fast-rationale-lookup.requirements.stable-logical-ids
+        - product.jobs.change-documentation-without-drift.outcomes.coherent-change.requirements.capture-change-records
+        - product.jobs.change-documentation-without-drift.outcomes.right-sized-placement.requirements.minimal-first-tier-ladder
+        - product.jobs.make-a-surgical-change-with-confidence.outcomes.safe-surgical-writes.requirements.writes-refused-when-invalid
       relationships:
         engineering.components.validate: every write re-validates through this component before committing.
     gen:
@@ -221,28 +221,28 @@ engineering:
       type: document
       responsibility: Render the intent tree into committed markdown docs, and diff a fresh render against what's on disk for the drift gate.
       fulfills:
-        - product.jobs.understand_the_rationale_behind_an_element.outcomes.fast_rationale_lookup.requirements.one_tracing_path_per_element
-        - product.jobs.change_documentation_without_drift.outcomes.right_sized_placement.requirements.canonical_path_slug_convention
-        - product.jobs.keep_committed_docs_trustworthy.outcomes.docs_match_intent_exactly.requirements.deterministic_generation
-        - product.jobs.keep_committed_docs_trustworthy.outcomes.docs_match_intent_exactly.requirements.ci_drift_gate
+        - product.jobs.understand-the-rationale-behind-an-element.outcomes.fast-rationale-lookup.requirements.one-tracing-path-per-element
+        - product.jobs.change-documentation-without-drift.outcomes.right-sized-placement.requirements.canonical-path-slug-convention
+        - product.jobs.keep-committed-docs-trustworthy.outcomes.docs-match-intent-exactly.requirements.deterministic-generation
+        - product.jobs.keep-committed-docs-trustworthy.outcomes.docs-match-intent-exactly.requirements.ci-drift-gate
       relationships:
         engineering.components.validate: never renders a tree that failed validate.
-      behavior: Computes each element's canonical path and slug from its address and declared type, then renders banner, authored core, declared edges, and a single derived footer (backlinks, see-also) sorted by address. `intent check` re-runs this into a temp directory and diffs it against what's on disk -- the CI drift gate that fulfills {{product.jobs.keep_committed_docs_trustworthy.outcomes.docs_match_intent_exactly.requirements.ci_drift_gate.link}}.
+      behavior: Computes each element's canonical path and slug from its address and declared type, then renders banner, authored core, declared edges, and a single derived footer (backlinks, see-also) sorted by address. `intent check` re-runs this into a temp directory and diffs it against what's on disk -- the CI drift gate that fulfills {{product.jobs.keep-committed-docs-trustworthy.outcomes.docs-match-intent-exactly.requirements.ci-drift-gate.link}}.
     help:
       name: Help
       responsibility: Serve the embedded concept, ref, judgment, guide, and error content on demand, and footer the relevant topic from every mutate command.
       fulfills:
-        - product.jobs.trust_the_skill_without_maintaining_it_by_hand.outcomes.judgment_reachable_at_the_point_of_action.requirements.command_footers_nudge_judgment
-        - product.jobs.trust_the_skill_without_maintaining_it_by_hand.outcomes.skill_and_help_share_one_source.requirements.skill_generated_from_embedded_content
+        - product.jobs.trust-the-skill-without-maintaining-it-by-hand.outcomes.judgment-reachable-at-the-point-of-action.requirements.command-footers-nudge-judgment
+        - product.jobs.trust-the-skill-without-maintaining-it-by-hand.outcomes.skill-and-help-share-one-source.requirements.skill-generated-from-embedded-content
     skill:
       name: Skill
       responsibility: Render an installable agent skill from the same embedded content help serves, per target agent adapter.
       fulfills:
-        - product.jobs.trust_the_skill_without_maintaining_it_by_hand.outcomes.skill_and_help_share_one_source.requirements.skill_generated_from_embedded_content
+        - product.jobs.trust-the-skill-without-maintaining-it-by-hand.outcomes.skill-and-help-share-one-source.requirements.skill-generated-from-embedded-content
       relationships:
         engineering.components.help: renders its output from help's embedded content, never a separately maintained file.
   decision_records:
-    single_go_binary_over_python:
+    single-go-binary-over-python:
       name: Single Go Binary Over Python
       affects:
         - engineering
@@ -255,7 +255,7 @@ engineering:
       consequences:
         - No runtime prerequisite anywhere it runs.
         - The CLI source is more verbose to write than the equivalent Python.
-    single_intent_yaml_over_sharded_files:
+    single-intent-yaml-over-sharded-files:
       name: Single intent.yaml Over Sharded Files
       affects:
         - engineering
@@ -268,7 +268,7 @@ engineering:
       consequences:
         - A large tree is one large file on disk, but nobody reads it directly.
         - There's exactly one file to point --file at.
-    flat_dotted_path_edges_over_nested_maps:
+    flat-dotted-path-edges-over-nested-maps:
       name: Flat Dotted-Path Edges Over Nested Maps
       affects:
         - engineering
@@ -281,7 +281,7 @@ engineering:
       consequences:
         - Every edge is a one-line diff to add, remove, or re-point.
         - Ancestor-grouping in show/trace output is a derived view, not a storage shape.
-    committed_docs_with_ci_drift_gate:
+    committed-docs-with-ci-drift-gate:
       name: Committed Docs With CI Drift Gate
       affects:
         - engineering
@@ -294,7 +294,7 @@ engineering:
       consequences:
         - Every intent.yaml change touches two diffs (yaml and docs) instead of one.
         - Generation must be fully deterministic -- same input always produces byte-identical output -- or check would flap.
-    judgment_embedded_in_binary_over_mcp:
+    judgment-embedded-in-binary-over-mcp:
       name: Judgment Embedded In Binary Over MCP
       affects:
         - engineering
@@ -309,10 +309,17 @@ engineering:
         - The binary carries editorial content, not just code -- a release ships judgment updates too.
         - MCP is not ruled out forever -- it could still earn a place later as a read-side query layer over the same engine, but isn't needed now.
 change_records:
-  dogfood_and_retire_the_archive:
+  dogfood-and-retire-the-archive:
     name: Dogfood And Retire The Archive
     affects:
       - product
       - engineering
     change: Authored Intent's own intent.yaml via the write CLI, committed the generated docs, deleted archive/, and rewrote README.md to describe the Go CLI instead of the retired Agent Skill. Also fixed add/record's repeatable flags (mitigates, fulfills, acceptance, affects, option, consequence) to stop silently splitting values on commas.
     rationale: 'The repo shipped a tool that could describe a product and engineering tree in its own format, but didn''t use that format to describe itself -- a new adopter had no example to read. Dogfooding also surfaced a real CLI bug: pflag''s StringSliceVar splits a value on commas even within one flag occurrence, which was silently shredding decision-record options and consequences into fragments.'
+  configurable-key-casing:
+    name: Configurable Key Casing
+    affects:
+      - product
+      - engineering
+    change: Added key_case (kebab-case default, snake_case override) as a project-wide intent.config.yaml setting, enforced by a new linter rule (E005) and the write path (add/record/mv --rename); the schema itself now accepts either shape and leaves the specific convention to the linter. Migrated this repo's own intent.yaml -- previously all snake_case -- to kebab-case via a batch of cascading mutate.Mv renames, so its generated docs/ tree is kebab-case too (gen already rendered keys verbatim; no translation code was added).
+    rationale: Kebab-case is the conventional casing for URLs and file paths (GitHub Pages, most static-site generators), so it is a better default than the incidental snake_case the tool started with. Making it a linter rule rather than a path-rendering translation keeps one invariant -- an element's key is its identity, path segment, and slug, unchanged -- while still letting a project choose its own convention and enforcing it consistently, the same way E001-E004 already enforce the tree's other structural invariants.

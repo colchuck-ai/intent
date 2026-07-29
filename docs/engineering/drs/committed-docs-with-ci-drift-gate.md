@@ -30,8 +30,9 @@ Commit the docs; intent check builds to a temp dir and diffs it against what's c
 
 ## See also
 
-- [Dogfood And Retire The Archive](../../change-records/dogfood_and_retire_the_archive.md)
-- [Flat Dotted-Path Edges Over Nested Maps](flat_dotted_path_edges_over_nested_maps.md)
-- [Judgment Embedded In Binary Over MCP](judgment_embedded_in_binary_over_mcp.md)
-- [Single Go Binary Over Python](single_go_binary_over_python.md)
-- [Single intent.yaml Over Sharded Files](single_intent_yaml_over_sharded_files.md)
+- [Configurable Key Casing](../../change-records/configurable-key-casing.md)
+- [Dogfood And Retire The Archive](../../change-records/dogfood-and-retire-the-archive.md)
+- [Flat Dotted-Path Edges Over Nested Maps](flat-dotted-path-edges-over-nested-maps.md)
+- [Judgment Embedded In Binary Over MCP](judgment-embedded-in-binary-over-mcp.md)
+- [Single Go Binary Over Python](single-go-binary-over-python.md)
+- [Single intent.yaml Over Sharded Files](single-intent-yaml-over-sharded-files.md)

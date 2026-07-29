@@ -8,4 +8,4 @@ When I open the docs tree, I want it to exactly match intent.yaml, so I can trus
 
 ## Contents
 
-- [Docs Match Intent Exactly](docs_match_intent_exactly/README.md)
+- [Docs Match Intent Exactly](docs-match-intent-exactly/README.md)

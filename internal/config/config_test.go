@@ -17,6 +17,31 @@ func TestDefaultsWhenFileMissing(t *testing.T) {
 	if c.Paths["assets"] != "docs/assets" {
 		t.Errorf("default assets = %q, want docs/assets", c.Paths["assets"])
 	}
+	if c.KeyCase != Kebab {
+		t.Errorf("default key_case = %q, want %q", c.KeyCase, Kebab)
+	}
+}
+
+func TestKeyCaseOverride(t *testing.T) {
+	dir := t.TempDir()
+	write(t, filepath.Join(dir, Filename), "key_case: snake_case\n")
+
+	c, err := LoadBeside(filepath.Join(dir, "intent.yaml"))
+	if err != nil {
+		t.Fatalf("load: %v", err)
+	}
+	if c.KeyCase != Snake {
+		t.Errorf("key_case = %q, want %q", c.KeyCase, Snake)
+	}
+}
+
+func TestKeyCaseRejectsUnknownValue(t *testing.T) {
+	dir := t.TempDir()
+	write(t, filepath.Join(dir, Filename), "key_case: camelCase\n")
+
+	if _, err := LoadBeside(filepath.Join(dir, "intent.yaml")); err == nil {
+		t.Fatal("expected an unrecognized key_case value to be rejected")
+	}
 }
 
 func TestOverridesAndAssetsFollowsOutputDir(t *testing.T) {

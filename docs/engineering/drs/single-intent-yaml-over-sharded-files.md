@@ -30,8 +30,9 @@ One file. The CLI mediates every read and write, so a single file merges cleanly
 
 ## See also
 
-- [Dogfood And Retire The Archive](../../change-records/dogfood_and_retire_the_archive.md)
-- [Committed Docs With CI Drift Gate](committed_docs_with_ci_drift_gate.md)
-- [Flat Dotted-Path Edges Over Nested Maps](flat_dotted_path_edges_over_nested_maps.md)
-- [Judgment Embedded In Binary Over MCP](judgment_embedded_in_binary_over_mcp.md)
-- [Single Go Binary Over Python](single_go_binary_over_python.md)
+- [Configurable Key Casing](../../change-records/configurable-key-casing.md)
+- [Dogfood And Retire The Archive](../../change-records/dogfood-and-retire-the-archive.md)
+- [Committed Docs With CI Drift Gate](committed-docs-with-ci-drift-gate.md)
+- [Flat Dotted-Path Edges Over Nested Maps](flat-dotted-path-edges-over-nested-maps.md)
+- [Judgment Embedded In Binary Over MCP](judgment-embedded-in-binary-over-mcp.md)
+- [Single Go Binary Over Python](single-go-binary-over-python.md)

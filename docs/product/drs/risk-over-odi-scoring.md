@@ -30,5 +30,6 @@ Risk as a first-class element. A requirement with no linked risk is recognizable
 
 ## See also
 
-- [Dogfood And Retire The Archive](../../change-records/dogfood_and_retire_the_archive.md)
-- [Distinct Prose-Field Names Per Element Type](distinct_prose_field_names_per_element_type.md)
+- [Configurable Key Casing](../../change-records/configurable-key-casing.md)
+- [Dogfood And Retire The Archive](../../change-records/dogfood-and-retire-the-archive.md)
+- [Distinct Prose-Field Names Per Element Type](distinct-prose-field-names-per-element-type.md)

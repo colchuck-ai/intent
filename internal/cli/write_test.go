@@ -8,7 +8,8 @@ import (
 )
 
 // tmpSeed copies the seed fixture into a temp file the test can mutate, and
-// returns its path.
+// returns its path. The seed is snake_case, so a sibling config pins key_case
+// to match — the fixture predates the kebab-case default and isn't migrating.
 func tmpSeed(t *testing.T) string {
 	t.Helper()
 	b, err := os.ReadFile("../model/testdata/seed.intent.yaml")
@@ -19,7 +20,19 @@ func tmpSeed(t *testing.T) string {
 	if err := os.WriteFile(path, b, 0o644); err != nil {
 		t.Fatalf("writing temp seed: %v", err)
 	}
+	pinKeyCaseSnake(t, path)
 	return path
+}
+
+// pinKeyCaseSnake drops an intent.config.yaml beside path pinning
+// key_case: snake_case, for a snake_case fixture copied somewhere the
+// kebab-case default would otherwise apply.
+func pinKeyCaseSnake(t *testing.T, path string) {
+	t.Helper()
+	cfgPath := filepath.Join(filepath.Dir(path), "intent.config.yaml")
+	if err := os.WriteFile(cfgPath, []byte("key_case: snake_case\n"), 0o644); err != nil {
+		t.Fatalf("writing config: %v", err)
+	}
 }
 
 func readFile(t *testing.T, path string) string {
@@ -229,6 +242,7 @@ func TestUnlinkDanglingEdgeBySuffix(t *testing.T) {
 	if err := os.WriteFile(path, b, 0o644); err != nil {
 		t.Fatalf("writing fixture: %v", err)
 	}
+	pinKeyCaseSnake(t, path)
 
 	// The dangling target "ghost" does not resolve, but unlink must still remove
 	// the edge given the suffix.

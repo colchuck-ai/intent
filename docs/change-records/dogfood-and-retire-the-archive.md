@@ -17,10 +17,11 @@ The repo shipped a tool that could describe a product and engineering tree in it
 
 ## See also
 
-- [Committed Docs With CI Drift Gate](../engineering/drs/committed_docs_with_ci_drift_gate.md)
-- [Flat Dotted-Path Edges Over Nested Maps](../engineering/drs/flat_dotted_path_edges_over_nested_maps.md)
-- [Judgment Embedded In Binary Over MCP](../engineering/drs/judgment_embedded_in_binary_over_mcp.md)
-- [Single Go Binary Over Python](../engineering/drs/single_go_binary_over_python.md)
-- [Single intent.yaml Over Sharded Files](../engineering/drs/single_intent_yaml_over_sharded_files.md)
-- [Distinct Prose-Field Names Per Element Type](../product/drs/distinct_prose_field_names_per_element_type.md)
-- [Risk Over ODI Opportunity Scoring](../product/drs/risk_over_odi_scoring.md)
+- [Configurable Key Casing](configurable-key-casing.md)
+- [Committed Docs With CI Drift Gate](../engineering/drs/committed-docs-with-ci-drift-gate.md)
+- [Flat Dotted-Path Edges Over Nested Maps](../engineering/drs/flat-dotted-path-edges-over-nested-maps.md)
+- [Judgment Embedded In Binary Over MCP](../engineering/drs/judgment-embedded-in-binary-over-mcp.md)
+- [Single Go Binary Over Python](../engineering/drs/single-go-binary-over-python.md)
+- [Single intent.yaml Over Sharded Files](../engineering/drs/single-intent-yaml-over-sharded-files.md)
+- [Distinct Prose-Field Names Per Element Type](../product/drs/distinct-prose-field-names-per-element-type.md)
+- [Risk Over ODI Opportunity Scoring](../product/drs/risk-over-odi-scoring.md)

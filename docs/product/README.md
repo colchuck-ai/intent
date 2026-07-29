@@ -8,16 +8,17 @@ A structured-source tool for product and engineering intent: one schema'd intent
 
 ## Referenced by
 
-- [Dogfood And Retire The Archive](../change-records/dogfood_and_retire_the_archive.md) (affects)
-- [Distinct Prose-Field Names Per Element Type](drs/distinct_prose_field_names_per_element_type.md) (affects)
-- [Risk Over ODI Opportunity Scoring](drs/risk_over_odi_scoring.md) (affects)
+- [Configurable Key Casing](../change-records/configurable-key-casing.md) (affects)
+- [Dogfood And Retire The Archive](../change-records/dogfood-and-retire-the-archive.md) (affects)
+- [Distinct Prose-Field Names Per Element Type](drs/distinct-prose-field-names-per-element-type.md) (affects)
+- [Risk Over ODI Opportunity Scoring](drs/risk-over-odi-scoring.md) (affects)
 
 ## Contents
 
-- [Distinct Prose-Field Names Per Element Type](drs/distinct_prose_field_names_per_element_type.md)
-- [Risk Over ODI Opportunity Scoring](drs/risk_over_odi_scoring.md)
-- [Change Documentation Without Drift](change_documentation_without_drift.md)
-- [Keep Committed Docs Trustworthy](keep_committed_docs_trustworthy/README.md)
-- [Make A Surgical Change With Confidence](make_a_surgical_change_with_confidence.md)
-- [Trust The Skill Without Maintaining It By Hand](trust_the_skill_without_maintaining_it_by_hand.md)
-- [Understand The Rationale Behind An Element](understand_the_rationale_behind_an_element/README.md)
+- [Distinct Prose-Field Names Per Element Type](drs/distinct-prose-field-names-per-element-type.md)
+- [Risk Over ODI Opportunity Scoring](drs/risk-over-odi-scoring.md)
+- [Change Documentation Without Drift](change-documentation-without-drift.md)
+- [Keep Committed Docs Trustworthy](keep-committed-docs-trustworthy/README.md)
+- [Make A Surgical Change With Confidence](make-a-surgical-change-with-confidence.md)
+- [Trust The Skill Without Maintaining It By Hand](trust-the-skill-without-maintaining-it-by-hand.md)
+- [Understand The Rationale Behind An Element](understand-the-rationale-behind-an-element/README.md)

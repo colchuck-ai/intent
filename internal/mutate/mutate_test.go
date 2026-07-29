@@ -129,8 +129,8 @@ func TestAddRejectsDuplicateKey(t *testing.T) {
 func TestAddRejectsBadKey(t *testing.T) {
 	r := loadSeed(t)
 	_, err := mutate.Add(r, tree.KindJob, "product", "Not A Key", mutate.Fields{Name: "X", Story: "Y"})
-	if err == nil || !strings.Contains(err.Error(), "snake_case") {
-		t.Fatalf("expected a snake_case error, got %v", err)
+	if err == nil || !strings.Contains(err.Error(), "lowercase letters") {
+		t.Fatalf("expected a bad-key-shape error, got %v", err)
 	}
 }
 

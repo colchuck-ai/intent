@@ -6,14 +6,14 @@ Render the intent tree into committed markdown docs, and diff a fresh render aga
 
 **Behavior:**
 
-Computes each element's canonical path and slug from its address and declared type, then renders banner, authored core, declared edges, and a single derived footer (backlinks, see-also) sorted by address. `intent check` re-runs this into a temp directory and diffs it against what's on disk -- the CI drift gate that fulfills [CI Drift Gate](../product/keep_committed_docs_trustworthy/docs_match_intent_exactly/ci_drift_gate.md).
+Computes each element's canonical path and slug from its address and declared type, then renders banner, authored core, declared edges, and a single derived footer (backlinks, see-also) sorted by address. `intent check` re-runs this into a temp directory and diffs it against what's on disk -- the CI drift gate that fulfills [CI Drift Gate](../product/keep-committed-docs-trustworthy/docs-match-intent-exactly/ci-drift-gate.md).
 
 **Fulfills:**
 
-- [One Tracing Path Per Element](../product/understand_the_rationale_behind_an_element/fast_rationale_lookup.md#one-tracing-path-per-element)
-- [Canonical Path/Slug Convention](../product/change_documentation_without_drift.md#canonical-pathslug-convention)
-- [Deterministic Generation](../product/keep_committed_docs_trustworthy/docs_match_intent_exactly/README.md#deterministic-generation)
-- [CI Drift Gate](../product/keep_committed_docs_trustworthy/docs_match_intent_exactly/ci_drift_gate.md)
+- [One Tracing Path Per Element](../product/understand-the-rationale-behind-an-element/fast-rationale-lookup.md#one-tracing-path-per-element)
+- [Canonical Path/Slug Convention](../product/change-documentation-without-drift.md#canonical-pathslug-convention)
+- [Deterministic Generation](../product/keep-committed-docs-trustworthy/docs-match-intent-exactly/README.md#deterministic-generation)
+- [CI Drift Gate](../product/keep-committed-docs-trustworthy/docs-match-intent-exactly/ci-drift-gate.md)
 
 **Relationships:**
 

@@ -4,6 +4,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/colchuck-ai/intent/internal/config"
 	"github.com/colchuck-ai/intent/internal/model"
 	"github.com/colchuck-ai/intent/internal/tree"
 	"github.com/colchuck-ai/intent/internal/validate"
@@ -11,13 +12,21 @@ import (
 
 const seedPath = "../model/testdata/seed.intent.yaml"
 
+// check loads path and runs the linter against it. Every fixture under
+// testdata/ (and the seed) is snake_case, so E001-E004 tests check under
+// config.Snake to keep their single expected finding isolated from E005.
 func check(t *testing.T, path string) []validate.Finding {
+	t.Helper()
+	return checkAs(t, path, config.Snake)
+}
+
+func checkAs(t *testing.T, path string, casing config.Casing) []validate.Finding {
 	t.Helper()
 	r, err := model.Load(path)
 	if err != nil {
 		t.Fatalf("loading %s: %v", path, err)
 	}
-	return validate.Check(tree.Build(r))
+	return validate.Check(tree.Build(r), casing)
 }
 
 // TestSeedIsClean is the phase exit criterion: the canonical seed passes.
@@ -76,6 +85,20 @@ func TestE004DomainScope(t *testing.T) {
 	if !strings.Contains(fs[0].Detail, "product") {
 		t.Errorf("detail should name the required domain: %s", fs[0].Detail)
 	}
+}
+
+func TestE005KeyCase(t *testing.T) {
+	fs := checkAs(t, "testdata/e005.intent.yaml", config.Snake)
+	codeAt(t, fs, validate.E005, "outcomes.some-outcome")
+	if !strings.Contains(fs[0].Detail, "snake_case") {
+		t.Errorf("detail should name the configured convention: %s", fs[0].Detail)
+	}
+
+	// The same tree is clean under kebab-case, and the sole snake_case key
+	// (some_job) trips it instead — the rule enforces whichever single
+	// convention is configured, not "kebab" or "snake" specifically.
+	fs = checkAs(t, "testdata/e005.intent.yaml", config.Kebab)
+	codeAt(t, fs, validate.E005, "jobs.some_job")
 }
 
 // TestFindingStringHasHelpPointer guards the DESIGN §9 rule that every failure

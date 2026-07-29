@@ -30,5 +30,6 @@ Keep the distinct names. The field name is the author's first hint at what to wr
 
 ## See also
 
-- [Dogfood And Retire The Archive](../../change-records/dogfood_and_retire_the_archive.md)
-- [Risk Over ODI Opportunity Scoring](risk_over_odi_scoring.md)
+- [Configurable Key Casing](../../change-records/configurable-key-casing.md)
+- [Dogfood And Retire The Archive](../../change-records/dogfood-and-retire-the-archive.md)
+- [Risk Over ODI Opportunity Scoring](risk-over-odi-scoring.md)

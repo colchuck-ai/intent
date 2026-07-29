@@ -8,6 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/colchuck-ai/intent/internal/config"
 	"github.com/colchuck-ai/intent/internal/model"
 	"github.com/colchuck-ai/intent/internal/schema"
 	"github.com/colchuck-ai/intent/internal/tree"
@@ -77,8 +78,12 @@ func commitWrite(cmd *cobra.Command, path string, r *model.Root) (*tree.Index, e
 	if err := schema.Validate(b); err != nil {
 		return nil, fmt.Errorf("refusing to write — schema check failed: %w", err)
 	}
+	cfg, err := config.LoadBeside(path)
+	if err != nil {
+		return nil, err
+	}
 	ix := tree.Build(r)
-	if findings := validate.Check(ix); len(findings) > 0 {
+	if findings := validate.Check(ix, cfg.KeyCase); len(findings) > 0 {
 		w := cmd.OutOrStdout()
 		fmt.Fprintln(w, "refusing to write — validation failed:")
 		for _, f := range findings {

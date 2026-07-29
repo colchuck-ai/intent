@@ -21,8 +21,11 @@ import (
 	"github.com/colchuck-ai/intent/internal/tree"
 )
 
-// keyRe is the snake_case element-key format (mirrors the schema's `key`).
-var keyRe = regexp.MustCompile(`^[a-z][a-z0-9_]*$`)
+// keyRe is the element-key shape (mirrors the schema's `key`): lowercase
+// letters, digits, underscores, or hyphens, starting with a letter. Which
+// specific convention a project requires (key_case) is the linter's call
+// (validate.E005), not this pre-flight shape check.
+var keyRe = regexp.MustCompile(`^[a-z][a-z0-9_-]*$`)
 
 // Fields carries the optional field values a new element may be created with.
 // Only the fields relevant to the kind being added are read; the rest are
@@ -51,7 +54,7 @@ type Fields struct {
 // give a clearer message than the schema would.
 func Add(r *model.Root, kind tree.Kind, parentAddr, key string, f Fields) (string, error) {
 	if !keyRe.MatchString(key) {
-		return "", fmt.Errorf("key %q must be snake_case (letters, digits, underscores; starting with a letter)", key)
+		return "", fmt.Errorf("key %q must be lowercase letters, digits, underscores, or hyphens, starting with a letter", key)
 	}
 	if kind == tree.KindRequirement && len(f.Mitigates) == 0 {
 		return "", fmt.Errorf("a requirement needs at least one --mitigates target")

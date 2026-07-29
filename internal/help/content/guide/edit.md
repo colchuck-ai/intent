@@ -13,7 +13,7 @@ it.
    `intent affects <addr>` — who points back at it (what your change might
    ripple to).
 3. **Change a field.** `intent set <addr> <field> "<value>"` — e.g.
-   `intent set stable_logical_ids statement "…"`. Edges are not fields — use
+   `intent set stable-logical-ids statement "…"`. Edges are not fields — use
    `link`/`unlink` (see `guide:add-requirement`).
 4. **The write is guarded.** `set` runs `validate` first and re-serializes
    canonically; an edit that would dangle a reference or break containment is

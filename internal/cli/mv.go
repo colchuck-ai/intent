@@ -75,7 +75,7 @@ func newMvCmd() *cobra.Command {
 			return nil
 		},
 	}
-	cmd.Flags().StringVar(&opts.Rename, "rename", "", "new snake_case key for the element")
+	cmd.Flags().StringVar(&opts.Rename, "rename", "", "new key for the element (per project convention, see key_case)")
 	cmd.Flags().StringVar(&opts.Before, "before", "", "position the element before this sibling")
 	cmd.Flags().StringVar(&opts.After, "after", "", "position the element after this sibling")
 	return cmd

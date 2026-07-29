@@ -1,0 +1,14 @@
+product:
+  name: Intent
+  summary: A structured-source tool for product and engineering intent.
+  jobs:
+    some_job:
+      name: Some Job
+      story: When I do X, I want Y.
+      outcomes:
+        some-outcome:
+          name: Some Outcome
+          statement: Minimize Z.
+engineering:
+  name: Intent
+  summary: The engine behind the intent tree.

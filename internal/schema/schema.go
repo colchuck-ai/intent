@@ -1,9 +1,10 @@
 // Package schema validates raw intent.yaml bytes against the embedded JSON
 // Schema contract.
 //
-// The schema checks shape only — required fields, snake_case keys, no unknown
-// fields, at-least-one edges. Meaning-level rules (does a reference resolve? is
-// a record's affects domain-pure?) belong to the linter, not here.
+// The schema checks shape only — required fields, lowercase identifier keys, no
+// unknown fields, at-least-one edges. Meaning-level rules (does a reference
+// resolve? is a record's affects domain-pure? does a key match this project's
+// configured casing?) belong to the linter, not here.
 package schema
 
 import (

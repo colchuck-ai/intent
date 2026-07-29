@@ -50,7 +50,7 @@ func Mv(r *model.Root, ix *tree.Index, addr string, opts MvOpts) (string, int, [
 	newKey := oldKey
 	if opts.Rename != "" {
 		if !keyRe.MatchString(opts.Rename) {
-			return "", 0, nil, fmt.Errorf("key %q must be snake_case (letters, digits, underscores; starting with a letter)", opts.Rename)
+			return "", 0, nil, fmt.Errorf("key %q must be lowercase letters, digits, underscores, or hyphens, starting with a letter", opts.Rename)
 		}
 		newKey = opts.Rename
 	}

@@ -17,7 +17,7 @@ Plus **records** that keep the story coherent over time:
 - **PDR** (Product Decision Record) — a product decision, its options, and consequences
 - **ADR** (Architectural Decision Record) — the same, for engineering
 
-Every element's snake_case key is its stable address (e.g. `product.jobs.<job>.outcomes.<outcome>.requirements.<requirement>`), so links survive even when there's no file yet.
+Every element's key is its stable address (e.g. `product.jobs.<job>.outcomes.<outcome>.requirements.<requirement>`), so links survive even when there's no file yet. A project picks one key convention — kebab-case (default) or snake_case — via `key_case` in `intent.config.yaml`.
 
 The trace, at a glance:
 

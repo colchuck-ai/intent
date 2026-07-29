@@ -30,8 +30,9 @@ Flat dotted-path lists everywhere; relationships stays a keyed map only because 
 
 ## See also
 
-- [Dogfood And Retire The Archive](../../change-records/dogfood_and_retire_the_archive.md)
-- [Committed Docs With CI Drift Gate](committed_docs_with_ci_drift_gate.md)
-- [Judgment Embedded In Binary Over MCP](judgment_embedded_in_binary_over_mcp.md)
-- [Single Go Binary Over Python](single_go_binary_over_python.md)
-- [Single intent.yaml Over Sharded Files](single_intent_yaml_over_sharded_files.md)
+- [Configurable Key Casing](../../change-records/configurable-key-casing.md)
+- [Dogfood And Retire The Archive](../../change-records/dogfood-and-retire-the-archive.md)
+- [Committed Docs With CI Drift Gate](committed-docs-with-ci-drift-gate.md)
+- [Judgment Embedded In Binary Over MCP](judgment-embedded-in-binary-over-mcp.md)
+- [Single Go Binary Over Python](single-go-binary-over-python.md)
+- [Single intent.yaml Over Sharded Files](single-intent-yaml-over-sharded-files.md)

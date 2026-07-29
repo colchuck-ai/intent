@@ -75,7 +75,7 @@ func TestResolveErrorsCatalog(t *testing.T) {
 	if !ok {
 		t.Fatal("expected the errors catalog to resolve")
 	}
-	for _, code := range []string{"E001", "E002", "E003", "E004"} {
+	for _, code := range []string{"E001", "E002", "E003", "E004", "E005"} {
 		if !strings.Contains(top.Body, code) {
 			t.Errorf("errors catalog missing %s", code)
 		}

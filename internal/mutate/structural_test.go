@@ -4,6 +4,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/colchuck-ai/intent/internal/config"
 	"github.com/colchuck-ai/intent/internal/mutate"
 	"github.com/colchuck-ai/intent/internal/tree"
 	"github.com/colchuck-ai/intent/internal/validate"
@@ -129,7 +130,7 @@ func TestMvRenameCascadesReferences(t *testing.T) {
 	if n != 2 {
 		t.Errorf("expected 2 references rewritten (relationships key + behavior prose); got %d", n)
 	}
-	if fs := validate.Check(tree.Build(r)); len(fs) > 0 {
+	if fs := validate.Check(tree.Build(r), config.Snake); len(fs) > 0 {
 		t.Errorf("tree should stay valid after rename; findings: %v", fs)
 	}
 }
@@ -154,7 +155,7 @@ func TestMvReparentRewritesIncomingEdges(t *testing.T) {
 	if n != 2 {
 		t.Errorf("expected 2 incoming edges rewritten; got %d", n)
 	}
-	if fs := validate.Check(tree.Build(r)); len(fs) > 0 {
+	if fs := validate.Check(tree.Build(r), config.Snake); len(fs) > 0 {
 		t.Errorf("tree should stay valid after reparent; findings: %v", fs)
 	}
 }
@@ -201,7 +202,7 @@ func TestMvReparentPromotesDestinationForDocument(t *testing.T) {
 		t.Errorf("expected the inline destination outcome %s to be promoted; got %v", oc2, promoted)
 	}
 	// The tree must be valid with no E002 — the linter never had to catch it.
-	if fs := validate.Check(tree.Build(r)); len(fs) > 0 {
+	if fs := validate.Check(tree.Build(r), config.Snake); len(fs) > 0 {
 		t.Errorf("containment must hold by construction; findings: %v", fs)
 	}
 	if oc, _ := tree.Build(r).Get(oc2); !oc.IsDocument {
@@ -231,7 +232,7 @@ func TestAddRecordPDRAndCR(t *testing.T) {
 	if craddr != "change_records.new_cr" {
 		t.Errorf("cr addr = %s", craddr)
 	}
-	if fs := validate.Check(tree.Build(r)); len(fs) > 0 {
+	if fs := validate.Check(tree.Build(r), config.Snake); len(fs) > 0 {
 		t.Errorf("records should be valid; findings: %v", fs)
 	}
 }

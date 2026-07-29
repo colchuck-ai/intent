@@ -10,6 +10,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/colchuck-ai/intent/internal/config"
 	"github.com/colchuck-ai/intent/internal/model"
 	"github.com/colchuck-ai/intent/internal/schema"
 	"github.com/colchuck-ai/intent/internal/tree"
@@ -89,8 +90,12 @@ func checkedIndex(path string) (*tree.Index, []validate.Finding, error) {
 	if err != nil {
 		return nil, nil, fmt.Errorf("parsing %s: %w", path, err)
 	}
+	cfg, err := config.LoadBeside(path)
+	if err != nil {
+		return nil, nil, err
+	}
 	ix := tree.Build(r)
-	return ix, validate.Check(ix), nil
+	return ix, validate.Check(ix, cfg.KeyCase), nil
 }
 
 // Execute runs the CLI and returns a process exit code.

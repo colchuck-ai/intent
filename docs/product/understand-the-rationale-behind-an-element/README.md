@@ -8,4 +8,4 @@ When I read an element, I want to see why it exists -- its parent, its siblings,
 
 ## Contents
 
-- [Fast Rationale Lookup](fast_rationale_lookup.md)
+- [Fast Rationale Lookup](fast-rationale-lookup.md)

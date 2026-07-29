@@ -22,14 +22,14 @@ Building the same intent.yaml twice must produce byte-identical docs, so a diff 
 
 **Docs Drift From Intent Silently**
 
-- [CI Drift Gate](ci_drift_gate.md) (mitigates)
+- [CI Drift Gate](ci-drift-gate.md) (mitigates)
 - [Deterministic Generation](#deterministic-generation) (mitigates)
 
 **Deterministic Generation**
 
 - [Gen](../../../engineering/gen.md) (fulfills)
-- [CI Drift Gate](ci_drift_gate.md) (dependsOn)
+- [CI Drift Gate](ci-drift-gate.md) (dependsOn)
 
 ## Contents
 
-- [CI Drift Gate](ci_drift_gate.md)
+- [CI Drift Gate](ci-drift-gate.md)

@@ -38,7 +38,7 @@ type RecordFields struct {
 // only as the post-write E004 (DESIGN §4).
 func AddRecord(r *model.Root, kind tree.Kind, key string, f RecordFields) (string, error) {
 	if !keyRe.MatchString(key) {
-		return "", fmt.Errorf("key %q must be snake_case (letters, digits, underscores; starting with a letter)", key)
+		return "", fmt.Errorf("key %q must be lowercase letters, digits, underscores, or hyphens, starting with a letter", key)
 	}
 	if len(f.Affects) == 0 {
 		return "", fmt.Errorf("a record needs at least one --affects target")

@@ -4,19 +4,19 @@
 
 The CLI engine -- model, validator, generator, write path, and embedded help -- behind the intent tree.
 
-## derive_only_mechanical_duals
+## derive-only-mechanical-duals
 
 Derive only the mechanical duals of what's declared -- backlinks, See-Also, maps, paths -- never infer intent itself.
 
-## clean_diffs_are_a_design_goal
+## clean-diffs-are-a-design-goal
 
 Canonical re-serialization and deterministic generation exist to keep the intent.yaml diff and the docs diff small and reviewable, not as an afterthought.
 
-## single_go_binary
+## single-go-binary
 
 The CLI ships as one static Go binary with no runtime prerequisite.
 
-## docs_committed_and_ci_enforced
+## docs-committed-and-ci-enforced
 
 Generated markdown docs are committed to the repo and drift-checked by intent check in CI.
 
@@ -30,8 +30,8 @@ Runs the structural schema check, then the semantic linter (E001-E004), and repo
 
 **Fulfills:**
 
-- [Mechanical Linter First Pass](../product/change_documentation_without_drift.md#mechanical-linter-first-pass)
-- [Alignment Check Before Finalizing](../product/change_documentation_without_drift.md#alignment-check-before-finalizing)
+- [Mechanical Linter First Pass](../product/change-documentation-without-drift.md#mechanical-linter-first-pass)
+- [Alignment Check Before Finalizing](../product/change-documentation-without-drift.md#alignment-check-before-finalizing)
 
 **Relationships:**
 
@@ -43,10 +43,10 @@ Apply one surgical, validated write per command -- add, set, link, mv, promote, 
 
 **Fulfills:**
 
-- [Stable Logical IDs](../product/understand_the_rationale_behind_an_element/fast_rationale_lookup.md#stable-logical-ids)
-- [Capture Change Records](../product/change_documentation_without_drift.md#capture-change-records)
-- [Minimal-First Tier Ladder](../product/change_documentation_without_drift.md#minimal-first-tier-ladder)
-- [Writes Refused When Invalid](../product/make_a_surgical_change_with_confidence.md#writes-refused-when-invalid)
+- [Stable Logical IDs](../product/understand-the-rationale-behind-an-element/fast-rationale-lookup.md#stable-logical-ids)
+- [Capture Change Records](../product/change-documentation-without-drift.md#capture-change-records)
+- [Minimal-First Tier Ladder](../product/change-documentation-without-drift.md#minimal-first-tier-ladder)
+- [Writes Refused When Invalid](../product/make-a-surgical-change-with-confidence.md#writes-refused-when-invalid)
 
 **Relationships:**
 
@@ -58,8 +58,8 @@ Serve the embedded concept, ref, judgment, guide, and error content on demand, a
 
 **Fulfills:**
 
-- [Command Footers Nudge Judgment](../product/trust_the_skill_without_maintaining_it_by_hand.md#command-footers-nudge-judgment)
-- [Skill Generated From Embedded Content](../product/trust_the_skill_without_maintaining_it_by_hand.md#skill-generated-from-embedded-content)
+- [Command Footers Nudge Judgment](../product/trust-the-skill-without-maintaining-it-by-hand.md#command-footers-nudge-judgment)
+- [Skill Generated From Embedded Content](../product/trust-the-skill-without-maintaining-it-by-hand.md#skill-generated-from-embedded-content)
 
 ## Skill
 
@@ -67,7 +67,7 @@ Render an installable agent skill from the same embedded content help serves, pe
 
 **Fulfills:**
 
-- [Skill Generated From Embedded Content](../product/trust_the_skill_without_maintaining_it_by_hand.md#skill-generated-from-embedded-content)
+- [Skill Generated From Embedded Content](../product/trust-the-skill-without-maintaining-it-by-hand.md#skill-generated-from-embedded-content)
 
 **Relationships:**
 
@@ -79,12 +79,13 @@ Render an installable agent skill from the same embedded content help serves, pe
 
 **Intent**
 
-- [Dogfood And Retire The Archive](../change-records/dogfood_and_retire_the_archive.md) (affects)
-- [Committed Docs With CI Drift Gate](drs/committed_docs_with_ci_drift_gate.md) (affects)
-- [Flat Dotted-Path Edges Over Nested Maps](drs/flat_dotted_path_edges_over_nested_maps.md) (affects)
-- [Judgment Embedded In Binary Over MCP](drs/judgment_embedded_in_binary_over_mcp.md) (affects)
-- [Single Go Binary Over Python](drs/single_go_binary_over_python.md) (affects)
-- [Single intent.yaml Over Sharded Files](drs/single_intent_yaml_over_sharded_files.md) (affects)
+- [Configurable Key Casing](../change-records/configurable-key-casing.md) (affects)
+- [Dogfood And Retire The Archive](../change-records/dogfood-and-retire-the-archive.md) (affects)
+- [Committed Docs With CI Drift Gate](drs/committed-docs-with-ci-drift-gate.md) (affects)
+- [Flat Dotted-Path Edges Over Nested Maps](drs/flat-dotted-path-edges-over-nested-maps.md) (affects)
+- [Judgment Embedded In Binary Over MCP](drs/judgment-embedded-in-binary-over-mcp.md) (affects)
+- [Single Go Binary Over Python](drs/single-go-binary-over-python.md) (affects)
+- [Single intent.yaml Over Sharded Files](drs/single-intent-yaml-over-sharded-files.md) (affects)
 
 **Validate**
 
@@ -104,13 +105,13 @@ Render an installable agent skill from the same embedded content help serves, pe
 **Mutate**
 
 - [Gen](gen.md)
-- [One Tracing Path Per Element](../product/understand_the_rationale_behind_an_element/fast_rationale_lookup.md#one-tracing-path-per-element)
+- [One Tracing Path Per Element](../product/understand-the-rationale-behind-an-element/fast-rationale-lookup.md#one-tracing-path-per-element)
 
 ## Contents
 
 - [Gen](gen.md)
-- [Committed Docs With CI Drift Gate](drs/committed_docs_with_ci_drift_gate.md)
-- [Flat Dotted-Path Edges Over Nested Maps](drs/flat_dotted_path_edges_over_nested_maps.md)
-- [Judgment Embedded In Binary Over MCP](drs/judgment_embedded_in_binary_over_mcp.md)
-- [Single Go Binary Over Python](drs/single_go_binary_over_python.md)
-- [Single intent.yaml Over Sharded Files](drs/single_intent_yaml_over_sharded_files.md)
+- [Committed Docs With CI Drift Gate](drs/committed-docs-with-ci-drift-gate.md)
+- [Flat Dotted-Path Edges Over Nested Maps](drs/flat-dotted-path-edges-over-nested-maps.md)
+- [Judgment Embedded In Binary Over MCP](drs/judgment-embedded-in-binary-over-mcp.md)
+- [Single Go Binary Over Python](drs/single-go-binary-over-python.md)
+- [Single intent.yaml Over Sharded Files](drs/single-intent-yaml-over-sharded-files.md)
