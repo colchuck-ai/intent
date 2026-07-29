@@ -81,13 +81,13 @@ func TestElementFields(t *testing.T) {
 		t.Errorf("domain: got %q, want product", oc.Domain)
 	}
 
-	// A principle has no name; its key is identity and the value is the prose.
+	// A principle carries both a name and a statement.
 	pr, ok := ix.Get("engineering.principles.derive_only_mechanical_duals")
 	if !ok {
 		t.Fatal("expected the principle to be present")
 	}
-	if pr.Name != "" {
-		t.Errorf("principle name should be empty, got %q", pr.Name)
+	if pr.Name != "Derive Only Mechanical Duals" {
+		t.Errorf("principle name = %q", pr.Name)
 	}
 	if pr.Prose == "" {
 		t.Error("principle prose (the statement value) should be populated")

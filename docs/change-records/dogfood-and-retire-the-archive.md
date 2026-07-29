@@ -18,6 +18,7 @@ The repo shipped a tool that could describe a product and engineering tree in it
 ## See also
 
 - [Configurable Key Casing](configurable-key-casing.md)
+- [Require Name On Principles And Constraints](require-name-on-principles-and-constraints.md)
 - [Committed Docs With CI Drift Gate](../engineering/drs/committed-docs-with-ci-drift-gate.md)
 - [Flat Dotted-Path Edges Over Nested Maps](../engineering/drs/flat-dotted-path-edges-over-nested-maps.md)
 - [Judgment Embedded In Binary Over MCP](../engineering/drs/judgment-embedded-in-binary-over-mcp.md)

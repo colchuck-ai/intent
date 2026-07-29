@@ -256,6 +256,25 @@ func TestUnlinkDanglingEdgeBySuffix(t *testing.T) {
 	}
 }
 
+func TestAddPrincipleWithNameWritesCanonical(t *testing.T) {
+	path := tmpSeed(t)
+	out, err := run(t, "add", "principle", "engineering", "new_rule",
+		"--name", "New Rule", "--statement", "A fresh axiom.", "-f", path)
+	if err != nil {
+		t.Fatalf("add: %v\n%s", err, out)
+	}
+	if !strings.Contains(out, "added engineering.principles.new_rule") {
+		t.Errorf("missing added confirmation:\n%s", out)
+	}
+	show, err := run(t, "show", "new_rule", "-f", path)
+	if err != nil {
+		t.Fatalf("show after add: %v\n%s", err, show)
+	}
+	if !strings.Contains(show, "New Rule") {
+		t.Errorf("expected the principle's name in show output:\n%s", show)
+	}
+}
+
 func TestAddRejectsInvalidType(t *testing.T) {
 	path := tmpSeed(t)
 	out, err := run(t, "add", "outcome", "understand_the_rationale_behind_an_element", "oc",

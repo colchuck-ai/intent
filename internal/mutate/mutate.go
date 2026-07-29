@@ -128,12 +128,12 @@ func Add(r *model.Root, kind tree.Kind, parentAddr, key string, f Fields) (strin
 			if _, ok := p.Principles.Get(key); ok {
 				return "", existsErr(addr)
 			}
-			p.Principles.Set(key, f.Statement)
+			p.Principles.Set(key, model.NamedStatement{Name: f.Name, Statement: f.Statement})
 		case tree.KindConstraint:
 			if _, ok := p.Constraints.Get(key); ok {
 				return "", existsErr(addr)
 			}
-			p.Constraints.Set(key, f.Statement)
+			p.Constraints.Set(key, model.NamedStatement{Name: f.Name, Statement: f.Statement})
 		default:
 			return "", parentMismatch(kind, parentAddr)
 		}

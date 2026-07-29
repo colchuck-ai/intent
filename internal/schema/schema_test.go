@@ -89,6 +89,36 @@ engineering:
 	}
 }
 
+// principleDoc wraps a `principles:` block body into a minimal valid tree, for
+// TestPrincipleRequiresNameAndStatement's cases.
+func principleDoc(body string) string {
+	return "product:\n  name: X\n  summary: Y\nengineering:\n  name: X\n  summary: Y\n  principles:\n" + body
+}
+
+// TestPrincipleRequiresNameAndStatement confirms a principle/constraint is a
+// required {name, statement} object, not a bare string.
+func TestPrincipleRequiresNameAndStatement(t *testing.T) {
+	bad := map[string]string{
+		"bare string":       "    p: A bare statement.\n",
+		"missing name":      "    p:\n      statement: A statement.\n",
+		"missing statement": "    p:\n      name: A Name\n",
+		"unknown field": "    p:\n      name: A Name\n      statement: A statement.\n" +
+			"      detail: extra\n",
+	}
+	for name, body := range bad {
+		t.Run(name, func(t *testing.T) {
+			if err := schema.Validate([]byte(principleDoc(body))); err == nil {
+				t.Fatalf("expected %s to be rejected", name)
+			}
+		})
+	}
+
+	good := "    p:\n      name: A Name\n      statement: A statement.\n"
+	if err := schema.Validate([]byte(principleDoc(good))); err != nil {
+		t.Errorf("expected a valid {name, statement} principle to pass, got: %v", err)
+	}
+}
+
 // TestRejectsMissingRoot confirms both roots are required.
 func TestRejectsMissingRoot(t *testing.T) {
 	bad := `

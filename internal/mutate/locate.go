@@ -15,8 +15,8 @@ import (
 //
 // The returned pointer is one of: *model.Product, *model.Engineering,
 // *model.Job, *model.Outcome, *model.Risk, *model.Requirement, *model.Component,
-// *model.DecisionRecord, *model.ChangeRecord, or *string (a principle or
-// constraint, whose value is its statement). Callers type-switch on it.
+// *model.DecisionRecord, *model.ChangeRecord, or *model.NamedStatement (a
+// principle or constraint). Callers type-switch on it.
 func locate(r *model.Root, addr string) (any, func(), error) {
 	segs := strings.Split(addr, ".")
 	noop := func() {}

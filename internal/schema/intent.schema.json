@@ -40,7 +40,15 @@
     "statementMap": {
       "type": "object",
       "propertyNames": { "$ref": "#/$defs/key" },
-      "additionalProperties": { "type": "string" }
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "statement"],
+        "properties": {
+          "name": { "type": "string" },
+          "statement": { "type": "string" }
+        }
+      }
     },
     "noteMap": {
       "type": "object",

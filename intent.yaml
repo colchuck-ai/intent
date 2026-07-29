@@ -191,11 +191,19 @@ engineering:
   name: Intent
   summary: The CLI engine -- model, validator, generator, write path, and embedded help -- behind the intent tree.
   principles:
-    derive-only-mechanical-duals: Derive only the mechanical duals of what's declared -- backlinks, See-Also, maps, paths -- never infer intent itself.
-    clean-diffs-are-a-design-goal: Canonical re-serialization and deterministic generation exist to keep the intent.yaml diff and the docs diff small and reviewable, not as an afterthought.
+    derive-only-mechanical-duals:
+      name: Derive Only Mechanical Duals
+      statement: Derive only the mechanical duals of what's declared -- backlinks, See-Also, maps, paths -- never infer intent itself.
+    clean-diffs-are-a-design-goal:
+      name: Clean Diffs Are A Design Goal
+      statement: Canonical re-serialization and deterministic generation exist to keep the intent.yaml diff and the docs diff small and reviewable, not as an afterthought.
   constraints:
-    single-go-binary: The CLI ships as one static Go binary with no runtime prerequisite.
-    docs-committed-and-ci-enforced: Generated markdown docs are committed to the repo and drift-checked by intent check in CI.
+    single-go-binary:
+      name: Single Go Binary
+      statement: The CLI ships as one static Go binary with no runtime prerequisite.
+    docs-committed-and-ci-enforced:
+      name: Docs Committed And CI Enforced
+      statement: Generated markdown docs are committed to the repo and drift-checked by intent check in CI.
   components:
     validate:
       name: Validate
@@ -323,3 +331,9 @@ change_records:
       - engineering
     change: Added key_case (kebab-case default, snake_case override) as a project-wide intent.config.yaml setting, enforced by a new linter rule (E005) and the write path (add/record/mv --rename); the schema itself now accepts either shape and leaves the specific convention to the linter. Migrated this repo's own intent.yaml -- previously all snake_case -- to kebab-case via a batch of cascading mutate.Mv renames, so its generated docs/ tree is kebab-case too (gen already rendered keys verbatim; no translation code was added).
     rationale: Kebab-case is the conventional casing for URLs and file paths (GitHub Pages, most static-site generators), so it is a better default than the incidental snake_case the tool started with. Making it a linter rule rather than a path-rendering translation keeps one invariant -- an element's key is its identity, path segment, and slug, unchanged -- while still letting a project choose its own convention and enforcing it consistently, the same way E001-E004 already enforce the tree's other structural invariants.
+  require-name-on-principles-and-constraints:
+    name: Require Name On Principles And Constraints
+    affects:
+      - engineering
+    change: 'Principles and constraints now require a name field, the same as every other element, instead of being a bare key: statement string. Engineering.Principles/Constraints changed from OrderedMap[string] to OrderedMap[NamedStatement]{Name, Statement}; the schema''s statementMap now requires a {name, statement} object. Named this repo''s own two principles and two constraints and rebuilt docs -- their headings and anchors now read as real names instead of the raw key.'
+    rationale: The 'keyed but shapeless' design meant a principle or constraint's generated heading and GitHub anchor fell back to its raw key (e.g. 'single-go-binary' instead of 'Single Go Binary'), the only elements in the tree without a readable heading. Requiring name -- rather than making it optional -- keeps every element in the tree uniformly shaped, avoiding a permanent two-shape special case for these two kinds.

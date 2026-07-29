@@ -32,6 +32,7 @@ Commit the docs; intent check builds to a temp dir and diffs it against what's c
 
 - [Configurable Key Casing](../../change-records/configurable-key-casing.md)
 - [Dogfood And Retire The Archive](../../change-records/dogfood-and-retire-the-archive.md)
+- [Require Name On Principles And Constraints](../../change-records/require-name-on-principles-and-constraints.md)
 - [Flat Dotted-Path Edges Over Nested Maps](flat-dotted-path-edges-over-nested-maps.md)
 - [Judgment Embedded In Binary Over MCP](judgment-embedded-in-binary-over-mcp.md)
 - [Single Go Binary Over Python](single-go-binary-over-python.md)

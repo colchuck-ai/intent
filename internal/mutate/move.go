@@ -443,12 +443,12 @@ func remapRefs(r *model.Root, oldAddr, newAddr string) int {
 	rewriteProse(&r.Engineering.Detail, "engineering", remap, &n)
 	for _, pk := range r.Engineering.Principles.Keys() {
 		v, _ := r.Engineering.Principles.Get(pk)
-		rewriteProse(&v, "engineering.principles."+pk, remap, &n)
+		rewriteProse(&v.Statement, "engineering.principles."+pk, remap, &n)
 		r.Engineering.Principles.Set(pk, v)
 	}
 	for _, ck := range r.Engineering.Constraints.Keys() {
 		v, _ := r.Engineering.Constraints.Get(ck)
-		rewriteProse(&v, "engineering.constraints."+ck, remap, &n)
+		rewriteProse(&v.Statement, "engineering.constraints."+ck, remap, &n)
 		r.Engineering.Constraints.Set(ck, v)
 	}
 	for _, ck := range r.Engineering.Components.Keys() {

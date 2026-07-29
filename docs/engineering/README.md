@@ -4,19 +4,19 @@
 
 The CLI engine -- model, validator, generator, write path, and embedded help -- behind the intent tree.
 
-## derive-only-mechanical-duals
+## Derive Only Mechanical Duals
 
 Derive only the mechanical duals of what's declared -- backlinks, See-Also, maps, paths -- never infer intent itself.
 
-## clean-diffs-are-a-design-goal
+## Clean Diffs Are A Design Goal
 
 Canonical re-serialization and deterministic generation exist to keep the intent.yaml diff and the docs diff small and reviewable, not as an afterthought.
 
-## single-go-binary
+## Single Go Binary
 
 The CLI ships as one static Go binary with no runtime prerequisite.
 
-## docs-committed-and-ci-enforced
+## Docs Committed And CI Enforced
 
 Generated markdown docs are committed to the repo and drift-checked by intent check in CI.
 
@@ -81,6 +81,7 @@ Render an installable agent skill from the same embedded content help serves, pe
 
 - [Configurable Key Casing](../change-records/configurable-key-casing.md) (affects)
 - [Dogfood And Retire The Archive](../change-records/dogfood-and-retire-the-archive.md) (affects)
+- [Require Name On Principles And Constraints](../change-records/require-name-on-principles-and-constraints.md) (affects)
 - [Committed Docs With CI Drift Gate](drs/committed-docs-with-ci-drift-gate.md) (affects)
 - [Flat Dotted-Path Edges Over Nested Maps](drs/flat-dotted-path-edges-over-nested-maps.md) (affects)
 - [Judgment Embedded In Binary Over MCP](drs/judgment-embedded-in-binary-over-mcp.md) (affects)

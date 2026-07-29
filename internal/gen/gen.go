@@ -183,8 +183,8 @@ func (s *site) docChildren(host string) []*tree.Element {
 	return out
 }
 
-// displayName is the element's name, falling back to its key (principles and
-// constraints have no name — the key is identity).
+// displayName is the element's name, falling back to its key when there is
+// none (unreachable today: every kind requires a name).
 func displayName(e *tree.Element) string {
 	if e.Name != "" {
 		return e.Name

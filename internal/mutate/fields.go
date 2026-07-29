@@ -139,12 +139,16 @@ func setField(el any, addr, field, value string) error {
 		default:
 			return unsettable(addr, field, "name, change, rationale")
 		}
-	case *string:
-		// A principle or constraint: its value is its statement.
-		if field != "statement" {
-			return unsettable(addr, field, "statement")
+	case *model.NamedStatement:
+		// A principle or constraint.
+		switch field {
+		case "name":
+			v.Name = value
+		case "statement":
+			v.Statement = value
+		default:
+			return unsettable(addr, field, "name, statement")
 		}
-		*v = value
 	default:
 		return fmt.Errorf("cannot set fields on %s", addr)
 	}

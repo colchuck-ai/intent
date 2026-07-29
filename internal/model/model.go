@@ -25,17 +25,24 @@ type Product struct {
 // Engineering is the engineering root: principles, constraints, components, and
 // architecture decision records (ADRs).
 //
-// Principles and constraints are keyed maps of key->statement, not bare lists,
-// so they carry stable addresses and can be edge targets (DESIGN §2, decision
-// to make them "keyed but shapeless").
+// Principles and constraints are keyed maps, not bare lists, so they carry
+// stable addresses and can be edge targets (DESIGN §2).
 type Engineering struct {
 	Name            string                     `yaml:"name"`
 	Summary         string                     `yaml:"summary"`
 	Detail          string                     `yaml:"detail,omitempty"`
-	Principles      OrderedMap[string]         `yaml:"principles,omitempty"`
-	Constraints     OrderedMap[string]         `yaml:"constraints,omitempty"`
+	Principles      OrderedMap[NamedStatement] `yaml:"principles,omitempty"`
+	Constraints     OrderedMap[NamedStatement] `yaml:"constraints,omitempty"`
 	Components      OrderedMap[Component]      `yaml:"components,omitempty"`
 	DecisionRecords OrderedMap[DecisionRecord] `yaml:"decision_records,omitempty"`
+}
+
+// NamedStatement is a principle or constraint: a named axiom. Both fields are
+// required — every principle/constraint has a name, the same as every other
+// element.
+type NamedStatement struct {
+	Name      string `yaml:"name"`
+	Statement string `yaml:"statement"`
 }
 
 // Job is a jobs-to-be-done narrative. Jobs are always their own document, so

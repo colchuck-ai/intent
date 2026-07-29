@@ -169,8 +169,36 @@ func TestSetPrincipleStatement(t *testing.T) {
 		t.Fatalf("set principle: %v", err)
 	}
 	v, _ := r.Engineering.Principles.Get("derive_only_mechanical_duals")
-	if v != "New axiom." {
-		t.Errorf("principle = %q", v)
+	if v.Statement != "New axiom." {
+		t.Errorf("principle statement = %q", v.Statement)
+	}
+}
+
+func TestSetPrincipleName(t *testing.T) {
+	r := loadSeed(t)
+	addr := "engineering.principles.derive_only_mechanical_duals"
+	if err := mutate.Set(r, addr, "name", "Renamed Axiom"); err != nil {
+		t.Fatalf("set principle name: %v", err)
+	}
+	v, _ := r.Engineering.Principles.Get("derive_only_mechanical_duals")
+	if v.Name != "Renamed Axiom" {
+		t.Errorf("principle name = %q", v.Name)
+	}
+}
+
+func TestAddPrincipleWithName(t *testing.T) {
+	r := loadSeed(t)
+	addr, err := mutate.Add(r, tree.KindPrinciple, "engineering", "new_rule",
+		mutate.Fields{Name: "New Rule", Statement: "A fresh axiom."})
+	if err != nil {
+		t.Fatalf("add principle: %v", err)
+	}
+	v, _ := r.Engineering.Principles.Get("new_rule")
+	if v.Name != "New Rule" || v.Statement != "A fresh axiom." {
+		t.Errorf("principle = %+v", v)
+	}
+	if addr != "engineering.principles.new_rule" {
+		t.Errorf("addr = %q", addr)
 	}
 }
 

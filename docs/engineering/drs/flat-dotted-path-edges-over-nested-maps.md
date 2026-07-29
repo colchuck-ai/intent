@@ -32,6 +32,7 @@ Flat dotted-path lists everywhere; relationships stays a keyed map only because 
 
 - [Configurable Key Casing](../../change-records/configurable-key-casing.md)
 - [Dogfood And Retire The Archive](../../change-records/dogfood-and-retire-the-archive.md)
+- [Require Name On Principles And Constraints](../../change-records/require-name-on-principles-and-constraints.md)
 - [Committed Docs With CI Drift Gate](committed-docs-with-ci-drift-gate.md)
 - [Judgment Embedded In Binary Over MCP](judgment-embedded-in-binary-over-mcp.md)
 - [Single Go Binary Over Python](single-go-binary-over-python.md)

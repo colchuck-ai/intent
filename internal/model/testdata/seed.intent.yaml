@@ -46,9 +46,13 @@ engineering:
   name: Intent
   summary: The engine, generator, and validator behind the intent tree.
   principles:
-    derive_only_mechanical_duals: Derive only the mechanical duals of what is declared.
+    derive_only_mechanical_duals:
+      name: Derive Only Mechanical Duals
+      statement: Derive only the mechanical duals of what is declared.
   constraints:
-    single_go_binary: The CLI ships as one Go binary with no runtime prerequisite.
+    single_go_binary:
+      name: Single Go Binary
+      statement: The CLI ships as one Go binary with no runtime prerequisite.
   components:
     validator:
       name: Validator

@@ -210,14 +210,14 @@ func (ix *Index) walkEngineering() {
 		v, _ := e.Principles.Get(k)
 		ix.add(&Element{
 			Addr: "engineering.principles." + k, Kind: KindPrinciple, Domain: DomainEngineering,
-			ProseField: "statement", Prose: v, Level: 1,
+			Name: v.Name, ProseField: "statement", Prose: v.Statement, Level: 1,
 		})
 	}
 	for _, k := range e.Constraints.Keys() {
 		v, _ := e.Constraints.Get(k)
 		ix.add(&Element{
 			Addr: "engineering.constraints." + k, Kind: KindConstraint, Domain: DomainEngineering,
-			ProseField: "statement", Prose: v, Level: 1,
+			Name: v.Name, ProseField: "statement", Prose: v.Statement, Level: 1,
 		})
 	}
 
