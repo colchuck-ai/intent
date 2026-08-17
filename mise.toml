@@ -1,7 +1,7 @@
 [tools]
 go = "1.25"
-# After the first tagged release, pin the CLI itself instead of building from
-# source:
-#   "ubi:colchuck-ai/intent" = "<version>"
+# To pin the CLI itself instead of building from source (verified against the
+# v0.1.0 release):
+#   "github:colchuck-ai/intent" = "<version>"
 # `mise install` then fetches that exact release binary; `mise exec -- intent
 # …` invokes it deterministically in CI and pre-commit.
