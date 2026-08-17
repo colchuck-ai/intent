@@ -36,6 +36,9 @@ release:
   github:
     owner: colchuck-ai
     name: intent
+  # rc tags (e.g. v0.3.0-rc.1) carry a semver pre-release suffix, so they
+  # publish as a GitHub pre-release rather than "Latest".
+  prerelease: auto
 
 changelog:
   sort: asc
