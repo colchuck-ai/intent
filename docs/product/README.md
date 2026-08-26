@@ -10,13 +10,13 @@ A structured-source tool for product and engineering intent: one schema'd intent
 
 - [Configurable Key Casing](../change-records/configurable-key-casing.md) (affects)
 - [Dogfood And Retire The Archive](../change-records/dogfood-and-retire-the-archive.md) (affects)
-- [Distinct Prose-Field Names Per Element Type](drs/distinct-prose-field-names-per-element-type.md) (affects)
-- [Risk Over ODI Opportunity Scoring](drs/risk-over-odi-scoring.md) (affects)
+- [Distinct Prose-Field Names Per Element Type](decision-records/distinct-prose-field-names-per-element-type.md) (affects)
+- [Risk Over ODI Opportunity Scoring](decision-records/risk-over-odi-scoring.md) (affects)
 
 ## Contents
 
-- [Distinct Prose-Field Names Per Element Type](drs/distinct-prose-field-names-per-element-type.md)
-- [Risk Over ODI Opportunity Scoring](drs/risk-over-odi-scoring.md)
+- [Distinct Prose-Field Names Per Element Type](decision-records/distinct-prose-field-names-per-element-type.md)
+- [Risk Over ODI Opportunity Scoring](decision-records/risk-over-odi-scoring.md)
 - [Change Documentation Without Drift](change-documentation-without-drift.md)
 - [Keep Committed Docs Trustworthy](keep-committed-docs-trustworthy/README.md)
 - [Make A Surgical Change With Confidence](make-a-surgical-change-with-confidence.md)

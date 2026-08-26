@@ -11,9 +11,9 @@ func TestFilePathFor(t *testing.T) {
 		{"product", true, "product/README.md"},
 		{"product.jobs.j", true, "product/j/README.md"},
 		{"product.jobs.j.outcomes.o", false, "product/j/o.md"},
-		{"product.decision_records.d", false, "product/drs/d.md"},
+		{"product.decision_records.d", false, "product/decision-records/d.md"},
 		{"engineering.components.c", false, "engineering/c.md"},
-		{"engineering.decision_records.a", false, "engineering/drs/a.md"},
+		{"engineering.decision_records.a", false, "engineering/decision-records/a.md"},
 		{"change_records.cr", false, "change-records/cr.md"},
 	}
 	for _, c := range cases {
@@ -27,7 +27,7 @@ func TestSlashRel(t *testing.T) {
 	cases := []struct{ from, to, want string }{
 		{"engineering/README.md", "engineering/validator.md", "validator.md"},
 		{"engineering/validator.md", "engineering/README.md", "README.md"},
-		{"product/j/o.md", "product/drs/d.md", "../drs/d.md"},
+		{"product/j/o.md", "product/decision-records/d.md", "../decision-records/d.md"},
 		{"engineering/validator.md", "product/j/o.md", "../product/j/o.md"},
 		{"product/README.md", "product/j/README.md", "j/README.md"},
 	}

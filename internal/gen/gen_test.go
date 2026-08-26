@@ -38,10 +38,10 @@ func TestBuildFileSet(t *testing.T) {
 	want := []string{
 		"change-records/add_resolvable_references_requirement.md",
 		"engineering/README.md",
-		"engineering/drs/single_go_binary_over_python.md",
+		"engineering/decision-records/single_go_binary_over_python.md",
 		"engineering/validator.md",
 		"product/README.md",
-		"product/drs/prefer_explicit_declaration.md",
+		"product/decision-records/prefer_explicit_declaration.md",
 		"product/understand_the_rationale_behind_an_element/README.md",
 		"product/understand_the_rationale_behind_an_element/fast_rationale_lookup.md",
 	}
@@ -116,13 +116,13 @@ func TestDerivedFooterBacklinksAndContents(t *testing.T) {
 	// A directory page lists its children, address-sorted.
 	prod, _ := find(files, "product/README.md")
 	pc := string(prod.Content)
-	drsAt := strings.Index(pc, "drs/prefer_explicit_declaration.md")
+	drAt := strings.Index(pc, "decision-records/prefer_explicit_declaration.md")
 	jobAt := strings.Index(pc, "understand_the_rationale_behind_an_element/README.md")
-	if drsAt < 0 || jobAt < 0 || !strings.Contains(pc, "## Contents") {
+	if drAt < 0 || jobAt < 0 || !strings.Contains(pc, "## Contents") {
 		t.Fatalf("product index missing contents map:\n%s", pc)
 	}
-	if drsAt > jobAt {
-		t.Errorf("contents should be address-sorted (drs before understand_*):\n%s", pc)
+	if drAt > jobAt {
+		t.Errorf("contents should be address-sorted (decision-records before understand_*):\n%s", pc)
 	}
 }
 

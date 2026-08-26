@@ -29,7 +29,7 @@ key_case: kebab-case              # or snake_case — the required element-key c
 The generated tree underneath `output_dir`:
 
 ```
-<output_dir>/product/          jobs / outcomes / …, drs/ (PDRs)
-<output_dir>/engineering/      components, drs/ (ADRs)
+<output_dir>/product/          jobs / outcomes / …, decision-records/ (PDRs)
+<output_dir>/engineering/      components, decision-records/ (ADRs)
 <output_dir>/change-records/   top-level CRs
 ```
