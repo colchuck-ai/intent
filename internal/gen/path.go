@@ -13,7 +13,7 @@ import (
 // ancestor of a document is itself a document, so every element key in the
 // address is a real directory level. Two names are remapped for the reader:
 // change_records → change-records (its own top directory) and decision_records
-// → drs (DESIGN §8).
+// → decision-records (DESIGN §8).
 func pathSegments(addr string) []string {
 	segs := strings.Split(addr, ".")
 	if segs[0] == "change_records" {
@@ -24,7 +24,7 @@ func pathSegments(addr string) []string {
 	for i := 1; i+1 < len(segs); i += 2 {
 		coll, key := segs[i], segs[i+1]
 		if coll == "decision_records" {
-			out = append(out, "drs", key)
+			out = append(out, "decision-records", key)
 		} else {
 			out = append(out, key)
 		}

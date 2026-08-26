@@ -82,11 +82,11 @@ Render an installable agent skill from the same embedded content help serves, pe
 - [Configurable Key Casing](../change-records/configurable-key-casing.md) (affects)
 - [Dogfood And Retire The Archive](../change-records/dogfood-and-retire-the-archive.md) (affects)
 - [Require Name On Principles And Constraints](../change-records/require-name-on-principles-and-constraints.md) (affects)
-- [Committed Docs With CI Drift Gate](drs/committed-docs-with-ci-drift-gate.md) (affects)
-- [Flat Dotted-Path Edges Over Nested Maps](drs/flat-dotted-path-edges-over-nested-maps.md) (affects)
-- [Judgment Embedded In Binary Over MCP](drs/judgment-embedded-in-binary-over-mcp.md) (affects)
-- [Single Go Binary Over Python](drs/single-go-binary-over-python.md) (affects)
-- [Single intent.yaml Over Sharded Files](drs/single-intent-yaml-over-sharded-files.md) (affects)
+- [Committed Docs With CI Drift Gate](decision-records/committed-docs-with-ci-drift-gate.md) (affects)
+- [Flat Dotted-Path Edges Over Nested Maps](decision-records/flat-dotted-path-edges-over-nested-maps.md) (affects)
+- [Judgment Embedded In Binary Over MCP](decision-records/judgment-embedded-in-binary-over-mcp.md) (affects)
+- [Single Go Binary Over Python](decision-records/single-go-binary-over-python.md) (affects)
+- [Single intent.yaml Over Sharded Files](decision-records/single-intent-yaml-over-sharded-files.md) (affects)
 
 **Validate**
 
@@ -111,8 +111,8 @@ Render an installable agent skill from the same embedded content help serves, pe
 ## Contents
 
 - [Gen](gen.md)
-- [Committed Docs With CI Drift Gate](drs/committed-docs-with-ci-drift-gate.md)
-- [Flat Dotted-Path Edges Over Nested Maps](drs/flat-dotted-path-edges-over-nested-maps.md)
-- [Judgment Embedded In Binary Over MCP](drs/judgment-embedded-in-binary-over-mcp.md)
-- [Single Go Binary Over Python](drs/single-go-binary-over-python.md)
-- [Single intent.yaml Over Sharded Files](drs/single-intent-yaml-over-sharded-files.md)
+- [Committed Docs With CI Drift Gate](decision-records/committed-docs-with-ci-drift-gate.md)
+- [Flat Dotted-Path Edges Over Nested Maps](decision-records/flat-dotted-path-edges-over-nested-maps.md)
+- [Judgment Embedded In Binary Over MCP](decision-records/judgment-embedded-in-binary-over-mcp.md)
+- [Single Go Binary Over Python](decision-records/single-go-binary-over-python.md)
+- [Single intent.yaml Over Sharded Files](decision-records/single-intent-yaml-over-sharded-files.md)
