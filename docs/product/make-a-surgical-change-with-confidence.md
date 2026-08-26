@@ -10,9 +10,13 @@ Minimize the chance that a write leaves the tree in an invalid state.
 
 ### Hand-Edited YAML Drifts From Schema
 
+**Kind:** Risk
+
 A hand-edited intent.yaml diverges from the schema or the containment rule because nothing checked it before it was saved.
 
 ### Writes Refused When Invalid
+
+**Kind:** Requirement
 
 Every mutating command must re-validate the whole tree before writing, and write nothing at all if validation fails.
 

@@ -2,6 +2,8 @@
 
 # Gen
 
+**Kind:** Component
+
 Render the intent tree into committed markdown docs, and diff a fresh render against what's on disk for the drift gate.
 
 **Behavior:**

@@ -10,9 +10,13 @@ Minimize the chance that the installed skill's guidance disagrees with intent he
 
 ### Skill And Binary Help Diverge
 
+**Kind:** Risk
+
 A hand-maintained skill file and the binary's embedded help are edited independently and drift apart.
 
 ### Skill Generated From Embedded Content
+
+**Kind:** Requirement
 
 install-skill must render the installed skill from the same embedded content intent help serves, never from a separately maintained file.
 
@@ -26,9 +30,13 @@ Minimize the chance an assistant completes a write without knowing a relevant ju
 
 ### Agent Won't Fetch What It Doesn't Know It Needs
 
+**Kind:** Risk
+
 An assistant finishes a write without knowing there's guidance it should have checked, because nothing prompted it to look.
 
 ### Command Footers Nudge Judgment
+
+**Kind:** Requirement
 
 Every write command must print a footer naming the next likely command and the relevant judgment topic.
 

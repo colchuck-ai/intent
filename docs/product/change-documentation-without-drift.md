@@ -10,13 +10,19 @@ Minimize the likelihood that a change to one element leaves something that refer
 
 ### Linked Elements Fall Out Of Sync
 
+**Kind:** Risk
+
 A change to one element isn't reflected in the elements that reference it, leaving them in contradiction.
 
 ### Undocumented Change Reads As Drift
 
+**Kind:** Risk
+
 A change lands with nothing recording what changed and why, so a later reader can't tell deliberate change from drift.
 
 ### Mechanical Linter First Pass
+
+**Kind:** Requirement
 
 Every write must run reference-resolution, containment, duplicate-reference, and domain-scope checks before it is committed to disk.
 
@@ -25,6 +31,8 @@ Every write must run reference-resolution, containment, duplicate-reference, and
 - [Linked Elements Fall Out Of Sync](#linked-elements-fall-out-of-sync)
 
 ### Alignment Check Before Finalizing
+
+**Kind:** Requirement
 
 A write that would leave any reference dangling or any containment invalid must be refused, not merely flagged.
 
@@ -38,6 +46,8 @@ A write that would leave any reference dangling or any containment invalid must 
 
 ### Capture Change Records
 
+**Kind:** Requirement
+
 A material update or delete must be capturable as a Change Record stating what changed and why.
 
 **Mitigates:**
@@ -50,13 +60,19 @@ Minimize the effort to determine where a new or changed element belongs, and at 
 
 ### Wrong Tier For The Content
 
+**Kind:** Risk
+
 Without a default tier, an author must weigh promotion from scratch for every element.
 
 ### No Canonical Path
 
+**Kind:** Risk
+
 An undefined path or naming convention forces an author to invent one instead of looking it up.
 
 ### Minimal-First Tier Ladder
+
+**Kind:** Requirement
 
 Every promotable element must default to inline and promote to its own document only on an explicit promote/set-type-document call, cascading ancestors automatically.
 
@@ -65,6 +81,8 @@ Every promotable element must default to inline and promote to its own document 
 - [Wrong Tier For The Content](#wrong-tier-for-the-content)
 
 ### Canonical Path/Slug Convention
+
+**Kind:** Requirement
 
 Every element's file path and slug must be computed from its address and type, never chosen by hand.
 

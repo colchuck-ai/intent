@@ -6,9 +6,13 @@ Minimize the chance that committed docs disagree with intent.yaml.
 
 ## Docs Drift From Intent Silently
 
+**Kind:** Risk
+
 Generated docs are edited by hand, or intent.yaml changes without a rebuild, and the mismatch goes unnoticed until someone reads the wrong page.
 
 ## Deterministic Generation
+
+**Kind:** Requirement
 
 Building the same intent.yaml twice must produce byte-identical docs, so a diff only ever reflects an actual intent change.
 

@@ -23,6 +23,22 @@ var edgeLabel = map[tree.EdgeKind]string{
 	tree.EdgeRelationships: "Relationships",
 }
 
+// siblingKindLabel names the element kinds that render as undifferentiated
+// sibling headings with no other structural cue to tell them apart: a
+// principle, a constraint, and a component all sit directly under the
+// engineering root, and a risk and a requirement both sit directly under an
+// outcome. It is deliberately partial, unlike edgeLabel: every other kind is
+// unambiguous from where it renders (a job's only children are outcomes; a
+// decision record has its own unmistakable field shape), so it gets no
+// label.
+var siblingKindLabel = map[tree.Kind]string{
+	tree.KindPrinciple:   "Principle",
+	tree.KindConstraint:  "Constraint",
+	tree.KindComponent:   "Component",
+	tree.KindRisk:        "Risk",
+	tree.KindRequirement: "Requirement",
+}
+
 // renderPage assembles one page: banner, then the authored core + declared edges
 // of the host document and each inline element it hosts, then a single derived
 // footer (DESIGN §8 page anatomy).
@@ -55,6 +71,10 @@ func (s *site) renderElement(b *strings.Builder, e *tree.Element, file string, d
 	}
 	b.WriteByte('\n')
 	b.WriteString(strings.Repeat("#", level) + " " + displayName(e) + "\n")
+
+	if label, ok := siblingKindLabel[e.Kind]; ok {
+		b.WriteString("\n**Kind:** " + label + "\n")
+	}
 
 	if e.Prose != "" {
 		b.WriteByte('\n')
