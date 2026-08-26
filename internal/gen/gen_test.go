@@ -160,6 +160,61 @@ func TestSeeAlsoLinksSharedTargetSiblings(t *testing.T) {
 	}
 }
 
+func TestKindLabelDisambiguatesSiblingTypes(t *testing.T) {
+	files := buildSeed(t)
+
+	// The engineering root flattens principles, constraints, and components as
+	// sibling headings with no other visible distinction -- each must carry an
+	// explicit kind label.
+	eng, ok := find(files, "engineering/README.md")
+	if !ok {
+		t.Fatal("engineering README missing")
+	}
+	es := string(eng.Content)
+	for _, want := range []string{
+		"## Derive Only Mechanical Duals\n\n**Kind:** Principle",
+		"## Single Go Binary\n\n**Kind:** Constraint",
+		"## Generator\n\n**Kind:** Component",
+	} {
+		if !strings.Contains(es, want) {
+			t.Errorf("engineering README missing kind label %q:\n%s", want, es)
+		}
+	}
+
+	// A promoted component still carries its kind label even though it's alone
+	// on its page -- a reader can land on it directly via a link.
+	val, ok := find(files, "engineering/validator.md")
+	if !ok {
+		t.Fatal("validator page missing")
+	}
+	if !strings.Contains(string(val.Content), "# Validator\n\n**Kind:** Component") {
+		t.Errorf("validator page missing kind label:\n%s", val.Content)
+	}
+
+	// An outcome flattens its risks and requirements as sibling headings --
+	// each must carry an explicit kind label.
+	oc, ok := find(files, "product/understand_the_rationale_behind_an_element/fast_rationale_lookup.md")
+	if !ok {
+		t.Fatal("outcome page missing")
+	}
+	body := string(oc.Content)
+	for _, want := range []string{
+		"## Ambiguous Reference\n\n**Kind:** Risk",
+		"## Stable Logical IDs\n\n**Kind:** Requirement",
+		"## Resolvable References\n\n**Kind:** Requirement",
+	} {
+		if !strings.Contains(body, want) {
+			t.Errorf("outcome page missing kind label %q:\n%s", want, body)
+		}
+	}
+
+	// The outcome itself, and the job hosting it, are unambiguous from
+	// structure alone (a job's only children are outcomes) and get no label.
+	if strings.Contains(body, "**Kind:** Outcome") || strings.Contains(body, "**Kind:** Job") {
+		t.Errorf("outcome and job should not carry a kind label:\n%s", body)
+	}
+}
+
 func TestPathsAndRelativeInterpolation(t *testing.T) {
 	src := `
 product:

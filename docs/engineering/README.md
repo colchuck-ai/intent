@@ -6,21 +6,31 @@ The CLI engine -- model, validator, generator, write path, and embedded help -- 
 
 ## Derive Only Mechanical Duals
 
+**Kind:** Principle
+
 Derive only the mechanical duals of what's declared -- backlinks, See-Also, maps, paths -- never infer intent itself.
 
 ## Clean Diffs Are A Design Goal
+
+**Kind:** Principle
 
 Canonical re-serialization and deterministic generation exist to keep the intent.yaml diff and the docs diff small and reviewable, not as an afterthought.
 
 ## Single Go Binary
 
+**Kind:** Constraint
+
 The CLI ships as one static Go binary with no runtime prerequisite.
 
 ## Docs Committed And CI Enforced
 
+**Kind:** Constraint
+
 Generated markdown docs are committed to the repo and drift-checked by intent check in CI.
 
 ## Validate
+
+**Kind:** Component
 
 Reject any intent.yaml that would produce an invalid tree -- dangling references, bad containment, duplicate references, or an out-of-domain record.
 
@@ -39,6 +49,8 @@ Runs the structural schema check, then the semantic linter (E001-E004), and repo
 
 ## Mutate
 
+**Kind:** Component
+
 Apply one surgical, validated write per command -- add, set, link, mv, promote, record -- refusing to touch disk unless the result passes validate.
 
 **Fulfills:**
@@ -54,6 +66,8 @@ Apply one surgical, validated write per command -- add, set, link, mv, promote, 
 
 ## Help
 
+**Kind:** Component
+
 Serve the embedded concept, ref, judgment, guide, and error content on demand, and footer the relevant topic from every mutate command.
 
 **Fulfills:**
@@ -62,6 +76,8 @@ Serve the embedded concept, ref, judgment, guide, and error content on demand, a
 - [Skill Generated From Embedded Content](../product/trust-the-skill-without-maintaining-it-by-hand.md#skill-generated-from-embedded-content)
 
 ## Skill
+
+**Kind:** Component
 
 Render an installable agent skill from the same embedded content help serves, per target agent adapter.
 

@@ -2,6 +2,8 @@
 
 # CI Drift Gate
 
+**Kind:** Requirement
+
 CI must fail whenever the committed docs and a fresh build of intent.yaml disagree.
 
 **Depends on:**

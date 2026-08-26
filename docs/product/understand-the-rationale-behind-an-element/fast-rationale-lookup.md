@@ -6,13 +6,19 @@ Minimize the time to trace an element back to the outcome it serves.
 
 ## Ambiguous Or Premature Reference
 
+**Kind:** Risk
+
 A reference points at something that doesn't resolve yet, or resolves to the wrong element, because addressing is ambiguous.
 
 ## Tracing Slows As Tree Grows
 
+**Kind:** Risk
+
 A growing tree increases the time it takes to trace an element back to the outcome it serves.
 
 ## Stable Logical IDs
+
+**Kind:** Requirement
 
 Every element must have a stable address that resolves correctly whether or not a document exists for it yet.
 
@@ -25,6 +31,8 @@ Every element must have a stable address that resolves correctly whether or not 
 - [Ambiguous Or Premature Reference](#ambiguous-or-premature-reference)
 
 ## One Tracing Path Per Element
+
+**Kind:** Requirement
 
 Each element must render at exactly one fixed, derived location -- outgoing edges, then a single Referenced-by footer -- so there's one correct route to follow.
 
